@@ -1,0 +1,139 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum SubscriptionTier {
+  FREE
+  BRONZE
+  GOLD
+  PREMIUM
+  PLATINUM
+}
+
+enum InteractionType {
+  LIKE
+  DISLIKE
+  SUPERLIKE
+  REPORT
+}
+
+model User {
+  id               Int              @id @default(autoincrement())
+  email            String           @unique
+  password         String
+  phone            String?          @unique
+  name             String
+  age              Int
+  bio              String?
+  weight           Float?
+  height           Float?
+  nationality      String?
+  gender           Gender?
+  city             String?
+  country          String?
+
+  // Interests & Details
+  zodiacSign       String?
+  seeking          String?
+  location         String?
+  job              String?
+  hobbies          String[]
+
+  // Integrations
+  spotifyId        String?
+  musicList        String[]
+
+  // Subscription
+  subscription     SubscriptionTier @default(FREE)
+  donationsEnabled Boolean          @default(false)
+
+  // Security/Restrictions
+  isRestricted     Boolean          @default(false)
+
+  // Relations
+  photos           Photo[]
+  likesSent        Interaction[]    @relation("LikesSent")
+  likesReceived    Interaction[]    @relation("LikesReceived")
+
+  matchesAsUser1   Match[]          @relation("User1Matches")
+  matchesAsUser2   Match[]          @relation("User2Matches")
+
+  messagesSent     Message[]        @relation("UserMessages")
+
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model Photo {
+  id        Int      @id @default(autoincrement())
+  url       String
+  isPrimary Boolean  @default(false)
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Interaction {
+  id        Int             @id @default(autoincrement())
+  type      InteractionType
+
+  fromId    Int
+  toId      Int
+
+  fromUser  User            @relation("LikesSent", fields: [fromId], references: [id])
+  toUser    User            @relation("LikesReceived", fields: [toId], references: [id])
+
+  createdAt DateTime        @default(now())
+
+  @@unique([fromId, toId])
+}
+
+model Match {
+  id        Int      @id @default(autoincrement())
+
+  user1Id   Int
+  user2Id   Int
+
+  user1     User     @relation("User1Matches", fields: [user1Id], references: [id])
+  user2     User     @relation("User2Matches", fields: [user2Id], references: [id])
+
+  chat      Chat?
+  createdAt DateTime @default(now())
+
+  @@unique([user1Id, user2Id])
+}
+
+model Chat {
+  id        Int       @id @default(autoincrement())
+
+  matchId   Int       @unique
+  match     Match     @relation(fields: [matchId], references: [id])
+
+  messages  Message[]
+  createdAt DateTime  @default(now())
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+
+  fromId    Int
+  fromUser  User     @relation("UserMessages", fields: [fromId], references: [id])
+
+  chatId    Int
+  chat      Chat     @relation(fields: [chatId], references: [id])
+
+  createdAt DateTime @default(now())
+}

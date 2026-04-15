@@ -1,0 +1,80 @@
+======================================
+HISTORIAL DE INSTALACIÓN Y CONFIGURACIÓN: PRISMA V7
+======================================
+
+1. COMANDOS DE TERMINAL EJECUTADOS
+--------------------------------------
+# Instalación de las dependencias de desarrollo y entorno
+npm install -D prisma@latest dotenv
+
+# Instalación del cliente de Prisma
+npm install @prisma/client@latest
+
+# Intentos de validación (Troubleshooting) para adaptar la v7
+npx prisma validate
+
+# Renombrar carpeta anterior e inicializar un entorno limpio de Prisma v7
+Rename-Item .\prisma .\prisma_bak
+npx prisma init
+
+# Generar el cliente de Prisma para conectar base de datos con el ORM
+npx prisma generate
+
+# Limpieza de la carpeta de respaldo tras configuración exitosa
+Remove-Item -Recurse -Force .\prisma_bak
+
+2. ARCHIVOS DE CÓDIGO CONFIGURADOS
+--------------------------------------
+A diferencia de Prisma v6, Prisma v7 maneja sus conexiones a través del archivo de configuración `prisma.config.ts`, y ya no se coloca el `url` dentro del esquema.
+
+--- [prisma.config.ts] ---
+import "dotenv/config";
+import { defineConfig } from "prisma/config";
+
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  migrations: {
+    path: "prisma/migrations",
+  },
+  datasource: {
+    url: process.env["DATABASE_URL"],
+  },
+});
+--------------------------
+
+--- [prisma/schema.prisma] ---
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+------------------------------
+
+--- [.env] ---
+DATABASE_URL="postgresql://postgres:admin123@localhost:5432/Tinder?schema=public"
+JWT_SECRET=super-secret-key-tindel-2026
+JWT_EXPIRATION=3600s
+------------------------------
+
+3. ACTUALIZACIONES DE HOY (SEGURIDAD, SEEDING Y RESOLUCIÓN)
+--------------------------------------
+# Corrección de Resolución de Módulos (NodeNext)
+- Se añadieron extensiones `.js` a todos los imports relativos en el directorio `src`.
+- Esto es necesario debido a la configuración de `moduleResolution: "nodenext"` en `tsconfig.json`.
+
+# Adición de campo de contraseña al modelo User
+- Se modificó `prisma/schema.prisma` para incluir `password String`.
+- Se ejecutó `npx prisma generate` para actualizar los tipos del cliente.
+
+# Configuración de Seeding
+- Se creó el archivo `prisma/seed.ts` para población de datos de prueba.
+- Se configuró el comando de seed en `package.json`:
+  "prisma": { "seed": "tsx prisma/seed.ts" }
+
+# Comandos de Seguridad Ejecutados
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
+npm install -D @types/passport-jwt @types/bcrypt
+

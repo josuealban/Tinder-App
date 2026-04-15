@@ -1,0 +1,36 @@
+======================================
+DETALLES DE SEGURIDAD Y AUTENTICACIÓN: JWT
+======================================
+
+1. CONFIGURACIÓN DEL ENTORNO (.env)
+--------------------------------------
+JWT_SECRET=super-secret-key-tindel-2026
+JWT_EXPIRATION=3600s
+
+2. FLUJO DE AUTENTICACIÓN
+--------------------------------------
+Se ha implementado un sistema de autenticación basado en JSON Web Tokens (JWT) utilizando Passport.js.
+
+Endpoints principales:
+- POST /auth/register: Crea un nuevo usuario. La contraseña se cifra automáticamente usando bcrypt (salt rounds: 10).
+- POST /auth/login: Valida el email y la contraseña. Si son correctos, devuelve un `access_token`.
+
+3. ESTRUCTURA DEL MÓDULO (src/auth)
+--------------------------------------
+- AuthService: Lógica de validación, registro y firmado de tokens.
+- AuthController: Manejo de las peticiones HTTP de autenticación.
+- JwtStrategy: Valida el token enviado en el header 'Authorization: Bearer <token>'.
+- JwtAuthGuard: Guardia reutilizable para proteger controladores.
+
+4. PROTECCIÓN DE RUTAS
+--------------------------------------
+Los siguientes controladores han sido protegidos y requieren un token válido:
+- UserController (@UseGuards(JwtAuthGuard))
+- MatchController (@UseGuards(JwtAuthGuard))
+
+5. CRIPTOGRAFÍA
+--------------------------------------
+- Algoritmo de Hashing: Bcrypt.
+- Algoritmo de Token: HS256.
+
+NOTA: Para las pruebas, todas las contraseñas generadas por el script de seed son "admin123".
