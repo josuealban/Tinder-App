@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { InteractionService } from './interaction.service';
 import { InteractionController } from './interaction.controller';
 import { PrismaModule } from '../prisma/prisma.module';
+import { PrismaService } from '../prisma/prisma.service.js';
 
 @Module({
   imports: [PrismaModule],
   controllers: [InteractionController],
-  providers: [InteractionService],
+  providers: [InteractionService, PrismaService],
   exports: [InteractionService],
 })
-export class InteractionModule {}
+export class InteractionModule { }
