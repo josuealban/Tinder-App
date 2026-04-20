@@ -1,12 +1,66 @@
+import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
 import * as bcrypt from 'bcrypt';
 
-const prisma = new PrismaClient();
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   const password = await bcrypt.hash('admin123', 10);
 
   console.log('Seeding data...');
+
+  // Create Subscription Plans
+  const plans = [
+    {
+      tier: 'FREE',
+      name: 'Gratis',
+      description: 'Plan básico para empezar',
+      price: 0,
+      features: ['5 likes diarios', '1 foto de perfil'],
+    },
+    {
+      tier: 'BRONZE',
+      name: 'Bronce',
+      description: 'Más visibilidad para conectar',
+      price: 4.99,
+      features: ['25 likes diarios', '3 fotos de perfil', 'Ver quién te dio like'],
+    },
+    {
+      tier: 'GOLD',
+      name: 'Oro',
+      description: 'Experiencia premium completa',
+      price: 14.99,
+      features: ['Likes ilimitados', '5 fotos de perfil', 'Rewind ilimitado', 'Passport'],
+    },
+    {
+      tier: 'PREMIUM',
+      name: 'Premium',
+      description: 'Lo mejor de Tindel',
+      price: 24.99,
+      features: ['Todas las funciones de Oro', '10 fotos de perfil', 'Boost mensual gratis'],
+    },
+    {
+      tier: 'PLATINUM',
+      name: 'Platino',
+      description: 'Máxima exclusividad',
+      price: 39.99,
+      features: ['Todas las funciones de Premium', 'Prioridad en likes', 'Mensaje antes de hacer match'],
+    },
+  ];
+
+  for (const plan of plans) {
+    await prisma.subscriptionPlan.upsert({
+      where: { tier: plan.tier as any },
+      update: plan as any,
+      create: plan as any,
+    });
+  }
+
+  console.log('Subscription plans created.');
 
   // Create Users
   const juan = await prisma.user.upsert({

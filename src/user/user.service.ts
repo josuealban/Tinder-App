@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
@@ -30,13 +30,16 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    return this.prisma.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { id },
       include: { photos: true },
     });
+    if (!user) throw new NotFoundException(`Usuario con id ${id} no encontrado`);
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
+    await this.findOne(id); // Verifica que existe antes de actualizar
     return this.prisma.user.update({
       where: { id },
       data: updateUserDto,
@@ -44,8 +47,10 @@ export class UserService {
   }
 
   async remove(id: number) {
+    await this.findOne(id); // Verifica que existe antes de eliminar
     return this.prisma.user.delete({
       where: { id },
     });
   }
 }
+

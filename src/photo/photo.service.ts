@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
@@ -18,9 +18,11 @@ export class PhotoService {
   }
 
   async findOne(id: number) {
-    return this.prisma.photo.findUnique({
+    const photo = await this.prisma.photo.findUnique({
       where: { id },
     });
+    if (!photo) throw new NotFoundException(`Foto con id ${id} no encontrada`);
+    return photo;
   }
 
   async findByUser(userId: number) {
@@ -30,6 +32,7 @@ export class PhotoService {
   }
 
   async update(id: number, updatePhotoDto: UpdatePhotoDto) {
+    await this.findOne(id); // Verifica que existe
     return this.prisma.photo.update({
       where: { id },
       data: updatePhotoDto,
@@ -37,8 +40,10 @@ export class PhotoService {
   }
 
   async remove(id: number) {
+    await this.findOne(id); // Verifica que existe
     return this.prisma.photo.delete({
       where: { id },
     });
   }
 }
+

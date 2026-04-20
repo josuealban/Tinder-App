@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
@@ -31,7 +31,7 @@ export class ChatService {
   }
 
   async findOne(id: number) {
-    return this.prisma.chat.findUnique({
+    const chat = await this.prisma.chat.findUnique({
       where: { id },
       include: {
         messages: { orderBy: { createdAt: 'asc' } },
@@ -43,9 +43,12 @@ export class ChatService {
         },
       },
     });
+    if (!chat) throw new NotFoundException(`Chat con id ${id} no encontrado`);
+    return chat;
   }
 
   async update(id: number, updateChatDto: UpdateChatDto) {
+    await this.findOne(id); // Verifica que existe
     return this.prisma.chat.update({
       where: { id },
       data: updateChatDto,
@@ -53,8 +56,10 @@ export class ChatService {
   }
 
   async remove(id: number) {
+    await this.findOne(id); // Verifica que existe
     return this.prisma.chat.delete({
       where: { id },
     });
   }
 }
+

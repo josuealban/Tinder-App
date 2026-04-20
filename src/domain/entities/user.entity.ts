@@ -1,5 +1,6 @@
 import { Gender } from '../enums/gender.enum.js';
 import { SubscriptionTier } from '../enums/subscription-tier.enum.js';
+import { SubscriptionPlan } from './subscription-plan.entity.js';
 import { Photo } from './photo.entity.js';
 
 export class User {
@@ -30,6 +31,7 @@ export class User {
 
   // Subscription
   subscription: SubscriptionTier;
+  subscriptionPlan?: SubscriptionPlan;
   donationsEnabled: boolean;
 
   // Security/Restrictions
@@ -46,5 +48,8 @@ export class User {
     this.hobbies = this.hobbies || [];
     this.musicList = this.musicList || [];
     this.photos = this.photos || [];
+    if (partial.subscriptionPlan) {
+      this.subscriptionPlan = new SubscriptionPlan(partial.subscriptionPlan);
+    }
   }
 }

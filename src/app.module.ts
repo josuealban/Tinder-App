@@ -9,6 +9,7 @@ import { MatchModule } from './match/match.module.js';
 import { ChatModule } from './chat/chat.module.js';
 import { MessageModule } from './message/message.module.js';
 import { AuthModule } from './auth/auth.module.js';
+import { SubscriptionModule } from './subscription/subscription.module.js';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthModule } from './auth/auth.module.js';
     ChatModule,
     MessageModule,
     AuthModule,
+    SubscriptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

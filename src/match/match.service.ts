@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { UpdateMatchDto } from './dto/update-match.dto';
@@ -42,7 +42,7 @@ export class MatchService {
   }
 
   async findOne(id: number) {
-    return this.prisma.match.findUnique({
+    const match = await this.prisma.match.findUnique({
       where: { id },
       include: {
         user1: { select: { id: true, name: true, photos: true } },
@@ -50,9 +50,12 @@ export class MatchService {
         chat: true,
       },
     });
+    if (!match) throw new NotFoundException(`Match con id ${id} no encontrado`);
+    return match;
   }
 
   async update(id: number, updateMatchDto: UpdateMatchDto) {
+    await this.findOne(id); // Verifica que existe
     return this.prisma.match.update({
       where: { id },
       data: updateMatchDto,
@@ -60,8 +63,10 @@ export class MatchService {
   }
 
   async remove(id: number) {
+    await this.findOne(id); // Verifica que existe
     return this.prisma.match.delete({
       where: { id },
     });
   }
 }
+
