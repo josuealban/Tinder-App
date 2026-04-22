@@ -1,6 +1,4 @@
-import { CreatePhotoDto } from './create-photo.dto';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreatePhotoDto } from './create-photo.dto.js';
 
-export class UpdatePhotoDto implements Partial<CreatePhotoDto> {
-  url?: string;
-  isPrimary?: boolean;
-}
+export class UpdatePhotoDto extends PartialType(CreatePhotoDto) {}
