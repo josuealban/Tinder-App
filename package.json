@@ -22,7 +22,19 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prisma:generate:usuarios": "prisma generate --config=prisma.usuarios.config.ts",
+    "prisma:generate:matches": "prisma generate --config=prisma.matches.config.ts",
+    "prisma:generate:mensajeria": "prisma generate --config=prisma.mensajeria.config.ts",
+    "prisma:generate:all": "npm run prisma:generate:usuarios && npm run prisma:generate:matches && npm run prisma:generate:mensajeria",
+    "prisma:push:usuarios": "prisma db push --config=prisma.usuarios.config.ts",
+    "prisma:push:matches": "prisma db push --config=prisma.matches.config.ts",
+    "prisma:push:mensajeria": "prisma db push --config=prisma.mensajeria.config.ts",
+    "prisma:push:all": "npm run prisma:push:usuarios && npm run prisma:push:matches && npm run prisma:push:mensajeria",
+    "seed": "tsx prisma/seed.ts",
+    "seed:usuarios": "tsx prisma/seeds/seed.usuarios.ts",
+    "seed:matches": "tsx prisma/seeds/seed.matches.ts",
+    "seed:mensajeria": "tsx prisma/seeds/seed.mensajeria.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

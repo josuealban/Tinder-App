@@ -78,3 +78,25 @@ JWT_EXPIRATION=3600s
 npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
 npm install -D @types/passport-jwt @types/bcrypt
 
+4. SEPARACIÓN DE BASES DE DATOS Y SEEDS (ÚLTIMA ACTUALIZACIÓN)
+--------------------------------------
+# Generación de clientes independientes por esquema
+npm run prisma:generate:usuarios
+npm run prisma:generate:matches
+npm run prisma:generate:mensajeria
+# Comando unificado:
+npm run prisma:generate:all
+
+# Sincronización de esquemas con bases de datos independientes (db push)
+npm run prisma:push:usuarios
+npm run prisma:push:matches
+npm run prisma:push:mensajeria
+# Comando unificado:
+npm run prisma:push:all
+
+# Ejecución de seeds en el nuevo formato usando adaptadores de base de datos
+npm run seed:usuarios
+npm run seed:matches
+npm run seed:mensajeria
+# Orquestador principal (ejecuta en orden: usuarios -> matches -> mensajeria):
+npm run seed

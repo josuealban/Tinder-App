@@ -1,0 +1,61 @@
+// ─────────────────────────────────────────────────────────────────────────────
+//  BASE DE DATOS: mensajeria_db
+//  Responsabilidad: Chat privado entre usuarios y planes de suscripción.
+//  Tablas: SubscriptionPlan, Chat, Message
+//  Nota: matchId y fromId son referencias lógicas a otras BDs
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma/client-mensajeria"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SubscriptionTier {
+  FREE
+  BRONZE
+  GOLD
+  PREMIUM
+  PLATINUM
+}
+
+// ─── SUSCRIPCIONES ───────────────────────────────────────────────────────────
+
+model SubscriptionPlan {
+  tier        SubscriptionTier @id
+  name        String
+  description String
+  price       Float
+  features    String[]
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+// ─── MENSAJERÍA ──────────────────────────────────────────────────────────────
+
+model Chat {
+  id        Int       @id @default(autoincrement())
+
+  // Referencia lógica a matches_db.Match
+  matchId   Int       @unique
+
+  messages  Message[]
+  createdAt DateTime  @default(now())
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+
+  // Referencia lógica a usuarios_db.User
+  fromId    Int
+
+  chatId    Int
+  chat      Chat     @relation(fields: [chatId], references: [id])
+
+  createdAt DateTime @default(now())
+}

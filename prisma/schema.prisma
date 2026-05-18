@@ -1,15 +1,28 @@
+// ─────────────────────────────────────────────────────────────────────────────
+//  CONFIGURACIÓN PRISMA
+//  multiSchema permite asignar cada tabla a un schema de PostgreSQL distinto,
+//  separando físicamente la BD por función del sistema.
+// ─────────────────────────────────────────────────────────────────────────────
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  schemas  = ["usuarios", "suscripciones", "social", "mensajeria"]
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  ENUMS
+// ─────────────────────────────────────────────────────────────────────────────
 
 enum Gender {
   MALE
   FEMALE
   OTHER
+
+  @@schema("usuarios")
 }
 
 enum SubscriptionTier {
@@ -18,6 +31,8 @@ enum SubscriptionTier {
   GOLD
   PREMIUM
   PLATINUM
+
+  @@schema("suscripciones")
 }
 
 enum InteractionType {
@@ -25,7 +40,16 @@ enum InteractionType {
   DISLIKE
   SUPERLIKE
   REPORT
+
+  @@schema("social")
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MÓDULO 1 — USUARIOS & PERFILES  (schema: "usuarios")
+//
+//  Responsabilidad: Registro, autenticación y datos del perfil del usuario.
+//  Tablas: User, Photo
+// ─────────────────────────────────────────────────────────────────────────────
 
 model User {
   id               Int              @id @default(autoincrement())
@@ -42,38 +66,58 @@ model User {
   city             String?
   country          String?
 
-  // Interests & Details
+  // Intereses & Detalles
   zodiacSign       String?
   seeking          String?
   location         String?
   job              String?
   hobbies          String[]
 
-  // Integrations
+  // Integraciones externas
   spotifyId        String?
   musicList        String[]
 
-  // Subscription
+  // Suscripción
   subscription     SubscriptionTier @default(FREE)
   subscriptionPlan SubscriptionPlan @relation(fields: [subscription], references: [tier])
   donationsEnabled Boolean          @default(false)
 
-  // Security/Restrictions
+  // Seguridad / Restricciones
   isRestricted     Boolean          @default(false)
 
-  // Relations
+  // Relaciones
   photos           Photo[]
   likesSent        Interaction[]    @relation("LikesSent")
   likesReceived    Interaction[]    @relation("LikesReceived")
-
   matchesAsUser1   Match[]          @relation("User1Matches")
   matchesAsUser2   Match[]          @relation("User2Matches")
-
   messagesSent     Message[]        @relation("UserMessages")
 
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
+
+  @@schema("usuarios")
 }
+
+model Photo {
+  id        Int      @id @default(autoincrement())
+  url       String
+  isPrimary Boolean  @default(false)
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@schema("usuarios")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MÓDULO 2 — SUSCRIPCIONES  (schema: "suscripciones")
+//
+//  Responsabilidad: Planes de membresía y monetización del servicio.
+//  Tablas: SubscriptionPlan
+// ─────────────────────────────────────────────────────────────────────────────
 
 model SubscriptionPlan {
   tier        SubscriptionTier @id
@@ -86,18 +130,17 @@ model SubscriptionPlan {
 
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+
+  @@schema("suscripciones")
 }
 
-model Photo {
-  id        Int      @id @default(autoincrement())
-  url       String
-  isPrimary Boolean  @default(false)
-
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-}
+// ─────────────────────────────────────────────────────────────────────────────
+//  MÓDULO 3 — INTERACCIONES & MATCHES  (schema: "social")
+//
+//  Responsabilidad: Gestión de likes, dislikes, superlikes, reportes y
+//                   coincidencias (matches) entre usuarios.
+//  Tablas: Interaction, Match
+// ─────────────────────────────────────────────────────────────────────────────
 
 model Interaction {
   id        Int             @id @default(autoincrement())
@@ -112,6 +155,7 @@ model Interaction {
   createdAt DateTime        @default(now())
 
   @@unique([fromId, toId])
+  @@schema("social")
 }
 
 model Match {
@@ -127,7 +171,15 @@ model Match {
   createdAt DateTime @default(now())
 
   @@unique([user1Id, user2Id])
+  @@schema("social")
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MÓDULO 4 — CHAT & MENSAJERÍA  (schema: "mensajeria")
+//
+//  Responsabilidad: Conversaciones privadas entre usuarios con match.
+//  Tablas: Chat, Message
+// ─────────────────────────────────────────────────────────────────────────────
 
 model Chat {
   id        Int       @id @default(autoincrement())
@@ -137,6 +189,8 @@ model Chat {
 
   messages  Message[]
   createdAt DateTime  @default(now())
+
+  @@schema("mensajeria")
 }
 
 model Message {
@@ -150,4 +204,6 @@ model Message {
   chat      Chat     @relation(fields: [chatId], references: [id])
 
   createdAt DateTime @default(now())
+
+  @@schema("mensajeria")
 }

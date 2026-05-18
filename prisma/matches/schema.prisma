@@ -1,0 +1,47 @@
+// ─────────────────────────────────────────────────────────────────────────────
+//  BASE DE DATOS: matches_db
+//  Responsabilidad: Gestión de interacciones (likes/dislikes) y coincidencias.
+//  Tablas: Interaction, Match
+//  Nota: userId se almacena como Int (referencia lógica a usuarios_db)
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma/client-matches"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum InteractionType {
+  LIKE
+  DISLIKE
+  SUPERLIKE
+  REPORT
+}
+
+model Interaction {
+  id        Int             @id @default(autoincrement())
+  type      InteractionType
+
+  // Referencias lógicas a usuarios_db.User
+  fromId    Int
+  toId      Int
+
+  createdAt DateTime        @default(now())
+
+  @@unique([fromId, toId])
+}
+
+model Match {
+  id        Int      @id @default(autoincrement())
+
+  // Referencias lógicas a usuarios_db.User
+  user1Id   Int
+  user2Id   Int
+
+  createdAt DateTime @default(now())
+
+  @@unique([user1Id, user2Id])
+}
