@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Put, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Put, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { ChatService } from './chat.service.js';
 import { CreateChatDto } from './dto/create-chat.dto.js';
 import { UpdateChatDto } from './dto/update-chat.dto.js';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 
+@UseGuards(JwtAuthGuard)
 @Controller('chats')
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}

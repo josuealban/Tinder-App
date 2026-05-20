@@ -11,7 +11,7 @@ import { JwtStrategy } from './strategies/jwt.strategy.js';
     UserModule,
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'super-secret-key-tindel-2026',
+      secret: process.env.JWT_SECRET || 'the_last_air_master',
       signOptions: { expiresIn: parseInt(process.env.JWT_EXPIRATION || '3600') },
     }),
   ],
