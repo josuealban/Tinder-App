@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { UserService } from '../../user/user.service.js';
+import { AuthenticatedUser } from '../decorators/current-user.decorator.js';
 
 interface JwtPayload {
   email: string;
@@ -9,7 +11,7 @@ interface JwtPayload {
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private readonly userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -17,7 +19,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload) {
-    return { userId: payload.sub, email: payload.email };
+  async validate(payload: JwtPayload): Promise<AuthenticatedUser> {
+    const user = await this.userService.findOne(payload.sub).catch(() => null);
+    if (!user) {
+      throw new UnauthorizedException('El usuario no existe');
+    }
+    if (user.isRestricted) {
+      throw new UnauthorizedException('El usuario está restringido');
+    }
+    return { userId: user.id, email: user.email };
   }
 }

@@ -3,6 +3,7 @@ import { UserService } from './user.service.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { CurrentUser, AuthenticatedUser } from '../auth/decorators/current-user.decorator.js';
 
 @UseGuards(JwtAuthGuard)
 @Controller('users')
@@ -17,6 +18,11 @@ export class UserController {
   @Get()
   findAll() {
     return this.userService.findAll();
+  }
+
+  @Get('me')
+  getProfile(@CurrentUser() user: AuthenticatedUser) {
+    return this.userService.findOne(user.userId);
   }
 
   @Get(':id')
