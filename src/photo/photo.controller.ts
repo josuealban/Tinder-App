@@ -1,10 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Put, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { PhotoService } from './photo.service';
-import { CreatePhotoDto } from './dto/create-photo.dto';
-import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { PhotoService } from './photo.service.js';
+import { CreatePhotoDto } from './dto/create-photo.dto.js';
+import { UpdatePhotoDto } from './dto/update-photo.dto.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
+import { Role } from '../auth/enums/role.enum.js';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('photos')
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
@@ -15,6 +18,7 @@ export class PhotoController {
   }
 
   @Get()
+  @Roles(Role.ADMIN)
   findAll() {
     return this.photoService.findAll();
   }

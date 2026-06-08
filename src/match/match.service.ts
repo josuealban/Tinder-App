@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateMatchDto } from './dto/create-match.dto';
-import { UpdateMatchDto } from './dto/update-match.dto';
+import { PrismaService } from '../prisma/prisma.service.js';
+import { CreateMatchDto } from './dto/create-match.dto.js';
+import { UpdateMatchDto } from './dto/update-match.dto.js';
 
 @Injectable()
 export class MatchService {
@@ -55,7 +55,7 @@ export class MatchService {
   }
 
   async update(id: number, updateMatchDto: UpdateMatchDto) {
-    await this.findOne(id); // Verifica que existe
+    await this.findOne(id);
     return this.prisma.match.update({
       where: { id },
       data: updateMatchDto,
@@ -63,7 +63,7 @@ export class MatchService {
   }
 
   async remove(id: number) {
-    await this.findOne(id); // Verifica que existe
+    await this.findOne(id);
     return this.prisma.match.delete({
       where: { id },
     });

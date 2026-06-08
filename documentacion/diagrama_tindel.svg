@@ -1,0 +1,397 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E0F14"/>
+      <stop offset="100%" stop-color="#060709"/>
+    </linearGradient>
+
+    <!-- React Gradient -->
+    <linearGradient id="reactGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5A5F"/>
+      <stop offset="100%" stop-color="#FF7A00"/>
+    </linearGradient>
+
+    <!-- NestJS Gradient -->
+    <linearGradient id="nestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0234E"/>
+      <stop offset="100%" stop-color="#8A0025"/>
+    </linearGradient>
+
+    <!-- Database Gradient -->
+    <linearGradient id="dbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00C9FF"/>
+      <stop offset="100%" stop-color="#92FE9D"/>
+    </linearGradient>
+
+    <!-- Glowing Shadows -->
+    <filter id="glowReact" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#FF5A5F" flood-opacity="0.2"/>
+    </filter>
+    <filter id="glowNest" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#E0234E" flood-opacity="0.2"/>
+    </filter>
+    <filter id="glowDb" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#00C9FF" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', system-ui, sans-serif; font-size: 28px; font-weight: 800; fill: #FFFFFF; letter-spacing: 0.5px; }
+    .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 400; fill: #A0AEC0; }
+    .layer-title { font-family: 'Outfit', 'Inter', system-ui, sans-serif; font-size: 20px; font-weight: 700; fill: #FFFFFF; }
+    .node-title { font-family: 'Inter', system-ui, sans-serif; font-size: 13px; font-weight: 700; fill: #FFFFFF; }
+    .node-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #CBD5E0; }
+    .http-method { font-family: 'Monaco', 'Courier New', monospace; font-size: 11px; font-weight: 800; fill: #FFFFFF; }
+    .http-post { fill: #FF5A5F; }
+    .http-get { fill: #3182CE; }
+    .http-patch { fill: #805AD5; }
+    .http-delete { fill: #E53E3E; }
+    .endpoint-text { font-family: 'Monaco', 'Courier New', monospace; font-size: 11px; fill: #E2E8F0; }
+    .arrow-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #E2E8F0; font-weight: 500; }
+    .box-bg { fill: #171923; stroke: #2D3748; stroke-width: 1.5; rx: 8; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="850" fill="url(#bgGrad)"/>
+  <rect width="1200" height="850" fill="none" stroke="#2D3748" stroke-width="2"/>
+
+  <!-- Grid Pattern -->
+  <g opacity="0.02">
+    <path d="M 0,50 L 1200,50 M 0,100 L 1200,100 M 0,150 L 1200,150 M 0,200 L 1200,200 M 0,250 L 1200,250 M 0,300 L 1200,300 M 0,350 L 1200,350 M 0,400 L 1200,400 M 0,450 L 1200,450 M 0,500 L 1200,500 M 0,550 L 1200,550 M 0,600 L 1200,600 M 0,650 L 1200,650 M 0,700 L 1200,700 M 0,750 L 1200,750 M 0,800 L 1200,800" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M 50,0 L 50,850 M 100,0 L 100,850 M 150,0 L 150,850 M 200,0 L 200,850 M 250,0 L 250,850 M 300,0 L 300,850 M 350,0 L 350,850 M 400,0 L 400,850 M 450,0 L 450,850 M 500,0 L 500,850 M 550,0 L 550,850 M 600,0 L 600,850 M 650,0 L 650,850 M 700,0 L 700,850 M 750,0 L 750,850 M 800,0 L 800,850 M 850,0 L 850,850 M 900,0 L 900,850 M 950,0 L 950,850 M 1000,0 L 1000,850 M 1050,0 L 1050,850 M 1100,0 L 1100,850 M 1150,0 L 1150,850" stroke="#FFFFFF" stroke-width="1"/>
+  </g>
+
+  <!-- Header -->
+  <g transform="translate(50, 45)">
+    <text class="title" x="0" y="0">DIAGRAMA DE ARQUITECTURA Y PETICIONES HTTP</text>
+    <text class="subtitle" x="0" y="22">Aplicación Real: API Tindel (React + NestJS + PostgreSQL + Prisma ORM)</text>
+    <line x1="0" y1="35" x2="1100" y2="35" stroke="#2D3748" stroke-width="1"/>
+  </g>
+
+  <!-- ==================== CAPA 1: FRONTEND (REACT) ==================== -->
+  <g transform="translate(50, 110)">
+    <rect width="280" height="690" fill="#1A1315" stroke="url(#reactGrad)" stroke-width="2" rx="12" filter="url(#glowReact)"/>
+    <text class="layer-title" x="20" y="35">Frontend (React)</text>
+    <text class="subtitle" x="20" y="55">Aplicación SPA en Cliente</text>
+    <line x1="20" y1="65" x2="260" y2="65" stroke="#3D2024" stroke-width="1"/>
+
+    <!-- Auth Component -->
+    <g transform="translate(20, 85)">
+      <rect class="box-bg" width="240" height="90"/>
+      <rect x="0" y="0" width="6" height="90" fill="url(#reactGrad)" rx="3"/>
+      <text class="node-title" x="18" y="22">Auth &amp; Profile</text>
+      <text class="node-text" x="18" y="42">• Register / Login</text>
+      <text class="node-text" x="18" y="58">• Configuración de bio y fotos</text>
+      <text class="node-text" x="18" y="74">• Guardado de Bearer JWT</text>
+    </g>
+
+    <!-- Swiper & discovery -->
+    <g transform="translate(20, 190)">
+      <rect class="box-bg" width="240" height="110"/>
+      <rect x="0" y="0" width="6" height="110" fill="url(#reactGrad)" rx="3"/>
+      <text class="node-title" x="18" y="22">Discovery (Swiper)</text>
+      <text class="node-text" x="18" y="42">• Carga perfiles recomendados</text>
+      <text class="node-text" x="18" y="58">• Botón Like (Swipe derecha)</text>
+      <text class="node-text" x="18" y="74">• Botón Dislike / Superlike</text>
+      <text class="node-text" x="18" y="90">• Dispara pantalla de "MATCH!"</text>
+    </g>
+
+    <!-- Chat & Matches UI -->
+    <g transform="translate(20, 315)">
+      <rect class="box-bg" width="240" height="110"/>
+      <rect x="0" y="0" width="6" height="110" fill="url(#reactGrad)" rx="3"/>
+      <text class="node-title" x="18" y="22">Matches &amp; Chat Room</text>
+      <text class="node-text" x="18" y="42">• Lista de Matches activos</text>
+      <text class="node-text" x="18" y="58">• Historial de Chats abiertos</text>
+      <text class="node-text" x="18" y="74">• Enviar / recibir mensajes</text>
+      <text class="node-text" x="18" y="90">• Deshacer Match (Unmatch)</text>
+    </g>
+
+    <!-- Axios Client -->
+    <g transform="translate(20, 570)">
+      <rect class="box-bg" width="240" height="90"/>
+      <rect x="0" y="0" width="6" height="90" fill="#E2E8F0" rx="3"/>
+      <text class="node-title" x="18" y="22">Axios / Fetch Client</text>
+      <text class="node-text" x="18" y="42">• Headers: Authorization: Bearer</text>
+      <text class="node-text" x="18" y="58">• Agrupa interceptores globales</text>
+      <text class="node-text" x="18" y="74">• Transforma payloads JSON</text>
+    </g>
+
+    <!-- Internal connection paths -->
+    <path d="M 140, 175 L 140, 570" stroke="#3D2024" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+    <path d="M 140, 300 L 140, 570" stroke="#3D2024" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+    <path d="M 140, 425 L 140, 570" stroke="#3D2024" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+  </g>
+
+  <!-- ==================== CAPA 2: BACKEND (NESTJS) ==================== -->
+  <g transform="translate(500, 110)">
+    <rect width="360" height="690" fill="#1C1417" stroke="url(#nestGrad)" stroke-width="2" rx="12" filter="url(#glowNest)"/>
+    <text class="layer-title" x="20" y="35">Backend (NestJS API)</text>
+    <text class="subtitle" x="20" y="55">Estructura Modular &amp; Controladores</text>
+    <line x1="20" y1="65" x2="340" y2="65" stroke="#3D2028" stroke-width="1"/>
+
+    <!-- Security guards -->
+    <g transform="translate(20, 80)">
+      <rect class="box-bg" width="320" height="55"/>
+      <rect x="0" y="0" width="6" height="55" fill="#E0234E" rx="3"/>
+      <text class="node-title" x="18" y="20">JwtAuthGuard</text>
+      <text class="node-text" x="18" y="38">Intercepta y valida firma del Bearer Token (401 si falla)</text>
+    </g>
+
+    <!-- Controller: Interactions -->
+    <g transform="translate(20, 145)">
+      <rect class="box-bg" width="320" height="110"/>
+      <rect x="0" y="0" width="6" height="110" fill="url(#nestGrad)" rx="3"/>
+      <text class="node-title" x="18" y="22">InteractionsModule</text>
+      <text class="node-text" x="18" y="42">POST /interactions - Dar Like / Superlike / Dislike</text>
+      <text class="node-text" x="18" y="58">GET /interactions/user/:userId - Ver historial</text>
+      <text class="node-text" x="18" y="74">⚡ Lógica Especial: Si hay LIKE recíproco, crea</text>
+      <text class="node-text" x="18" y="90">   automáticamente registros de Match y Chat.</text>
+    </g>
+
+    <!-- Controller: Chats & Messages -->
+    <g transform="translate(20, 265)">
+      <rect class="box-bg" width="320" height="100"/>
+      <rect x="0" y="0" width="6" height="100" fill="url(#nestGrad)" rx="3"/>
+      <text class="node-title" x="18" y="22">Chats &amp; Messages Modules</text>
+      <text class="node-text" x="18" y="42">GET /chats - Listar chats con previsualización</text>
+      <text class="node-text" x="18" y="58">GET /chats/:id - Obtener detalles e historial</text>
+      <text class="node-text" x="18" y="74">POST /messages - Enviar mensaje a un chat</text>
+      <text class="node-text" x="18" y="90">GET /messages/chat/:chatId - Cargar mensajes</text>
+    </g>
+
+    <!-- Controller: Users & Auth -->
+    <g transform="translate(20, 375)">
+      <rect class="box-bg" width="320" height="100"/>
+      <rect x="0" y="0" width="6" height="100" fill="url(#nestGrad)" rx="3"/>
+      <text class="node-title" x="18" y="22">Users &amp; Auth Modules</text>
+      <text class="node-text" x="18" y="42">POST /auth/register | POST /auth/login</text>
+      <text class="node-text" x="18" y="58">GET /users (Con fotos asociadas)</text>
+      <text class="node-text" x="18" y="74">PATCH /users/:id (Edita biografía y fotos)</text>
+      <text class="node-text" x="18" y="90">DELETE /users/:id (Elimina cuenta)</text>
+    </g>
+
+    <!-- Services Capa -->
+    <g transform="translate(20, 485)">
+      <rect class="box-bg" width="320" height="90"/>
+      <rect x="0" y="0" width="6" height="90" fill="url(#nestGrad)" rx="3"/>
+      <text class="node-title" x="18" y="22">NestJS Services (Lógica de Negocio)</text>
+      <text class="node-text" x="18" y="42">• Valida reglas: No autolikes, no duplicados (409 Conflict)</text>
+      <text class="node-text" x="18" y="58">• Manejo de fotos y lógica de suscripciones</text>
+      <text class="node-text" x="18" y="74">• Excepciones semánticas (NotFound, BadRequest)</text>
+    </g>
+
+    <!-- Prisma Service -->
+    <g transform="translate(20, 585)">
+      <rect class="box-bg" width="320" height="85"/>
+      <rect x="0" y="0" width="6" height="85" fill="#00C9FF" rx="3"/>
+      <text class="node-title" x="18" y="22">PrismaService (ORM Client)</text>
+      <text class="node-text" x="18" y="42">• Traduce consultas TypeScript a base de datos</text>
+      <text class="node-text" x="18" y="58">• Consultas relacionales complejas e includes de fotos</text>
+      <text class="node-text" x="18" y="74">• Asegura la consistencia referencial y transaccional</text>
+    </g>
+
+    <!-- Internal lines -->
+    <path d="M 180, 135 L 180, 145" stroke="#3D2028" stroke-width="2" fill="none"/>
+    <path d="M 180, 255 L 180, 265" stroke="#3D2028" stroke-width="2" fill="none"/>
+    <path d="M 180, 365 L 180, 375" stroke="#3D2028" stroke-width="2" fill="none"/>
+    <path d="M 180, 475 L 180, 485" stroke="#3D2028" stroke-width="2" fill="none"/>
+    <path d="M 180, 575 L 180, 585" stroke="#3D2028" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- ==================== CAPA 3: BASE DE DATOS (POSTGRESQL) ==================== -->
+  <g transform="translate(950, 110)">
+    <rect width="200" height="690" fill="#11161A" stroke="url(#dbGrad)" stroke-width="2" rx="12" filter="url(#glowDb)"/>
+    <text class="layer-title" x="20" y="35">Database</text>
+    <text class="subtitle" x="20" y="55">PostgreSQL + Prisma</text>
+    <line x1="20" y1="65" x2="180" y2="65" stroke="#1D2A30" stroke-width="1"/>
+
+    <!-- Cylinder Shape -->
+    <g transform="translate(40, 80)" fill="none" stroke="url(#dbGrad)" stroke-width="2">
+      <path d="M 0,15 A 60,12 0 0,0 120,15 A 60,12 0 0,0 0,15 Z" fill="#1D2A30" fill-opacity="0.3"/>
+      <path d="M 0,15 L 0,65 A 60,12 0 0,0 120,65 L 120,15"/>
+      <text class="node-title" x="38" y="42" fill="#FFFFFF" stroke="none">Postgres</text>
+    </g>
+
+    <!-- Schema Tables (Compact Representation) -->
+    <g transform="translate(15, 160)">
+      <rect class="box-bg" width="170" height="600"/>
+      
+      <!-- User Table -->
+      <g transform="translate(10, 15)">
+        <rect x="0" y="0" width="150" height="20" fill="#1A202C" rx="3"/>
+        <text class="node-title" x="8" y="14" font-size="11">Table: User</text>
+        <text class="node-text" x="8" y="34">🔑 id: Int [PK]</text>
+        <text class="node-text" x="8" y="48">👤 bio: String</text>
+        <text class="node-text" x="8" y="62">📧 email: String [UQ]</text>
+      </g>
+
+      <!-- Photo Table -->
+      <g transform="translate(10, 95)">
+        <rect x="0" y="0" width="150" height="20" fill="#1A202C" rx="3"/>
+        <text class="node-title" x="8" y="14" font-size="11">Table: Photo</text>
+        <text class="node-text" x="8" y="34">🔑 id: Int [PK]</text>
+        <text class="node-text" x="8" y="48">🖼️ url: String</text>
+        <text class="node-text" x="8" y="62">👤 userId: Int [FK]</text>
+      </g>
+
+      <!-- Interaction Table -->
+      <g transform="translate(10, 175)">
+        <rect x="0" y="0" width="150" height="20" fill="#1A202C" rx="3"/>
+        <text class="node-title" x="8" y="14" font-size="11">Table: Interaction</text>
+        <text class="node-text" x="8" y="34">🔑 id: Int [PK]</text>
+        <text class="node-text" x="8" y="48">❤️ type: InteractionType</text>
+        <text class="node-text" x="8" y="62">👤 fromId: Int [FK]</text>
+        <text class="node-text" x="8" y="76">👤 toId: Int [FK]</text>
+      </g>
+
+      <!-- Match Table -->
+      <g transform="translate(10, 270)">
+        <rect x="0" y="0" width="150" height="20" fill="#1A202C" rx="3"/>
+        <text class="node-title" x="8" y="14" font-size="11">Table: Match</text>
+        <text class="node-text" x="8" y="34">🔑 id: Int [PK]</text>
+        <text class="node-text" x="8" y="48">👤 user1Id: Int [FK]</text>
+        <text class="node-text" x="8" y="62">👤 user2Id: Int [FK]</text>
+      </g>
+
+      <!-- Chat Table -->
+      <g transform="translate(10, 350)">
+        <rect x="0" y="0" width="150" height="20" fill="#1A202C" rx="3"/>
+        <text class="node-title" x="8" y="14" font-size="11">Table: Chat</text>
+        <text class="node-text" x="8" y="34">🔑 id: Int [PK]</text>
+        <text class="node-text" x="8" y="48">🤝 matchId: Int [FK]</text>
+      </g>
+
+      <!-- Message Table -->
+      <g transform="translate(10, 420)">
+        <rect x="0" y="0" width="150" height="20" fill="#1A202C" rx="3"/>
+        <text class="node-title" x="8" y="14" font-size="11">Table: Message</text>
+        <text class="node-text" x="8" y="34">🔑 id: Int [PK]</text>
+        <text class="node-text" x="8" y="48">💬 content: Text</text>
+        <text class="node-text" x="8" y="62">👤 fromId: Int [FK]</text>
+        <text class="node-text" x="8" y="76">💬 chatId: Int [FK]</text>
+      </g>
+
+      <!-- Relational Connectors -->
+      <path d="M 120, 115 L 120, 150 M 120, 240 L 120, 270 M 120, 318 L 120, 350 M 120, 390 L 120, 420" stroke="#00C9FF" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+    </g>
+  </g>
+
+  <!-- ==================== CAPA DE COMUNICACIÓN CLIENTE -> SERVIDOR ==================== -->
+  <defs>
+    <marker id="cyanArrow" markerWidth="8" markerHeight="8" refX="8" refY="2" orient="auto">
+      <path d="M0,0 L8,2 L0,4 Z" fill="#FF5A5F"/>
+    </marker>
+    <marker id="pinkArrow" markerWidth="8" markerHeight="8" refX="0" refY="2" orient="auto">
+      <path d="M8,0 L0,2 L8,4 Z" fill="#E2E8F0"/>
+    </marker>
+  </defs>
+
+  <!-- 1. POST /auth/login -->
+  <g transform="translate(330, 200)">
+    <path d="M 0,0 L 170,0" stroke="#FF5A5F" stroke-width="2" marker-end="url(#cyanArrow)" fill="none"/>
+    <rect class="http-post" x="35" y="-18" width="45" height="13" rx="3"/>
+    <text class="http-method" x="41" y="-8">POST</text>
+    <text class="endpoint-text" x="85" y="-8">/auth/login</text>
+
+    <!-- Return -->
+    <path d="M 170,20 L 0,20" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrow)" fill="none"/>
+    <text class="arrow-text" x="12" y="32" font-size="10" fill="#CBD5E0">JSON: { access_token } (201)</text>
+  </g>
+
+  <!-- 2. GET /users -->
+  <g transform="translate(330, 265)">
+    <path d="M 0,0 L 170,0" stroke="#3182CE" stroke-width="2" marker-end="url(#cyanArrow)" fill="none"/>
+    <rect class="http-get" x="35" y="-18" width="35" height="13" rx="3"/>
+    <text class="http-method" x="41" y="-8">GET</text>
+    <text class="endpoint-text" x="75" y="-8">/users</text>
+    <text class="node-text" x="35" y="12" fill="#718096">Headers: Authorization: Bearer JWT</text>
+
+    <!-- Return -->
+    <path d="M 170,25 L 0,25" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrow)" fill="none"/>
+    <text class="arrow-text" x="15" y="37" font-size="10" fill="#CBD5E0">JSON: [ { id, bio, photos:[] } ] (200)</text>
+  </g>
+
+  <!-- 3. POST /interactions -->
+  <g transform="translate(330, 345)">
+    <path d="M 0,0 L 170,0" stroke="#FF5A5F" stroke-width="2" marker-end="url(#cyanArrow)" fill="none"/>
+    <rect class="http-post" x="35" y="-18" width="45" height="13" rx="3"/>
+    <text class="http-method" x="41" y="-8">POST</text>
+    <text class="endpoint-text" x="85" y="-8">/interactions</text>
+
+    <!-- Return -->
+    <path d="M 170,20 L 0,20" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrow)" fill="none"/>
+    <text class="arrow-text" x="8" y="32" font-size="10" fill="#CBD5E0">JSON: { interaction, isMatch: true } (201)</text>
+  </g>
+
+  <!-- 4. GET /chats/:id -->
+  <g transform="translate(330, 415)">
+    <path d="M 0,0 L 170,0" stroke="#3182CE" stroke-width="2" marker-end="url(#cyanArrow)" fill="none"/>
+    <rect class="http-get" x="35" y="-18" width="35" height="13" rx="3"/>
+    <text class="http-method" x="41" y="-8">GET</text>
+    <text class="endpoint-text" x="75" y="-8">/chats/:id</text>
+
+    <!-- Return -->
+    <path d="M 170,20 L 0,20" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrow)" fill="none"/>
+    <text class="arrow-text" x="15" y="32" font-size="10" fill="#CBD5E0">JSON: { id, messages: [], ... } (200)</text>
+  </g>
+
+  <!-- 5. POST /messages -->
+  <g transform="translate(330, 480)">
+    <path d="M 0,0 L 170,0" stroke="#FF5A5F" stroke-width="2" marker-end="url(#cyanArrow)" fill="none"/>
+    <rect class="http-post" x="35" y="-18" width="45" height="13" rx="3"/>
+    <text class="http-method" x="41" y="-8">POST</text>
+    <text class="endpoint-text" x="85" y="-8">/messages</text>
+
+    <!-- Return -->
+    <path d="M 170,20 L 0,20" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrow)" fill="none"/>
+    <text class="arrow-text" x="20" y="32" font-size="10" fill="#CBD5E0">JSON: { id, content, chatId } (201)</text>
+  </g>
+
+  <!-- 6. PATCH /users/:id -->
+  <g transform="translate(330, 550)">
+    <path d="M 0,0 L 170,0" stroke="#805AD5" stroke-width="2" marker-end="url(#cyanArrow)" fill="none"/>
+    <rect class="http-patch" x="30" y="-18" width="50" height="13" rx="3"/>
+    <text class="http-method" x="35" y="-8">PATCH</text>
+    <text class="endpoint-text" x="85" y="-8">/users/:id</text>
+
+    <!-- Return -->
+    <path d="M 170,20 L 0,20" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrow)" fill="none"/>
+    <text class="arrow-text" x="15" y="32" font-size="10" fill="#CBD5E0">JSON: { id, bio: "Amante de..." } (200)</text>
+  </g>
+
+  <!-- 7. DELETE /matches/:id -->
+  <g transform="translate(330, 620)">
+    <path d="M 0,0 L 170,0" stroke="#E53E3E" stroke-width="2" marker-end="url(#cyanArrow)" fill="none"/>
+    <rect class="http-delete" x="30" y="-18" width="55" height="13" rx="3"/>
+    <text class="http-method" x="35" y="-8">DELETE</text>
+    <text class="endpoint-text" x="90" y="-8">/matches/:id</text>
+
+    <!-- Return -->
+    <path d="M 170,20 L 0,20" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrow)" fill="none"/>
+    <text class="arrow-text" x="30" y="32" font-size="10" fill="#CBD5E0">JSON: { success: true } (200)</text>
+  </g>
+
+  <!-- ==================== DB CONNECTIONS (NESTJS -> DB CLIENT) ==================== -->
+  <path d="M 860, 627 L 940, 627" stroke="#00C9FF" stroke-width="2.5" marker-end="url(#cyanArrow)" fill="none"/>
+  <path d="M 940, 642 L 860, 642" stroke="#00C9FF" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
+  <text class="node-title" x="872" y="617" fill="#00C9FF" font-size="10">Prisma Client</text>
+  
+  <path d="M 830, 585 L 830, 480 L 950, 480" stroke="#00C9FF" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+  <circle cx="830" cy="585" r="3" fill="#00C9FF"/>
+
+  <path d="M 810, 585 L 810, 300 L 950, 300" stroke="#00C9FF" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+  <circle cx="810" cy="585" r="3" fill="#00C9FF"/>
+
+  <!-- Legend -->
+  <g transform="translate(950, 755)">
+    <rect width="200" height="50" fill="#171923" stroke="#2D3748" stroke-width="1" rx="6"/>
+    <circle cx="18" cy="15" r="4" fill="#FF5A5F"/>
+    <text class="node-text" x="32" y="19" font-size="9">Petición HTTP Client -> Server</text>
+    <circle cx="18" cy="27" r="4" fill="#E2E8F0"/>
+    <text class="node-text" x="32" y="31" font-size="9">Respuesta Server -> Client</text>
+    <circle cx="18" cy="39" r="4" fill="#00C9FF"/>
+    <text class="node-text" x="32" y="43" font-size="9">Prisma ORM a PostgreSQL</text>
+  </g>
+</svg>

@@ -1,10 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Put, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { InteractionService } from './interaction.service';
-import { CreateInteractionDto } from './dto/create-interaction.dto';
-import { UpdateInteractionDto } from './dto/update-interaction.dto';
+import { InteractionService } from './interaction.service.js';
+import { CreateInteractionDto } from './dto/create-interaction.dto.js';
+import { UpdateInteractionDto } from './dto/update-interaction.dto.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
+import { Role } from '../auth/enums/role.enum.js';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('interactions')
 export class InteractionController {
   constructor(private readonly interactionService: InteractionService) {}
@@ -15,6 +18,7 @@ export class InteractionController {
   }
 
   @Get()
+  @Roles(Role.ADMIN)
   findAll() {
     return this.interactionService.findAll();
   }

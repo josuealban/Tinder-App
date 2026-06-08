@@ -7,10 +7,10 @@ import { PrismaMensajeriaService } from './prisma-mensajeria.service';
 @Global()
 @Module({
   providers: [
-    PrismaService,           // BD original (compatibilidad)
-    PrismaUsuariosService,   // BD: usuarios_db  → User, Photo
-    PrismaMatchesService,    // BD: matches_db   → Interaction, Match
-    PrismaMensajeriaService, // BD: mensajeria_db → SubscriptionPlan, Chat, Message
+    PrismaService,
+    PrismaUsuariosService,
+    PrismaMatchesService,
+    PrismaMensajeriaService,
   ],
   exports: [
     PrismaService,

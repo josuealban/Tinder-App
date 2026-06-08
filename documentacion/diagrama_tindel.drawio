@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1654" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ===== TITULO ===== -->
+    <mxCell id="titulo" value="DIAGRAMA DE FLUJO DE PETICIONES HTTP — Proyecto TINDEL (NestJS + Prisma + PostgreSQL)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+      <mxGeometry x="30" y="15" width="2140" height="35" as="geometry" />
+    </mxCell>
+
+    <!-- ================================================================ -->
+    <!-- ZONA FRONTEND -->
+    <!-- ================================================================ -->
+    <mxCell id="z-fe" value="Frontend (React)&#xa;localhost:5173" style="swimlane;startSize=40;fillColor=#EBF5FB;strokeColor=#1A5276;fontStyle=1;fontSize=13;fontColor=#1A5276;rounded=1;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="20" y="60" width="270" height="1250" as="geometry" />
+    </mxCell>
+
+    <mxCell id="fe-register" value="Register Page&#xa;(axios  POST)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00BCD4;strokeColor=#006EAF;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="55" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-login" value="Login Page&#xa;(axios  POST)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00BCD4;strokeColor=#006EAF;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="145" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-users" value="Discovery / Swiper&#xa;(axios  GET)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="295" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-profile" value="Profile Edit&#xa;(axios  PATCH)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#4A148C;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="395" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-del-user" value="Delete Account&#xa;(axios  DELETE)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="495" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-swipe" value="Like / Superlike / Dislike&#xa;(axios  POST)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF6F00;strokeColor=#E65100;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="640" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-matches" value="Matches Screen&#xa;(axios  GET)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="790" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-unmatch" value="Unmatch Button&#xa;(axios  DELETE)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="890" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-chats" value="Chat Screen&#xa;(axios  GET)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="1040" width="200" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-msg" value="Send Message&#xa;(axios  POST)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF6F00;strokeColor=#E65100;fontColor=#fff;fontStyle=1;fontSize=11;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="1140" width="200" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- separadores de sección FE -->
+    <mxCell id="fe-sep1" value="── AUTH ──" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#006EAF;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="40" width="200" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-sep2" value="── USERS ──" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#2E7D32;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="280" width="200" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-sep3" value="── INTERACTIONS ──" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#E65100;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="625" width="200" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-sep4" value="── MATCHES ──" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#B71C1C;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="775" width="200" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="fe-sep5" value="── CHATS / MESSAGES ──" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontStyle=1;fontSize=10;fontColor=#004D40;" vertex="1" parent="z-fe">
+      <mxGeometry x="35" y="1025" width="200" height="18" as="geometry" />
+    </mxCell>
+
+    <!-- ================================================================ -->
+    <!-- ZONA BACKEND NestJS -->
+    <!-- ================================================================ -->
+    <mxCell id="z-be" value="Backend — NestJS (localhost:3000)" style="swimlane;startSize=40;fillColor=#FDEDEC;strokeColor=#E0234E;fontStyle=1;fontSize=13;fontColor=#E0234E;rounded=1;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="390" y="60" width="870" height="1250" as="geometry" />
+    </mxCell>
+
+    <!-- JWT Guard banner -->
+    <mxCell id="be-guard" value="🛡️  JwtAuthGuard  —  Intercepta todas las rutas excepto POST /auth/register y POST /auth/login  —  Valida Bearer Token en Header" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontColor=#5D4037;fontSize=10;fontStyle=2;" vertex="1" parent="z-be">
+      <mxGeometry x="20" y="50" width="830" height="32" as="geometry" />
+    </mxCell>
+
+    <!-- ====== MÓDULO AUTH ====== -->
+    <mxCell id="mod-auth" value="Módulo Auth  (/auth)" style="swimlane;startSize=28;fillColor=#E0234E;strokeColor=#8A0025;fontColor=#fff;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="z-be">
+      <mxGeometry x="20" y="100" width="830" height="160" as="geometry" />
+    </mxCell>
+
+    <!-- POST /auth/register flow -->
+    <mxCell id="auth-ctrl-reg" value="AuthController&#xa;@Post('register')" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF5B7F;strokeColor=#C62828;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-auth">
+      <mxGeometry x="10" y="35" width="180" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="auth-svc-reg" value="AuthService&#xa;register(dto)&#xa;bcrypt.hash(password, 10)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF5B7F;strokeColor=#C62828;fontColor=#fff;fontSize=10;" vertex="1" parent="mod-auth">
+      <mxGeometry x="220" y="35" width="175" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="auth-svc-reg2" value="UserService&#xa;create(dto)&#xa;prisma.user.create()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF8A80;strokeColor=#C62828;fontColor=#5D0000;fontSize=10;" vertex="1" parent="mod-auth">
+      <mxGeometry x="425" y="35" width="175" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- POST /auth/login flow -->
+    <mxCell id="auth-ctrl-log" value="AuthController&#xa;@Post('login')" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF5B7F;strokeColor=#C62828;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-auth">
+      <mxGeometry x="10" y="100" width="180" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="auth-svc-log" value="AuthService&#xa;validateUser(email, pass)&#xa;bcrypt.compare() ✓" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF5B7F;strokeColor=#C62828;fontColor=#fff;fontSize=10;" vertex="1" parent="mod-auth">
+      <mxGeometry x="220" y="100" width="175" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="auth-svc-log2" value="AuthService&#xa;login(user)&#xa;jwtService.sign(payload)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF5B7F;strokeColor=#C62828;fontColor=#fff;fontSize=10;" vertex="1" parent="mod-auth">
+      <mxGeometry x="425" y="100" width="175" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="auth-resp-log" value="→ { access_token }" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;fontColor=#880E4F;fontSize=10;fontStyle=1;" vertex="1" parent="mod-auth">
+      <mxGeometry x="625" y="100" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- internal arrows auth -->
+    <mxCell id="a-reg1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-auth" source="auth-ctrl-reg" target="auth-svc-reg">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="a-reg2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-auth" source="auth-svc-reg" target="auth-svc-reg2">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="a-log1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-auth" source="auth-ctrl-log" target="auth-svc-log">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="a-log2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-auth" source="auth-svc-log" target="auth-svc-log2">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="a-log3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-auth" source="auth-svc-log2" target="auth-resp-log">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ====== MÓDULO USERS ====== -->
+    <mxCell id="mod-users" value="Módulo Users  (/users)  🛡️ JwtAuthGuard" style="swimlane;startSize=28;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#fff;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="z-be">
+      <mxGeometry x="20" y="278" width="830" height="220" as="geometry" />
+    </mxCell>
+
+    <mxCell id="u-ctrl-get" value="UserController&#xa;@Get()  findAll()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#42A5F5;strokeColor=#1565C0;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-users">
+      <mxGeometry x="10" y="35" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="u-svc-get" value="UserService&#xa;findAll()&#xa;prisma.user.findMany({ include: photos })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#64B5F6;strokeColor=#1565C0;fontColor=#0D47A1;fontSize=10;" vertex="1" parent="mod-users">
+      <mxGeometry x="215" y="35" width="215" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="u-ctrl-patch" value="UserController&#xa;@Patch(':id')  update()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9C27B0;strokeColor=#4A148C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-users">
+      <mxGeometry x="10" y="95" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="u-svc-patch" value="UserService&#xa;update(id, dto)&#xa;findOne() → prisma.user.update()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CE93D8;strokeColor=#4A148C;fontColor=#4A148C;fontSize=10;" vertex="1" parent="mod-users">
+      <mxGeometry x="215" y="95" width="215" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="u-ctrl-put" value="UserController&#xa;@Put(':id')  updatePut()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8BC34A;strokeColor=#558B2F;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-users">
+      <mxGeometry x="10" y="155" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="u-svc-put" value="UserService&#xa;update(id, dto)&#xa;findOne() → prisma.user.update()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#AED581;strokeColor=#558B2F;fontColor=#33691E;fontSize=10;" vertex="1" parent="mod-users">
+      <mxGeometry x="215" y="155" width="215" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="u-ctrl-del" value="UserController&#xa;@Delete(':id')  remove()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-users">
+      <mxGeometry x="460" y="35" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="u-svc-del" value="UserService&#xa;remove(id)&#xa;findOne() → prisma.user.delete()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF9A9A;strokeColor=#B71C1C;fontColor=#B71C1C;fontSize=10;" vertex="1" parent="mod-users">
+      <mxGeometry x="655" y="35" width="165" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="u-ctrl-getme" value="UserController&#xa;@Get('me')  getProfile()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#42A5F5;strokeColor=#1565C0;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-users">
+      <mxGeometry x="460" y="95" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="u-svc-getme" value="UserService&#xa;findOne(userId from JWT)&#xa;prisma.user.findUnique()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#64B5F6;strokeColor=#1565C0;fontColor=#0D47A1;fontSize=10;" vertex="1" parent="mod-users">
+      <mxGeometry x="655" y="95" width="165" height="45" as="geometry" />
+    </mxCell>
+
+    <!-- internal arrows users -->
+    <mxCell id="au1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-users" source="u-ctrl-get" target="u-svc-get"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="au2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#4A148C;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-users" source="u-ctrl-patch" target="u-svc-patch"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="au3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#558B2F;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-users" source="u-ctrl-put" target="u-svc-put"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="au4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B71C1C;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-users" source="u-ctrl-del" target="u-svc-del"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="au5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-users" source="u-ctrl-getme" target="u-svc-getme"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ====== MÓDULO INTERACTIONS ====== -->
+    <mxCell id="mod-int" value="Módulo Interactions  (/interactions)  🛡️ JwtAuthGuard  ⚡ Lógica de Match Automático" style="swimlane;startSize=28;fillColor=#E65100;strokeColor=#BF360C;fontColor=#fff;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="z-be">
+      <mxGeometry x="20" y="516" width="830" height="270" as="geometry" />
+    </mxCell>
+
+    <mxCell id="int-ctrl-post" value="InteractionController&#xa;@Post()  create(dto)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF6F00;strokeColor=#BF360C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-int">
+      <mxGeometry x="10" y="35" width="175" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="int-svc-create" value="InteractionService&#xa;create(dto)&#xa;prisma.interaction.create()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFA726;strokeColor=#BF360C;fontColor=#4E342E;fontSize=10;" vertex="1" parent="mod-int">
+      <mxGeometry x="215" y="35" width="185" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="int-decision" value="¿type == LIKE&#xa;o SUPERLIKE?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontColor=#5D4037;fontSize=10;fontStyle=1;" vertex="1" parent="mod-int">
+      <mxGeometry x="425" y="28" width="140" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="int-reciprocal" value="prisma.interaction.findFirst()&#xa;¿Existe LIKE recíproco?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontColor=#5D4037;fontSize=9;" vertex="1" parent="mod-int">
+      <mxGeometry x="590" y="24" width="150" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="int-match-create" value="⚡ AUTO-CASCADE&#xa;prisma.match.create({&#xa;  chat: { create: {} }&#xa;})" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B71C1C;strokeColor=#7F0000;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-int">
+      <mxGeometry x="760" y="30" width="60" height="70" as="geometry" />
+    </mxCell>
+
+    <mxCell id="int-ctrl-get" value="InteractionController&#xa;@Get('user/:userId')" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF6F00;strokeColor=#BF360C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-int">
+      <mxGeometry x="10" y="115" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="int-svc-findby" value="InteractionService&#xa;findByUser(userId)&#xa;prisma.interaction.findMany(where: OR[fromId,toId])" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFA726;strokeColor=#BF360C;fontColor=#4E342E;fontSize=10;" vertex="1" parent="mod-int">
+      <mxGeometry x="215" y="115" width="270" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="int-ctrl-patch" value="InteractionController&#xa;@Patch(':id')  update()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF6F00;strokeColor=#BF360C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-int">
+      <mxGeometry x="10" y="180" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="int-svc-patch" value="InteractionService&#xa;update(id, dto)&#xa;prisma.interaction.update()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFA726;strokeColor=#BF360C;fontColor=#4E342E;fontSize=10;" vertex="1" parent="mod-int">
+      <mxGeometry x="215" y="180" width="215" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="int-ctrl-del" value="InteractionController&#xa;@Delete(':id')  remove()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-int">
+      <mxGeometry x="10" y="235" width="175" height="25" as="geometry" />
+    </mxCell>
+    <mxCell id="int-svc-del" value="InteractionService.remove(id)  →  prisma.interaction.delete({ where: { id } })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF9A9A;strokeColor=#B71C1C;fontColor=#B71C1C;fontSize=10;" vertex="1" parent="mod-int">
+      <mxGeometry x="215" y="235" width="340" height="25" as="geometry" />
+    </mxCell>
+
+    <!-- internal arrows interactions -->
+    <mxCell id="ai1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#BF360C;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-int" source="int-ctrl-post" target="int-svc-create"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="ai2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#F57F17;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-int" source="int-svc-create" target="int-decision"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="ai3" value="SÍ" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#F57F17;strokeWidth=1.5;endArrow=block;endFill=1;fontStyle=1;fontSize=9;fontColor=#E65100;" edge="1" parent="mod-int" source="int-decision" target="int-reciprocal"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="ai4" value="¡SÍ!" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B71C1C;strokeWidth=2;endArrow=block;endFill=1;fontStyle=1;fontSize=9;fontColor=#B71C1C;" edge="1" parent="mod-int" source="int-reciprocal" target="int-match-create"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="ai5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#BF360C;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-int" source="int-ctrl-get" target="int-svc-findby"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="ai6" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#BF360C;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-int" source="int-ctrl-patch" target="int-svc-patch"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="ai7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B71C1C;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-int" source="int-ctrl-del" target="int-svc-del"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ====== MÓDULO MATCHES ====== -->
+    <mxCell id="mod-match" value="Módulo Matches  (/matches)  🛡️ JwtAuthGuard" style="swimlane;startSize=28;fillColor=#4A148C;strokeColor=#12005E;fontColor=#fff;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="z-be">
+      <mxGeometry x="20" y="804" width="830" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="m-ctrl-get" value="MatchController&#xa;@Get('user/:userId')" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9C27B0;strokeColor=#4A148C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-match">
+      <mxGeometry x="10" y="35" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="m-svc-get" value="MatchService.findByUser(userId)&#xa;prisma.match.findMany({ where: OR[user1Id,user2Id],&#xa;include: { user1, user2, chat } })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CE93D8;strokeColor=#4A148C;fontColor=#4A148C;fontSize=10;" vertex="1" parent="mod-match">
+      <mxGeometry x="210" y="35" width="305" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="m-ctrl-del" value="MatchController&#xa;@Delete(':id')  remove()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-match">
+      <mxGeometry x="540" y="35" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="m-svc-del" value="MatchService.remove(id)&#xa;findOne() → prisma.match.delete()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF9A9A;strokeColor=#B71C1C;fontColor=#B71C1C;fontSize=10;" vertex="1" parent="mod-match">
+      <mxGeometry x="730" y="35" width="90" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="am1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#4A148C;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-match" source="m-ctrl-get" target="m-svc-get"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="am2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B71C1C;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-match" source="m-ctrl-del" target="m-svc-del"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ====== MÓDULO MESSAGES ====== -->
+    <mxCell id="mod-msg" value="Módulo Messages  (/messages)  🛡️ JwtAuthGuard" style="swimlane;startSize=28;fillColor=#004D40;strokeColor=#002B22;fontColor=#fff;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="z-be">
+      <mxGeometry x="20" y="942" width="830" height="120" as="geometry" />
+    </mxCell>
+
+    <mxCell id="msg-ctrl-get" value="MessageController&#xa;@Get('chat/:chatId')" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00897B;strokeColor=#004D40;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-msg">
+      <mxGeometry x="10" y="35" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="msg-svc-get" value="MessageService.findByChatId(chatId)&#xa;prisma.message.findMany({ where: { chatId },&#xa;orderBy: { createdAt: 'asc' } })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#80CBC4;strokeColor=#004D40;fontColor=#004D40;fontSize=10;" vertex="1" parent="mod-msg">
+      <mxGeometry x="210" y="35" width="305" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="msg-ctrl-post" value="MessageController&#xa;@Post()  create(dto)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF6F00;strokeColor=#E65100;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="mod-msg">
+      <mxGeometry x="540" y="35" width="175" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="msg-svc-post" value="MessageService.create(dto)&#xa;prisma.message.create()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCC80;strokeColor=#E65100;fontColor=#BF360C;fontSize=10;" vertex="1" parent="mod-msg">
+      <mxGeometry x="730" y="35" width="90" height="45" as="geometry" />
+    </mxCell>
+
+    <mxCell id="amsg1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#004D40;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-msg" source="msg-ctrl-get" target="msg-svc-get"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="amsg2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#E65100;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="mod-msg" source="msg-ctrl-post" target="msg-svc-post"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ================================================================ -->
+    <!-- ZONA ORM Prisma -->
+    <!-- ================================================================ -->
+    <mxCell id="z-orm" value="ORM (Prisma Client)" style="swimlane;startSize=40;fillColor=#E8F8F5;strokeColor=#00796B;fontStyle=1;fontSize=13;fontColor=#00796B;rounded=1;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="1310" y="60" width="220" height="1250" as="geometry" />
+    </mxCell>
+
+    <mxCell id="orm-user" value="User&#xa;create / findUnique&#xa;findMany / update / delete" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00BCD4;strokeColor=#006EAF;fontColor=#fff;fontStyle=1;fontSize=10;" vertex="1" parent="z-orm">
+      <mxGeometry x="15" y="130" width="190" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="orm-interaction" value="Interaction&#xa;create / findFirst&#xa;findMany / update / delete" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF6F00;strokeColor=#E65100;fontColor=#fff;fontStyle=1;fontSize=10;" vertex="1" parent="z-orm">
+      <mxGeometry x="15" y="560" width="190" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="orm-match" value="Match&#xa;create / findMany&#xa;findUnique / delete" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#4A148C;fontColor=#fff;fontStyle=1;fontSize=10;" vertex="1" parent="z-orm">
+      <mxGeometry x="15" y="840" width="190" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="orm-chat" value="Chat&#xa;create (auto en Match)&#xa;findMany" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#004D40;strokeColor=#002B22;fontColor=#fff;fontStyle=1;fontSize=10;" vertex="1" parent="z-orm">
+      <mxGeometry x="15" y="960" width="190" height="65" as="geometry" />
+    </mxCell>
+    <mxCell id="orm-message" value="Message&#xa;create / findMany" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#009688;strokeColor=#004D40;fontColor=#fff;fontStyle=1;fontSize=10;" vertex="1" parent="z-orm">
+      <mxGeometry x="15" y="1100" width="190" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- ================================================================ -->
+    <!-- ZONA BD PostgreSQL -->
+    <!-- ================================================================ -->
+    <mxCell id="z-bd" value="BD (PostgreSQL)" style="swimlane;startSize=40;fillColor=#EBF5FB;strokeColor=#1565C0;fontStyle=1;fontSize=13;fontColor=#1565C0;rounded=1;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="1580" y="60" width="215" height="1250" as="geometry" />
+    </mxCell>
+
+    <mxCell id="bd-user" value="tabla: User&#xa;id, name, email, password&#xa;bio, age, hobbies&#xa;musicList, createdAt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#BBDEFB;strokeColor=#1565C0;fontColor=#0D47A1;fontStyle=1;fontSize=10;" vertex="1" parent="z-bd">
+      <mxGeometry x="15" y="120" width="185" height="85" as="geometry" />
+    </mxCell>
+    <mxCell id="bd-interaction" value="tabla: Interaction&#xa;id, type [LIKE/SUPERLIKE/DISLIKE]&#xa;fromId [FK], toId [FK]&#xa;createdAt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#FFE0B2;strokeColor=#E65100;fontColor=#BF360C;fontStyle=1;fontSize=10;" vertex="1" parent="z-bd">
+      <mxGeometry x="15" y="545" width="185" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="bd-match" value="tabla: Match&#xa;id, user1Id [FK]&#xa;user2Id [FK], createdAt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontColor=#4A148C;fontStyle=1;fontSize=10;" vertex="1" parent="z-bd">
+      <mxGeometry x="15" y="830" width="185" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="bd-chat" value="tabla: Chat&#xa;id, matchId [FK]&#xa;createdAt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#B2DFDB;strokeColor=#004D40;fontColor=#004D40;fontStyle=1;fontSize=10;" vertex="1" parent="z-bd">
+      <mxGeometry x="15" y="955" width="185" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="bd-message" value="tabla: Message&#xa;id, content&#xa;fromId [FK], chatId [FK]&#xa;createdAt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#B2DFDB;strokeColor=#00695C;fontColor=#004D40;fontStyle=1;fontSize=10;" vertex="1" parent="z-bd">
+      <mxGeometry x="15" y="1085" width="185" height="85" as="geometry" />
+    </mxCell>
+
+    <!-- ================================================================ -->
+    <!-- FLECHAS: FRONTEND → BACKEND -->
+    <!-- ================================================================ -->
+    <mxCell id="arr-fe-reg" value="POST /auth/register&#xa;{name, email, password}" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#006EAF;strokeWidth=2;fontColor=#006EAF;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-register" target="auth-ctrl-reg">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-log" value="POST /auth/login&#xa;{email, password}" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=2;fontColor=#C62828;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-login" target="auth-ctrl-log">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-users" value="GET /users&#xa;Bearer &lt;token&gt;" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1976D2;strokeWidth=2;fontColor=#1976D2;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-users" target="u-ctrl-get">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-prof" value="PATCH /users/:id&#xa;Bearer &lt;token&gt;" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#7B1FA2;strokeWidth=2;fontColor=#7B1FA2;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-profile" target="u-ctrl-patch">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-delusr" value="DELETE /users/:id&#xa;Bearer &lt;token&gt;" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B71C1C;strokeWidth=2;fontColor=#B71C1C;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-del-user" target="u-ctrl-del">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-swipe" value="POST /interactions&#xa;{type, fromId, toId}" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#E65100;strokeWidth=2;fontColor=#E65100;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-swipe" target="int-ctrl-post">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-match" value="GET /matches/user/:id&#xa;Bearer &lt;token&gt;" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#4A148C;strokeWidth=2;fontColor=#4A148C;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-matches" target="m-ctrl-get">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-unmatch" value="DELETE /matches/:id&#xa;Bearer &lt;token&gt;" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B71C1C;strokeWidth=2;fontColor=#B71C1C;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-unmatch" target="m-ctrl-del">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-chat" value="GET /messages/chat/:id&#xa;Bearer &lt;token&gt;" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#004D40;strokeWidth=2;fontColor=#004D40;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-chats" target="msg-ctrl-get">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="arr-fe-msg" value="POST /messages&#xa;{chatId, fromId, content}" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#E65100;strokeWidth=2;fontColor=#E65100;fontSize=9;fontStyle=1;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-msg" target="msg-ctrl-post">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ================================================================ -->
+    <!-- FLECHAS: BACKEND → ORM -->
+    <!-- ================================================================ -->
+    <mxCell id="arr-be-orm-user-reg" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="auth-svc-reg2" target="orm-user"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-user-log" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="auth-svc-log" target="orm-user"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-user-get" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="u-svc-get" target="orm-user"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-user-patch" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="u-svc-patch" target="orm-user"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-int" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="int-svc-create" target="orm-interaction"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-match-auto" value="AUTO" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B71C1C;strokeWidth=2;endArrow=block;endFill=1;fontStyle=1;fontSize=9;fontColor=#B71C1C;" edge="1" parent="1" source="int-match-create" target="orm-match"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-match-get" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="m-svc-get" target="orm-match"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-match-del" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="m-svc-del" target="orm-match"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-msg-get" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="msg-svc-get" target="orm-chat"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-be-orm-msg-post" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="msg-svc-post" target="orm-message"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ================================================================ -->
+    <!-- FLECHAS: ORM → BD (punteadas = SQL) -->
+    <!-- ================================================================ -->
+    <mxCell id="arr-orm-bd-user" value="SQL" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-user" target="bd-user"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-orm-bd-int" value="SQL" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-interaction" target="bd-interaction"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-orm-bd-match" value="SQL" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-match" target="bd-match"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-orm-bd-chat" value="SQL" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-chat" target="bd-chat"><mxGeometry relative="1" as="geometry" /></mxCell>
+    <mxCell id="arr-orm-bd-msg" value="SQL" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-message" target="bd-message"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+    <!-- ================================================================ -->
+    <!-- LEYENDA -->
+    <!-- ================================================================ -->
+    <mxCell id="leyenda" value="LEYENDA" style="swimlane;startSize=25;fillColor=#F8F9FA;strokeColor=#495057;fontStyle=1;fontSize=11;fontColor=#212529;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="20" y="1330" width="1775" height="55" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-post" value="POST — Crear" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF6F00;strokeColor=#E65100;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="10" y="13" width="140" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-get" value="GET — Obtener" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="160" y="13" width="140" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-patch" value="PATCH — Actualizar parcial" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#4A148C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="310" y="13" width="185" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-put" value="PUT — Actualizar completo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#558B2F;strokeColor=#33691E;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="505" y="13" width="185" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-del" value="DELETE — Eliminar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#fff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="700" y="13" width="160" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-guard" value="🛡️ JwtAuthGuard = Bearer Token obligatorio en Headers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontColor=#5D4037;fontSize=10;fontStyle=2;" vertex="1" parent="leyenda">
+      <mxGeometry x="870" y="13" width="310" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-cascade" value="⚡ POST /interactions LIKE → auto-crea Match + Chat en cascada" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;fontColor=#880E4F;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="1190" y="13" width="370" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-sql" value="- - - SQL vía Prisma ORM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontColor=#0D47A1;fontSize=10;fontStyle=1;dashed=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="1570" y="13" width="185" height="28" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

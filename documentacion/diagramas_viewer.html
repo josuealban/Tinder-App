@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visor Interactivo de Arquitectura y Peticiones HTTP</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            outfit: ['Outfit', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+          colors: {
+            brand: {
+              dark: '#0B0D13',
+              card: '#161923',
+              react: '#00F2FE',
+              nest: '#E0234E',
+              db: '#09B7B9',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #08090D;
+      color: #F7FAFC;
+    }
+    .glass {
+      background: rgba(22, 25, 35, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0D13;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2D3748;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4A5568;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="glass sticky top-0 z-50 border-b border-white/5 py-4 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-brand-nest to-brand-react flex items-center justify-center font-outfit font-extrabold text-white text-xl shadow-lg shadow-brand-nest/20">
+          U
+        </div>
+        <div>
+          <h1 class="text-xl font-outfit font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+            Visor de Arquitectura y Conexiones
+          </h1>
+          <p class="text-xs text-slate-400">Entrega de Tarea Escolar - React (Frontend) + NestJS (Backend) + DB</p>
+        </div>
+      </div>
+
+      <!-- Tab Selectors -->
+      <div class="flex bg-brand-dark/80 p-1 rounded-xl border border-white/5 shadow-inner">
+        <button id="btn-tareas" onclick="switchTab('tareas')" class="px-5 py-2 rounded-lg font-outfit text-sm font-semibold transition-all duration-300 bg-gradient-to-r from-brand-react to-blue-600 text-white shadow-md">
+          📋 Gestor de Tareas (Deber)
+        </button>
+        <button id="btn-tindel" onclick="switchTab('tindel')" class="px-5 py-2 rounded-lg font-outfit text-sm font-semibold text-slate-400 hover:text-white transition-all duration-300">
+          🔥 Tindel App (Proyecto Real)
+        </button>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex items-center gap-3">
+        <button onclick="window.print()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold font-outfit transition shadow flex items-center gap-2">
+          🖨️ Guardar PDF / Imprimir
+        </button>
+        <a id="download-link" href="diagrama_tareas.svg" download="Diagrama_Conexiones_Tareas.svg" class="px-4 py-2 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white rounded-lg text-xs font-semibold font-outfit transition shadow flex items-center gap-2">
+          📥 Descargar SVG Vectorial
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Grid -->
+  <main class="flex-grow max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- LEFT PANEL: Endpoints List -->
+    <section class="lg:col-span-3 flex flex-col gap-4">
+      <div class="glass p-4 rounded-2xl flex flex-col gap-3 h-[700px]">
+        <h2 class="font-outfit font-bold text-lg text-white border-b border-white/5 pb-2">📋 Listado de Rutas (Endpoints)</h2>
+        
+        <p class="text-xs text-slate-400">Haz clic en una petición para explorar el flujo de datos y los payloads JSON correspondientes.</p>
+        
+        <div id="endpoints-list" class="flex-grow overflow-y-auto space-y-2 pr-1">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- MIDDLE PANEL: Interactive Diagram Frame -->
+    <section class="lg:col-span-6 flex flex-col gap-4">
+      <div class="glass p-4 rounded-2xl flex flex-col gap-3 h-[700px] relative overflow-hidden">
+        <div class="flex justify-between items-center border-b border-white/5 pb-2">
+          <h2 id="diagram-title" class="font-outfit font-bold text-lg text-white">Visualización del Diagrama</h2>
+          <span class="text-xs bg-slate-800 px-2.5 py-1 rounded-full text-slate-300 border border-white/5">Vectorial (SVG)</span>
+        </div>
+        
+        <div class="flex-grow flex items-center justify-center bg-black/30 rounded-xl overflow-hidden border border-white/5 p-2 group relative">
+          <!-- Embed actual SVGs inline using object tags so they are super crisp -->
+          <object id="svg-viewer" type="image/svg+xml" data="diagrama_tareas.svg" class="w-full h-full object-contain transition-transform duration-300"></object>
+          
+          <!-- Zoom Controls overlay -->
+          <div class="absolute bottom-4 right-4 bg-brand-dark/95 border border-white/10 rounded-lg p-1.5 flex gap-1 shadow-2xl opacity-80 hover:opacity-100 transition">
+            <button onclick="zoom(1.2)" class="w-7 h-7 flex items-center justify-center text-slate-300 hover:text-white bg-slate-800 rounded font-bold text-sm">+</button>
+            <button onclick="zoom(0.8)" class="w-7 h-7 flex items-center justify-center text-slate-300 hover:text-white bg-slate-800 rounded font-bold text-sm">-</button>
+            <button onclick="resetZoom()" class="w-14 h-7 flex items-center justify-center text-slate-300 hover:text-white bg-slate-800 rounded text-xs font-semibold">Reset</button>
+          </div>
+        </div>
+
+        <p class="text-xxs text-center text-slate-500 font-mono">Consejo: Puedes arrastrar o hacer zoom en tu navegador. El SVG se mantiene nítido al 100%.</p>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: JSON Explorer -->
+    <section class="lg:col-span-3 flex flex-col gap-4">
+      <div class="glass p-4 rounded-2xl flex flex-col gap-3 h-[700px]">
+        <h2 class="font-outfit font-bold text-lg text-white border-b border-white/5 pb-2">🔍 Explorador JSON</h2>
+        
+        <div id="json-explorer-content" class="flex-grow flex flex-col gap-4 overflow-y-auto pr-1">
+          <!-- Initial Placeholder state -->
+          <div id="json-placeholder" class="my-auto flex flex-col items-center justify-center text-center p-6 gap-3">
+            <div class="text-4xl text-slate-600">💡</div>
+            <h3 class="font-outfit font-semibold text-white">Selecciona una petición</h3>
+            <p class="text-xs text-slate-400">Haz clic en cualquier endpoint del listado de la izquierda para ver su estructura detallada de envío y respuesta de la base de datos.</p>
+          </div>
+
+          <!-- Active JSON details (Hidden initially) -->
+          <div id="json-details" class="hidden space-y-4">
+            <!-- Badge & Title -->
+            <div class="flex items-center gap-2">
+              <span id="json-badge" class="px-2.5 py-1 rounded text-xxs font-mono font-extrabold uppercase">POST</span>
+              <span id="json-route" class="font-mono text-sm text-slate-200 font-semibold">/auth/login</span>
+            </div>
+
+            <!-- Description -->
+            <div>
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Descripción</h4>
+              <p id="json-description" class="text-xs text-slate-300 leading-relaxed"></p>
+            </div>
+
+            <!-- Security details -->
+            <div id="json-security-box" class="bg-red-500/10 border border-red-500/20 p-2.5 rounded-lg text-xs">
+              <span class="font-bold text-red-400">🛡️ Seguridad:</span> <span id="json-security" class="text-slate-300"></span>
+            </div>
+
+            <!-- Business logic details -->
+            <div class="bg-blue-500/5 border border-blue-500/10 p-2.5 rounded-lg text-xs">
+              <span class="font-bold text-brand-react">⚡ Regla de Negocio:</span> <span id="json-business-logic" class="text-slate-300"></span>
+            </div>
+
+            <!-- Request Body -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Petición JSON (Request Body)</h4>
+                <button onclick="copyCode('request-code')" class="text-xxs text-brand-react hover:underline">Copiar</button>
+              </div>
+              <pre class="bg-brand-dark border border-white/5 p-3 rounded-lg overflow-x-auto"><code id="request-code" class="font-mono text-xxs text-emerald-400 block whitespace-pre"></code></pre>
+            </div>
+
+            <!-- Response Body -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Respuesta JSON (<span id="response-status" class="text-emerald-400">201 Created</span>)</h4>
+                <button onclick="copyCode('response-code')" class="text-xxs text-brand-react hover:underline">Copiar</button>
+              </div>
+              <pre class="bg-brand-dark border border-white/5 p-3 rounded-lg overflow-x-auto"><code id="response-code" class="font-mono text-xxs text-brand-react block whitespace-pre"></code></pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-white/5 py-4 px-6 text-center text-xs text-slate-500">
+    Desarrollado para la materia de Herramientas de Despliegue de Aplicaciones • UIDE 2026 • Docente &amp; Alumno: Josué Albán
+  </footer>
+
+  <!-- Scripts for data and interactivity -->
+  <script>
+    // Zoom Logic
+    let currentZoom = 1;
+    function zoom(factor) {
+      const viewer = document.getElementById('svg-viewer');
+      currentZoom *= factor;
+      // Cap zoom scale
+      currentZoom = Math.min(Math.max(currentZoom, 0.5), 3);
+      viewer.style.transform = `scale(${currentZoom})`;
+    }
+
+    function resetZoom() {
+      const viewer = document.getElementById('svg-viewer');
+      currentZoom = 1;
+      viewer.style.transform = `scale(1)`;
+    }
+
+    // Copy to clipboard helper
+    function copyCode(elementId) {
+      const code = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Copiado al portapapeles con éxito');
+      }).catch(err => {
+        console.error('Error al copiar: ', err);
+      });
+    }
+
+    // Database of Endpoints details
+    const data = {
+      tareas: [
+        {
+          method: 'POST',
+          route: '/auth/register',
+          description: 'Crea una nueva cuenta de usuario en la base de datos cifrando de forma segura la contraseña mediante bcrypt.',
+          security: 'Público. No requiere autenticación previa.',
+          business: 'Valida que el correo sea único. Inserta un nuevo registro en la tabla User de PostgreSQL.',
+          status: '201 Created',
+          reqJson: `{
+  "name": "Josué Albán",
+  "email": "estudiante@uide.edu.ec",
+  "password": "miPasswordSegura123"
+}`,
+          resJson: `{
+  "id": 1,
+  "name": "Josué Albán",
+  "email": "estudiante@uide.edu.ec",
+  "createdAt": "2026-06-01T13:45:00.000Z"
+}`
+        },
+        {
+          method: 'POST',
+          route: '/auth/login',
+          description: 'Autentica las credenciales del usuario y genera un JSON Web Token (JWT) firmado de corta duración.',
+          security: 'Público. No requiere autenticación.',
+          business: 'Busca al usuario por email, valida la contraseña cifrada y firma el token con el ID de usuario como payload.',
+          status: '201 Created',
+          reqJson: `{
+  "email": "estudiante@uide.edu.ec",
+  "password": "miPasswordSegura123"
+}`,
+          resJson: `{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVt...",
+  "user": {
+    "id": 1,
+    "name": "Josué Albán",
+    "email": "estudiante@uide.edu.ec"
+  }
+}`
+        },
+        {
+          method: 'GET',
+          route: '/tasks',
+          description: 'Obtiene todas las tareas asociadas al usuario autenticado, ordenadas por fecha de creación.',
+          security: 'Protegido por JwtAuthGuard. Requiere cabecera Authorization: Bearer <Token>.',
+          business: 'Filtra las tareas usando el ID del usuario extraído directamente del payload del token JWT, protegiendo la privacidad de los datos.',
+          status: '200 OK',
+          reqJson: `// Ninguno (Cuerpo Vacío)
+// Adjuntar JWT en los Headers`,
+          resJson: `[
+  {
+    "id": 104,
+    "title": "Elaborar Diagrama de Conexiones",
+    "description": "Diseñar el flujo frontend, backend y BD",
+    "status": "PENDING",
+    "dueDate": "2026-06-05T23:59:59.000Z",
+    "createdAt": "2026-06-01T13:45:00.000Z"
+  }
+]`
+        },
+        {
+          method: 'POST',
+          route: '/tasks',
+          description: 'Crea una nueva tarea vinculada al usuario logueado en la base de datos.',
+          security: 'Protegido por JwtAuthGuard y validado por ValidationPipe.',
+          business: 'Recibe CreateTaskDto, asocia el userId del token JWT para evitar suplantación de identidad y ejecuta prisma.task.create().',
+          status: '201 Created',
+          reqJson: `{
+  "title": "Elaborar Diagrama de Conexiones",
+  "description": "Diseñar el flujo frontend y backend con peticiones",
+  "dueDate": "2026-06-05T23:59:59Z",
+  "priority": "HIGH"
+}`,
+          resJson: `{
+  "id": 104,
+  "title": "Elaborar Diagrama de Conexiones",
+  "description": "Diseñar el flujo frontend y backend con peticiones",
+  "dueDate": "2026-06-05T23:59:59.000Z",
+  "priority": "HIGH",
+  "status": "PENDING",
+  "userId": 1,
+  "createdAt": "2026-06-01T13:45:00.000Z"
+}`
+        },
+        {
+          method: 'PATCH',
+          route: '/tasks/:id',
+          description: 'Actualiza de forma parcial las propiedades de una tarea existente (por ejemplo, marcarla como completada).',
+          security: 'Protegido por JwtAuthGuard.',
+          business: 'Verifica que la tarea pertenezca al usuario del token JWT (403 Forbidden si no le pertenece). Actualiza el estado a COMPLETED en PostgreSQL.',
+          status: '200 OK',
+          reqJson: `{
+  "status": "COMPLETED"
+}`,
+          resJson: `{
+  "id": 104,
+  "title": "Elaborar Diagrama de Conexiones",
+  "status": "COMPLETED",
+  "updatedAt": "2026-06-01T13:49:15.000Z"
+}`
+        },
+        {
+          method: 'DELETE',
+          route: '/tasks/:id',
+          description: 'Elimina de forma física un registro de tarea de la base de datos.',
+          security: 'Protegido por JwtAuthGuard.',
+          business: 'Comprueba existencia y pertenencia. Llama a prisma.task.delete(). Si el ID no existe lanza NotFoundException (404).',
+          status: '200 OK / 204 No Content',
+          reqJson: `// Cuerpo Vacío`,
+          resJson: `{
+  "success": true,
+  "message": "La tarea ha sido eliminada permanentemente de la base de datos."
+}`
+        }
+      ],
+      tindel: [
+        {
+          method: 'POST',
+          route: '/auth/login',
+          description: 'Inicia sesión en Tindel con email y devuelve el token JWT del usuario para futuras peticiones.',
+          security: 'Público.',
+          business: 'Devuelve el token firmado que contiene la sesión del usuario.',
+          status: '201 Created',
+          reqJson: `{
+  "email": "juan@example.com",
+  "password": "admin123"
+}`,
+          resJson: `{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVt..."
+}`
+        },
+        {
+          method: 'GET',
+          route: '/users',
+          description: 'Obtiene el feed de personas sugeridas en los alrededores, incluyendo sus fotos activas.',
+          security: 'Protegido por JwtAuthGuard.',
+          business: 'Filtra al propio usuario y a las personas con las que ya interactuó. Realiza un include en Prisma para traer las urls de las fotos.',
+          status: '200 OK',
+          reqJson: `// Cuerpo Vacío`,
+          resJson: `[
+  {
+    "id": 2,
+    "name": "María José",
+    "bio": "Amante de los viajes y la programación en React 💻",
+    "photos": [
+      { "id": 12, "url": "https://midominio.com/foto_maria.jpg", "isPrimary": true }
+    ]
+  }
+]`
+        },
+        {
+          method: 'POST',
+          route: '/interactions',
+          description: 'Registra un swipe (Like, Dislike, Superlike o Report) de un usuario hacia otro.',
+          security: 'Protegido por JwtAuthGuard. Valida tipos en InteractionType.',
+          business: 'Lógica Clave: Si tipo es LIKE, realiza una consulta para ver si el usuario receptor ya le dio LIKE previo. Si se cumple, crea concurrentemente un Match y una sala de Chat para ambos.',
+          status: '201 Created',
+          reqJson: `{
+  "type": "LIKE",
+  "fromId": 1,
+  "toId": 2
+}`,
+          resJson: `{
+  "interaction": {
+    "id": 501,
+    "type": "LIKE",
+    "fromId": 1,
+    "toId": 2
+  },
+  "isMatch": true,
+  "matchDetails": {
+    "matchId": 89,
+    "chatId": 112,
+    "message": "¡Felicidades! Se ha producido un Match recíproco y se ha abierto un chat privado."
+  }
+}`
+        },
+        {
+          method: 'GET',
+          route: '/chats/:id',
+          description: 'Abre el canal de chat privado entre dos personas que hicieron Match, cargando su historial de mensajes.',
+          security: 'Protegido por JwtAuthGuard.',
+          business: 'Obtiene el chat de la base de datos validando que el userId solicitante sea participante (user1 o user2). Ejecuta include de mensajes ordenados.',
+          status: '200 OK',
+          reqJson: `// Cuerpo Vacío`,
+          resJson: `{
+  "id": 112,
+  "matchId": 89,
+  "users": [
+    { "id": 1, "name": "Josué" },
+    { "id": 2, "name": "María" }
+  ],
+  "messages": [
+    { "id": 2049, "fromId": 1, "content": "¡Hola! ¿Qué tal el proyecto?", "createdAt": "2026-06-01T13:47:05Z" }
+  ]
+}`
+        },
+        {
+          method: 'POST',
+          route: '/messages',
+          description: 'Envía un nuevo mensaje de texto dentro de una conversación de Match activa.',
+          security: 'Protegido por JwtAuthGuard.',
+          business: 'Crea el mensaje asociado al chatId en base de datos. Si el chat no existe, lanza NotFoundException. Si el usuario no pertenece al chat, lanza ForbiddenException.',
+          status: '201 Created',
+          reqJson: `{
+  "chatId": 112,
+  "fromId": 1,
+  "content": "¡Hola! ¿Qué tal el proyecto?"
+}`,
+          resJson: `{
+  "id": 2049,
+  "chatId": 112,
+  "fromId": 1,
+  "content": "¡Hola! ¿Qué tal el proyecto?",
+  "createdAt": "2026-06-01T13:47:05.000Z"
+}`
+        },
+        {
+          method: 'DELETE',
+          route: '/matches/:id',
+          description: 'Deshace un Match activo entre dos usuarios, eliminando también la sala de chat de forma segura.',
+          security: 'Protegido por JwtAuthGuard.',
+          business: 'Prisma ejecuta un delete en cascada. Elimina de forma transaccional el Match y el Chat con sus mensajes para cumplir con las políticas de privacidad.',
+          status: '200 OK',
+          reqJson: `// Cuerpo Vacío`,
+          resJson: `{
+  "success": true,
+  "message": "Match deshecho y chat eliminado permanentemente."
+}`
+        }
+      ]
+    };
+
+    let activeTab = 'tareas';
+
+    // Switch between Tareas (Task Manager) and Tindel tabs
+    function switchTab(tabName) {
+      activeTab = tabName;
+      resetZoom();
+      
+      const btnTareas = document.getElementById('btn-tareas');
+      const btnTindel = document.getElementById('btn-tindel');
+      const downloadLink = document.getElementById('download-link');
+      const svgViewer = document.getElementById('svg-viewer');
+      const diagramTitle = document.getElementById('diagram-title');
+
+      if (tabName === 'tareas') {
+        btnTareas.className = "px-5 py-2 rounded-lg font-outfit text-sm font-semibold transition-all duration-300 bg-gradient-to-r from-brand-react to-blue-600 text-white shadow-md";
+        btnTindel.className = "px-5 py-2 rounded-lg font-outfit text-sm font-semibold text-slate-400 hover:text-white transition-all duration-300";
+        downloadLink.href = "diagrama_tareas.svg";
+        downloadLink.download = "Diagrama_Conexiones_Tareas.svg";
+        svgViewer.data = "diagrama_tareas.svg";
+        diagramTitle.innerText = "Diagrama: Gestor de Tareas (Deber)";
+      } else {
+        btnTindel.className = "px-5 py-2 rounded-lg font-outfit text-sm font-semibold transition-all duration-300 bg-gradient-to-r from-brand-nest to-red-700 text-white shadow-md";
+        btnTareas.className = "px-5 py-2 rounded-lg font-outfit text-sm font-semibold text-slate-400 hover:text-white transition-all duration-300";
+        downloadLink.href = "diagrama_tindel.svg";
+        downloadLink.download = "Diagrama_Conexiones_Tindel.svg";
+        svgViewer.data = "diagrama_tindel.svg";
+        diagramTitle.innerText = "Diagrama: API Tindel (Proyecto Real)";
+      }
+
+      // Hide JSON details panel and show placeholder
+      document.getElementById('json-placeholder').classList.remove('hidden');
+      document.getElementById('json-details').classList.add('hidden');
+
+      // Populate endpoints list
+      populateEndpoints();
+    }
+
+    // Populate endpoints list on the left side
+    function populateEndpoints() {
+      const container = document.getElementById('endpoints-list');
+      container.innerHTML = '';
+
+      const items = data[activeTab];
+      items.forEach((item, index) => {
+        const button = document.createElement('button');
+        button.onclick = () => selectEndpoint(index);
+        button.className = "w-full text-left p-3 rounded-xl border border-white/5 hover:border-white/10 bg-brand-dark/40 hover:bg-brand-dark/90 flex flex-col gap-1 transition-all duration-200 group";
+
+        const badgeColor = getMethodBadgeColor(item.method);
+
+        button.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-extrabold uppercase ${badgeColor}">${item.method}</span>
+            <span class="text-[10px] text-slate-500 font-mono">${item.status.split(' ')[0]}</span>
+          </div>
+          <div class="font-mono text-xs text-slate-300 group-hover:text-white truncate mt-1">${item.route}</div>
+        `;
+        container.appendChild(button);
+      });
+    }
+
+    function getMethodBadgeColor(method) {
+      switch(method) {
+        case 'POST': return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+        case 'GET': return 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+        case 'PUT': return 'bg-orange-500/10 text-orange-400 border border-orange-500/20';
+        case 'PATCH': return 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
+        case 'DELETE': return 'bg-red-500/10 text-red-400 border border-red-500/20';
+        default: return 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
+      }
+    }
+
+    // Interactive endpoint selection
+    function selectEndpoint(index) {
+      const item = data[activeTab][index];
+
+      // Hide placeholder, show details
+      document.getElementById('json-placeholder').classList.add('hidden');
+      const details = document.getElementById('json-details');
+      details.classList.remove('hidden');
+
+      // Populate details
+      const badge = document.getElementById('json-badge');
+      badge.innerText = item.method;
+      badge.className = `px-2.5 py-1 rounded text-xxs font-mono font-extrabold uppercase ${getMethodBadgeColor(item.method)}`;
+
+      document.getElementById('json-route').innerText = item.route;
+      document.getElementById('json-description').innerText = item.description;
+      document.getElementById('json-security').innerText = item.security;
+      document.getElementById('json-business-logic').innerText = item.business;
+
+      const reqCode = document.getElementById('request-code');
+      reqCode.innerText = item.reqJson;
+
+      const resCode = document.getElementById('response-code');
+      resCode.innerText = item.resJson;
+
+      const resStatus = document.getElementById('response-status');
+      resStatus.innerText = item.status;
+      
+      // Update status text color based on code (2xx vs 4xx)
+      if (item.status.startsWith('2')) {
+        resStatus.className = "text-emerald-400 font-bold";
+      } else {
+        resStatus.className = "text-red-400 font-bold";
+      }
+    }
+
+    // Initialize list
+    populateEndpoints();
+  </script>
+</body>
+</html>

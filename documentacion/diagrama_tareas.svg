@@ -1,0 +1,334 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F111A"/>
+      <stop offset="100%" stop-color="#08090D"/>
+    </linearGradient>
+
+    <!-- React Gradient -->
+    <linearGradient id="reactGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F2FE"/>
+      <stop offset="100%" stop-color="#4FACFE"/>
+    </linearGradient>
+
+    <!-- NestJS Gradient -->
+    <linearGradient id="nestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5B7F"/>
+      <stop offset="100%" stop-color="#E0234E"/>
+    </linearGradient>
+
+    <!-- Database Gradient -->
+    <linearGradient id="dbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#44A08D"/>
+      <stop offset="100%" stop-color="#09B7B9"/>
+    </linearGradient>
+
+    <!-- Glowing Shadows -->
+    <filter id="glowReact" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#00F2FE" flood-opacity="0.2"/>
+    </filter>
+    <filter id="glowNest" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#E0234E" flood-opacity="0.2"/>
+    </filter>
+    <filter id="glowDb" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#09B7B9" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', system-ui, sans-serif; font-size: 28px; font-weight: 800; fill: #FFFFFF; letter-spacing: 0.5px; }
+    .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 400; fill: #A0AEC0; }
+    .layer-title { font-family: 'Outfit', 'Inter', system-ui, sans-serif; font-size: 20px; font-weight: 700; fill: #FFFFFF; }
+    .node-title { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; font-weight: 700; fill: #FFFFFF; }
+    .node-text { font-family: 'Inter', system-ui, sans-serif; font-size: 12px; fill: #CBD5E0; }
+    .http-method { font-family: 'Monaco', 'Courier New', monospace; font-size: 12px; font-weight: 800; fill: #FFFFFF; }
+    .http-post { fill: #48BB78; }
+    .http-get { fill: #4299E1; }
+    .http-put { fill: #ED8936; }
+    .http-patch { fill: #9F7AEA; }
+    .http-delete { fill: #F56565; }
+    .endpoint-text { font-family: 'Monaco', 'Courier New', monospace; font-size: 12px; fill: #E2E8F0; }
+    .arrow-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #718096; font-weight: bold; }
+    .arrow-line { stroke: #4A5568; stroke-width: 1.5; stroke-dasharray: 4,4; fill: none; }
+    .arrow-line-active { stroke: #A0AEC0; stroke-width: 2; fill: none; }
+    .box-bg { fill: #1A202C; stroke: #2D3748; stroke-width: 1.5; rx: 8; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bgGrad)"/>
+  <rect width="1200" height="800" fill="none" stroke="#2D3748" stroke-width="2"/>
+
+  <!-- Grid Pattern (Visual Accent) -->
+  <g opacity="0.03">
+    <path d="M 0,50 L 1200,50 M 0,100 L 1200,100 M 0,150 L 1200,150 M 0,200 L 1200,200 M 0,250 L 1200,250 M 0,300 L 1200,300 M 0,350 L 1200,350 M 0,400 L 1200,400 M 0,450 L 1200,450 M 0,500 L 1200,500 M 0,550 L 1200,550 M 0,600 L 1200,600 M 0,650 L 1200,650 M 0,700 L 1200,700 M 0,750 L 1200,750" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M 50,0 L 50,800 M 100,0 L 100,800 M 150,0 L 150,800 M 200,0 L 200,800 M 250,0 L 250,800 M 300,0 L 300,800 M 350,0 L 350,800 M 400,0 L 400,800 M 450,0 L 450,800 M 500,0 L 500,800 M 550,0 L 550,800 M 600,0 L 600,800 M 650,0 L 650,800 M 700,0 L 700,800 M 750,0 L 750,800 M 800,0 L 800,800 M 850,0 L 850,800 M 900,0 L 900,800 M 950,0 L 950,800 M 1000,0 L 1000,800 M 1050,0 L 1050,800 M 1100,0 L 1100,800 M 1150,0 L 1150,800" stroke="#FFFFFF" stroke-width="1"/>
+  </g>
+
+  <!-- Header -->
+  <g transform="translate(50, 45)">
+    <text class="title" x="0" y="0">DIAGRAMA DE CONEXIONES Y PETICIONES HTTP</text>
+    <text class="subtitle" x="0" y="22">Aplicación: Gestor de Tareas de React a NestJS y Base de Datos (PostgreSQL)</text>
+    <line x1="0" y1="35" x2="1100" y2="35" stroke="#2D3748" stroke-width="1"/>
+  </g>
+
+  <!-- ==================== CAPA 1: FRONTEND (REACT) ==================== -->
+  <g transform="translate(50, 120)">
+    <!-- Layer Border & Label -->
+    <rect width="280" height="600" fill="#151923" stroke="url(#reactGrad)" stroke-width="2" rx="12" filter="url(#glowReact)"/>
+    <text class="layer-title" x="20" y="35">Frontend (React)</text>
+    <text class="subtitle" x="20" y="55">Aplicación del Cliente (Browser)</text>
+    <line x1="20" y1="65" x2="260" y2="65" stroke="#2D3748" stroke-width="1"/>
+
+    <!-- Component 1: Auth Module -->
+    <g transform="translate(20, 90)">
+      <rect class="box-bg" width="240" height="90"/>
+      <rect x="0" y="0" width="6" height="90" fill="url(#reactGrad)" rx="3"/>
+      <text class="node-title" x="18" y="25">Auth Component</text>
+      <text class="node-text" x="18" y="45">• Registro de Usuarios</text>
+      <text class="node-text" x="18" y="62">• Login con Email &amp; Clave</text>
+      <text class="node-text" x="18" y="78">• Guarda JWT en Context/Local</text>
+    </g>
+
+    <!-- Component 2: Tasks Manager UI -->
+    <g transform="translate(20, 200)">
+      <rect class="box-bg" width="240" height="110"/>
+      <rect x="0" y="0" width="6" height="110" fill="url(#reactGrad)" rx="3"/>
+      <text class="node-title" x="18" y="25">Task Dashboard</text>
+      <text class="node-text" x="18" y="45">• Visualización (Task List)</text>
+      <text class="node-text" x="18" y="62">• Formulario (Task Form)</text>
+      <text class="node-text" x="18" y="79">• Filtros de Estado y Prioridad</text>
+      <text class="node-text" x="18" y="95">• Botón "Completar" / "Eliminar"</text>
+    </g>
+
+    <!-- Component 3: HTTP Axios/Fetch Client -->
+    <g transform="translate(20, 480)">
+      <rect class="box-bg" width="240" height="90"/>
+      <rect x="0" y="0" width="6" height="90" fill="#E2E8F0" rx="3"/>
+      <text class="node-title" x="18" y="25">Axios / Fetch Client</text>
+      <text class="node-text" x="18" y="45">• Agrega cabecera Authorization</text>
+      <text class="node-text" x="18" y="62">• Bearer Token: eyJhbGciOi...</text>
+      <text class="node-text" x="18" y="78">• Maneja respuestas JSON</text>
+    </g>
+
+    <!-- Client Communication lines internal -->
+    <path d="M 140, 180 L 140, 480" stroke="#2D3748" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+    <path d="M 140, 310 L 140, 480" stroke="#2D3748" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+  </g>
+
+  <!-- ==================== CAPA 2: BACKEND (NESTJS) ==================== -->
+  <g transform="translate(500, 120)">
+    <!-- Layer Border & Label -->
+    <rect width="360" height="600" fill="#1A151C" stroke="url(#nestGrad)" stroke-width="2" rx="12" filter="url(#glowNest)"/>
+    <text class="layer-title" x="20" y="35">Backend (NestJS API)</text>
+    <text class="subtitle" x="20" y="55">Servidor RESTful (Puerto 3000)</text>
+    <line x1="20" y1="65" x2="340" y2="65" stroke="#3D2028" stroke-width="1"/>
+
+    <!-- Auth Guard Block -->
+    <g transform="translate(20, 85)">
+      <rect class="box-bg" width="320" height="65"/>
+      <rect x="0" y="0" width="6" height="65" fill="#E0234E" rx="3"/>
+      <text class="node-title" x="18" y="25">JwtAuthGuard (Seguridad)</text>
+      <text class="node-text" x="18" y="45">Valida la cabecera: Bearer &lt;Token&gt; (Retorna 401 si falla)</text>
+    </g>
+
+    <!-- Validation Pipe Block -->
+    <g transform="translate(20, 165)">
+      <rect class="box-bg" width="320" height="65"/>
+      <rect x="0" y="0" width="6" height="65" fill="#ED8936" rx="3"/>
+      <text class="node-title" x="18" y="25">ValidationPipe (DTOs)</text>
+      <text class="node-text" x="18" y="45">Valida el body JSON contra class-validator (400 si falla)</text>
+    </g>
+
+    <!-- Task Controller -->
+    <g transform="translate(20, 245)">
+      <rect class="box-bg" width="320" height="110"/>
+      <rect x="0" y="0" width="6" height="110" fill="url(#nestGrad)" rx="3"/>
+      <text class="node-title" x="18" y="25">TasksController (Endpoints)</text>
+      <text class="node-text" x="18" y="45">GET /tasks | POST /tasks (CreateTaskDto)</text>
+      <text class="node-text" x="18" y="62">PUT /tasks/:id (UpdateTaskDto)</text>
+      <text class="node-text" x="18" y="79">PATCH /tasks/:id (CompleteTaskDto)</text>
+      <text class="node-text" x="18" y="96">DELETE /tasks/:id</text>
+    </g>
+
+    <!-- Task Service (Business Logic) -->
+    <g transform="translate(20, 370)">
+      <rect class="box-bg" width="320" height="95"/>
+      <rect x="0" y="0" width="6" height="95" fill="url(#nestGrad)" rx="3"/>
+      <text class="node-title" x="18" y="25">TasksService (Lógica de Negocio)</text>
+      <text class="node-text" x="18" y="45">• Verifica pertenencia (userId == task.userId)</text>
+      <text class="node-text" x="18" y="62">• Controla estados lógicos y fechas límite</text>
+      <text class="node-text" x="18" y="79">• Lanza excepciones semánticas (404, 403)</text>
+    </g>
+
+    <!-- Prisma Service -->
+    <g transform="translate(20, 480)">
+      <rect class="box-bg" width="320" height="90"/>
+      <rect x="0" y="0" width="6" height="90" fill="#09B7B9" rx="3"/>
+      <text class="node-title" x="18" y="25">PrismaService (ORM Client)</text>
+      <text class="node-text" x="18" y="45">• Mapea consultas TypeScript a PostgreSQL</text>
+      <text class="node-text" x="18" y="62">• prisma.task.findMany() / prisma.task.create()</text>
+      <text class="node-text" x="18" y="78">• Garantiza transacciones ACID</text>
+    </g>
+
+    <!-- Internal lines -->
+    <path d="M 180, 150 L 180, 165" stroke="#3D2028" stroke-width="2" fill="none"/>
+    <path d="M 180, 230 L 180, 245" stroke="#3D2028" stroke-width="2" fill="none"/>
+    <path d="M 180, 355 L 180, 370" stroke="#3D2028" stroke-width="2" fill="none"/>
+    <path d="M 180, 465 L 180, 480" stroke="#3D2028" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- ==================== CAPA 3: BASE DE DATOS (POSTGRESQL) ==================== -->
+  <g transform="translate(950, 120)">
+    <!-- Layer Border & Label -->
+    <rect width="200" height="600" fill="#111617" stroke="url(#dbGrad)" stroke-width="2" rx="12" filter="url(#glowDb)"/>
+    <text class="layer-title" x="20" y="35">Database</text>
+    <text class="subtitle" x="20" y="55">PostgreSQL</text>
+    <line x1="20" y1="65" x2="180" y2="65" stroke="#1D302D" stroke-width="1"/>
+
+    <!-- Cylinder Shape representing DB -->
+    <g transform="translate(40, 95)" fill="none" stroke="url(#dbGrad)" stroke-width="2">
+      <path d="M 0,20 A 60,15 0 0,0 120,20 A 60,15 0 0,0 0,20 Z" fill="#1D302D" fill-opacity="0.3"/>
+      <path d="M 0,20 L 0,80 A 60,15 0 0,0 120,80 L 120,20"/>
+      <path d="M 0,50 A 60,15 0 0,0 120,50" stroke-dasharray="3,3"/>
+      <text class="node-title" x="38" y="52" fill="#FFFFFF" stroke="none">Postgres</text>
+    </g>
+
+    <!-- Table 1: User -->
+    <g transform="translate(15, 220)">
+      <rect class="box-bg" width="170" height="150"/>
+      <rect x="0" y="0" width="170" height="25" fill="#1A202C" stroke="#2D3748" stroke-width="1" rx="4"/>
+      <text class="node-title" x="12" y="18">Tabla: User</text>
+      <text class="node-text" x="12" y="45">🔑 id: Int [PK]</text>
+      <text class="node-text" x="12" y="65">👤 name: String</text>
+      <text class="node-text" x="12" y="85">📧 email: String [UQ]</text>
+      <text class="node-text" x="12" y="105">🔒 password: String</text>
+      <text class="node-text" x="12" y="125">🕒 createdAt: DateTime</text>
+    </g>
+
+    <!-- Table 2: Task -->
+    <g transform="translate(15, 395)">
+      <rect class="box-bg" width="170" height="180"/>
+      <rect x="0" y="0" width="170" height="25" fill="#1A202C" stroke="#2D3748" stroke-width="1" rx="4"/>
+      <text class="node-title" x="12" y="18">Tabla: Task</text>
+      <text class="node-text" x="12" y="45">🔑 id: Int [PK]</text>
+      <text class="node-text" x="12" y="65">📝 title: String</text>
+      <text class="node-text" x="12" y="85">📄 description: Text</text>
+      <text class="node-text" x="12" y="105">🚩 status: TaskStatus</text>
+      <text class="node-text" x="12" y="125">📅 dueDate: DateTime</text>
+      <text class="node-text" x="12" y="145">👤 userId: Int [FK -> User]</text>
+      <text class="node-text" x="12" y="165">🕒 createdAt: DateTime</text>
+    </g>
+
+    <!-- Relation line FK -->
+    <path d="M 100, 370 L 100, 395" stroke="#09B7B9" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
+    <circle cx="100" cy="370" r="3" fill="#09B7B9"/>
+    <path d="M 95, 395 L 105, 395" stroke="#09B7B9" stroke-width="1.5"/>
+  </g>
+
+  <!-- ==================== CAPA DE COMUNICACIÓN (FLECHAS CLIENTE -> SERVIDOR) ==================== -->
+  
+  <!-- Arrow definition styles -->
+  <defs>
+    <marker id="arrowHeadLeft" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 Z" fill="#A0AEC0"/>
+    </marker>
+    <marker id="arrowHeadRight" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,3 L9,6 L9,0 Z" fill="#A0AEC0"/>
+    </marker>
+    <!-- Cyan markers -->
+    <marker id="cyanArrowRight" markerWidth="8" markerHeight="8" refX="8" refY="2" orient="auto">
+      <path d="M0,0 L8,2 L0,4 Z" fill="#00F2FE"/>
+    </marker>
+    <marker id="pinkArrowLeft" markerWidth="8" markerHeight="8" refX="0" refY="2" orient="auto">
+      <path d="M8,0 L0,2 L8,4 Z" fill="#FF5B7F"/>
+    </marker>
+  </defs>
+
+  <!-- 1. POST /auth/login (Request &amp; Response) -->
+  <g transform="translate(330, 205)">
+    <path d="M 0,0 L 170,0" stroke="#00F2FE" stroke-width="2" marker-end="url(#cyanArrowRight)" fill="none"/>
+    <rect class="http-post" x="40" y="-22" width="45" height="15" rx="3"/>
+    <text class="http-method" x="47" y="-10">POST</text>
+    <text class="endpoint-text" x="90" y="-10">/auth/login</text>
+
+    <!-- Return -->
+    <path d="M 170,25 L 0,25" stroke="#FF5B7F" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrowLeft)" fill="none"/>
+    <text class="arrow-text" x="12" y="42" fill="#E2E8F0">JSON: { access_token } (201 Created)</text>
+  </g>
+
+  <!-- 2. GET /tasks (Request &amp; Response) -->
+  <g transform="translate(330, 280)">
+    <path d="M 0,0 L 170,0" stroke="#4299E1" stroke-width="2" marker-end="url(#cyanArrowRight)" fill="none"/>
+    <rect class="http-get" x="40" y="-22" width="40" height="15" rx="3"/>
+    <text class="http-method" x="47" y="-10">GET</text>
+    <text class="endpoint-text" x="85" y="-10">/tasks</text>
+    <text class="node-text" x="40" y="15" fill="#718096">Headers: Authorization: Bearer JWT</text>
+
+    <!-- Return -->
+    <path d="M 170,35 L 0,35" stroke="#FF5B7F" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrowLeft)" fill="none"/>
+    <text class="arrow-text" x="22" y="52" fill="#E2E8F0">JSON: [ { id, title, status } ] (200 OK)</text>
+  </g>
+
+  <!-- 3. POST /tasks (Request &amp; Response) -->
+  <g transform="translate(330, 385)">
+    <path d="M 0,0 L 170,0" stroke="#48BB78" stroke-width="2" marker-end="url(#cyanArrowRight)" fill="none"/>
+    <rect class="http-post" x="40" y="-22" width="45" height="15" rx="3"/>
+    <text class="http-method" x="47" y="-10">POST</text>
+    <text class="endpoint-text" x="90" y="-10">/tasks</text>
+
+    <!-- Return -->
+    <path d="M 170,25 L 0,25" stroke="#FF5B7F" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrowLeft)" fill="none"/>
+    <text class="arrow-text" x="12" y="42" fill="#E2E8F0">JSON: { id, title, status, ... } (201 Created)</text>
+  </g>
+
+  <!-- 4. PATCH /tasks/:id (Request &amp; Response) -->
+  <g transform="translate(330, 470)">
+    <path d="M 0,0 L 170,0" stroke="#9F7AEA" stroke-width="2" marker-end="url(#cyanArrowRight)" fill="none"/>
+    <rect class="http-patch" x="35" y="-22" width="50" height="15" rx="3"/>
+    <text class="http-method" x="40" y="-10">PATCH</text>
+    <text class="endpoint-text" x="90" y="-10">/tasks/:id</text>
+
+    <!-- Return -->
+    <path d="M 170,25 L 0,25" stroke="#FF5B7F" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrowLeft)" fill="none"/>
+    <text class="arrow-text" x="18" y="42" fill="#E2E8F0">JSON: { status: "COMPLETED" } (200 OK)</text>
+  </g>
+
+  <!-- 5. DELETE /tasks/:id (Request &amp; Response) -->
+  <g transform="translate(330, 555)">
+    <path d="M 0,0 L 170,0" stroke="#F56565" stroke-width="2" marker-end="url(#cyanArrowRight)" fill="none"/>
+    <rect class="http-delete" x="35" y="-22" width="55" height="15" rx="3"/>
+    <text class="http-method" x="40" y="-10">DELETE</text>
+    <text class="endpoint-text" x="95" y="-10">/tasks/:id</text>
+
+    <!-- Return -->
+    <path d="M 170,25 L 0,25" stroke="#FF5B7F" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#pinkArrowLeft)" fill="none"/>
+    <text class="arrow-text" x="35" y="42" fill="#E2E8F0">JSON: { success: true } (200 OK)</text>
+  </g>
+
+  <!-- ==================== CAPA DE CONEXIÓN CON DB (BACKEND -> DB) ==================== -->
+  <!-- Line from Prisma Service to DB cylinder -->
+  <path d="M 860, 525 L 940, 525" stroke="#09B7B9" stroke-width="2.5" marker-end="url(#cyanArrowRight)" fill="none"/>
+  <path d="M 940, 545 L 860, 545" stroke="#09B7B9" stroke-width="2" stroke-dasharray="3,3" fill="none"/>
+  <text class="node-title" x="872" y="515" fill="#09B7B9" font-size="11">Prisma Client</text>
+  <text class="node-title" x="872" y="565" fill="#09B7B9" font-size="10">SQL Query</text>
+
+  <!-- Line from Prisma Service to Task Table -->
+  <path d="M 830, 480 L 830, 440 L 950, 440" stroke="#09B7B9" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+  <circle cx="830" cy="480" r="3" fill="#09B7B9"/>
+
+  <!-- Line from Prisma Service to User Table -->
+  <path d="M 810, 480 L 810, 310 L 950, 310" stroke="#09B7B9" stroke-width="1.5" stroke-dasharray="2,2" fill="none"/>
+  <circle cx="810" cy="480" r="3" fill="#09B7B9"/>
+
+  <!-- Legend in bottom right -->
+  <g transform="translate(950, 720)">
+    <rect width="200" height="60" fill="#151923" stroke="#2D3748" stroke-width="1" rx="6"/>
+    <circle cx="20" cy="18" r="5" fill="#00F2FE"/>
+    <text class="node-text" x="35" y="22" font-size="10">Petición HTTP (Client -> Server)</text>
+    <circle cx="20" cy="35" r="5" fill="#FF5B7F"/>
+    <text class="node-text" x="35" y="39" font-size="10">Respuesta JSON (Server -> Client)</text>
+    <circle cx="20" cy="48" r="5" fill="#09B7B9"/>
+    <text class="node-text" x="35" y="52" font-size="10">ORM / Conexión Base de Datos</text>
+  </g>
+</svg>

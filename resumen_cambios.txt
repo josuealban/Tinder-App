@@ -1,0 +1,101 @@
+================================================================================
+RESUMEN DE CAMBIOS: RBAC, CONSULTAS NATIVAS Y CONSULTAS DERIVADAS
+================================================================================
+
+Este documento detalla todas las modificaciones realizadas en el proyecto Tindel
+para la implementación del Control de Acceso Basado en Roles (RBAC) y la
+creación de consultas nativas y derivadas.
+
+--------------------------------------------------------------------------------
+1. ARCHIVOS MODIFICADOS Y CREADOS
+--------------------------------------------------------------------------------
+
+A. Base de Datos & Prisma Schemas:
+   * Modificado: prisma/schema.prisma
+     - Qué cambió: Se agregó el enum `Role` (con valores `USER` y `ADMIN`) y se
+       mapeó al esquema "usuarios". Se añadió el campo `role` al modelo `User`
+       con valor por defecto `USER`.
+     - Por qué: Para almacenar el rol de cada usuario en la base de datos central.
+
+   * Modificado: prisma/usuarios/schema.prisma
+     - Qué cambió: Se agregaron los mismos elementos del enum `Role` y campo `role`
+       dentro del modelo `User` en la base de datos de usuarios.
+     - Por qué: Para mantener la coherencia con el microservicio/esquema específico
+       de usuarios.
+
+B. Módulo de Autenticación & RBAC (src/auth):
+   * Creado: src/auth/enums/role.enum.ts
+     - Qué contiene: Definición del enum TypeScript para roles (`Role.USER`, `Role.ADMIN`).
+     - Por qué: Para poder tipar los roles en el código sin depender directamente del
+       cliente Prisma generado.
+
+   * Creado: src/auth/decorators/roles.decorator.ts
+     - Qué contiene: El decorador personalizado `@Roles(...roles: Role[])`.
+     - Por qué: Permite definir qué roles tienen acceso a una ruta específica.
+
+   * Creado: src/auth/guards/roles.guard.ts
+     - Qué contiene: Clase `RolesGuard` que lee los roles requeridos mediante Reflector
+       y comprueba si el rol del usuario autenticado coincide con los permitidos.
+     - Por qué: Bloquea o permite peticiones HTTP de manera automática según el rol del JWT.
+
+   * Modificado: src/auth/decorators/current-user.decorator.ts
+     - Qué cambió: Se agregó la propiedad `role: string` a la clase `AuthenticatedUser`.
+     - Por qué: Para que al inyectar el `@CurrentUser()` en cualquier controlador,
+       tengamos acceso al rol del usuario.
+
+   * Modificado: src/auth/strategies/jwt.strategy.ts
+     - Qué cambió: El método `validate(payload)` ahora extrae el usuario de la BD
+       y retorna el objeto incluyendo la propiedad `role: user.role`.
+     - Por qué: Permite poblar dinámicamente el request con el rol actual guardado
+       en la base de datos en cada petición protegida.
+
+C. Servicios y Controladores de Usuario (src/user):
+   * Modificado: src/user/user.service.ts
+     - Qué cambió:
+       1. Se implementó `findDerived(minAge, maxAge, country)` (Consulta Derivada).
+          Filtra dinámicamente usando la API orientada a objetos de Prisma,
+          incluyendo las fotos del usuario si cumple las condiciones.
+       2. Se implementó `getStatsByCountry()` (Consulta Nativa). Ejecuta SQL puro
+          mediante `this.prisma.$queryRawUnsafe` para contar usuarios agrupados
+          por país directamente en la tabla `"usuarios"."User"`.
+     - Por qué: Para cumplir con los requerimientos de implementar consultas nativas
+       y derivadas reutilizables.
+
+   * Modificado: src/user/user.controller.ts
+     - Qué cambió:
+       1. Se añadió `RolesGuard` a nivel de clase `@UseGuards(JwtAuthGuard, RolesGuard)`.
+       2. Se protegió con `@Roles(Role.ADMIN)` los endpoints `create`, `findAll` y `remove`.
+       3. Se crearon los endpoints `GET /users/stats/by-country` (ADMIN) y
+          `GET /users/search/derived` (USER/ADMIN).
+     - Por qué: Expone las nuevas consultas y restringe los endpoints administrativos
+       únicamente a usuarios con rol ADMIN.
+
+--------------------------------------------------------------------------------
+2. CÓMO PROBAR Y REVISAR CADA PARTE POR SEPARADO
+--------------------------------------------------------------------------------
+
+A. Verificar la Base de Datos (Prisma):
+   * Comando de verificación: `npx prisma studio` o mediante consola de base de datos.
+   * Qué revisar: Comprobar que en la tabla `User` (esquema `usuarios`), ahora exista
+     la columna `role` con tipo ENUM (`USER` o `ADMIN`) y que los registros tengan
+     por defecto el valor 'USER'.
+
+B. Probar la Consulta Derivada:
+   * Endpoint: `GET http://localhost:3000/users/search/derived?minAge=18&maxAge=30&country=Ecuador`
+   * Qué revisar: Debe retornar una lista de usuarios cuyo rango de edad esté entre
+     18 y 30 años, y cuyo país sea 'Ecuador' (sin importar mayúsculas/minúsculas),
+     incluyendo el arreglo `photos` de cada uno.
+
+C. Probar la Consulta Nativa (Solo ADMIN):
+   * Endpoint: `GET http://localhost:3000/users/stats/by-country`
+   * Qué revisar: Debe retornar un arreglo JSON con estadísticas agrupadas
+     (ej. `[{"country": "Ecuador", "count": 5}]`) usando SQL nativo. Requiere JWT de ADMIN.
+
+D. Probar el RBAC (Roles):
+   * Prueba 1 (Fallo esperado): Loguéate con un usuario estándar ('USER'), obtén su token
+     e intenta consultar `GET http://localhost:3000/users`. Debe responder `403 Forbidden`
+     porque `findAll` está restringido para ADMIN.
+   * Prueba 2 (Éxito esperado): Cambia el rol de un usuario a 'ADMIN' en la base de datos.
+     Usa el token de este usuario para la misma consulta `GET http://localhost:3000/users`.
+     Debe permitirte ver el listado de usuarios correctamente.
+================================================================================

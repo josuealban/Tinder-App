@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1654" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ===== TITULO PRINCIPAL ===== -->
+    <mxCell id="titulo" value="DIAGRAMA DE CONEXIONES Y PETICIONES HTTP — Aplicación Gestión de Tareas (React + NestJS + PostgreSQL)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fontStyle=1;fontColor=#1A1A2E;" vertex="1" parent="1">
+      <mxGeometry x="30" y="20" width="1590" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!-- ===================== ZONA FRONTEND ========================= -->
+    <!-- ============================================================ -->
+    <mxCell id="zona-frontend" value="Frontend (React)&#xa;localhost:5173" style="swimlane;startSize=40;fillColor=#EBF5FB;strokeColor=#1A5276;fontStyle=1;fontSize=13;fontColor=#1A5276;swimlaneLine=1;rounded=1;arcSize=3;" vertex="1" parent="1">
+      <mxGeometry x="30" y="80" width="280" height="1000" as="geometry" />
+    </mxCell>
+
+    <!-- Auth Page -->
+    <mxCell id="fe-register" value="Register Page&#xa;(Interface axios POST)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00BCD4;strokeColor=#006EAF;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-frontend">
+      <mxGeometry x="40" y="60" width="200" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- Login Page -->
+    <mxCell id="fe-login" value="Login Page&#xa;(Interface axios POST)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00BCD4;strokeColor=#006EAF;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-frontend">
+      <mxGeometry x="40" y="145" width="200" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- Task List -->
+    <mxCell id="fe-task-list" value="Task List&#xa;(Interface axios GET)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-frontend">
+      <mxGeometry x="40" y="265" width="200" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- Task Form Create -->
+    <mxCell id="fe-task-create" value="Task Form (Create)&#xa;(Interface axios POST)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-frontend">
+      <mxGeometry x="40" y="385" width="200" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- Task Form Edit -->
+    <mxCell id="fe-task-edit" value="Task Form (Edit)&#xa;(Interface axios PUT/PATCH)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8BC34A;strokeColor=#558B2F;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-frontend">
+      <mxGeometry x="40" y="505" width="200" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- Delete Button -->
+    <mxCell id="fe-task-delete" value="Delete Button&#xa;(Interface axios DELETE)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-frontend">
+      <mxGeometry x="40" y="625" width="200" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- Axios Label -->
+    <mxCell id="fe-label-axios" value="📦 Cliente HTTP: Axios&#xa;Maneja tokens JWT en headers&#xa;automáticamente via Interceptors" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontColor=#5D4037;fontSize=9;fontStyle=2;" vertex="1" parent="zona-frontend">
+      <mxGeometry x="20" y="870" width="240" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- JWT note -->
+    <mxCell id="fe-label-jwt" value="🔐 JWT Token guardado en&#xa;localStorage tras el login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontColor=#1B5E20;fontSize=9;fontStyle=2;" vertex="1" parent="zona-frontend">
+      <mxGeometry x="20" y="940" width="240" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!-- ===================== ZONA BACKEND ========================= -->
+    <!-- ============================================================ -->
+    <mxCell id="zona-backend" value="Backend — NestJS (localhost:3000)" style="swimlane;startSize=40;fillColor=#FDEDEC;strokeColor=#E0234E;fontStyle=1;fontSize=13;fontColor=#E0234E;swimlaneLine=1;rounded=1;arcSize=3;" vertex="1" parent="1">
+      <mxGeometry x="540" y="80" width="570" height="1000" as="geometry" />
+    </mxCell>
+
+    <!-- Auth Module -->
+    <mxCell id="be-auth-mod" value="Módulo Auth" style="swimlane;startSize=28;fillColor=#E0234E;strokeColor=#8A0025;fontColor=#ffffff;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="zona-backend">
+      <mxGeometry x="25" y="55" width="520" height="115" as="geometry" />
+    </mxCell>
+    <mxCell id="be-auth-ctrl" value="Controller (Auth)&#xa;POST /auth/register&#xa;POST /auth/login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF5B7F;strokeColor=#C62828;fontColor=#ffffff;fontSize=10;" vertex="1" parent="be-auth-mod">
+      <mxGeometry x="10" y="32" width="235" height="68" as="geometry" />
+    </mxCell>
+    <mxCell id="be-auth-svc" value="Service (Auth)&#xa;register() → bcrypt.hash()&#xa;login() → validateUser() + JWT.sign()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF5B7F;strokeColor=#C62828;fontColor=#ffffff;fontSize=10;" vertex="1" parent="be-auth-mod">
+      <mxGeometry x="272" y="32" width="235" height="68" as="geometry" />
+    </mxCell>
+
+    <!-- Tasks Module -->
+    <mxCell id="be-tasks-mod" value="Módulo Tasks ⭐" style="swimlane;startSize=28;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="zona-backend">
+      <mxGeometry x="25" y="200" width="520" height="490" as="geometry" />
+    </mxCell>
+
+    <!-- GET -->
+    <mxCell id="be-tasks-ctrl-get" value="Controller (Task)&#xa;GET /tasks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="10" y="36" width="235" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="be-tasks-svc-get" value="Service (findAll)&#xa;prisma.task.findMany({ where: { userId } })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#ffffff;fontSize=10;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="272" y="36" width="235" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- POST -->
+    <mxCell id="be-tasks-ctrl-post" value="Controller (Task)&#xa;POST /tasks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="10" y="106" width="235" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="be-tasks-svc-post" value="Service (create)&#xa;prisma.task.create({ data: dto })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#ffffff;fontSize=10;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="272" y="106" width="235" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- PUT -->
+    <mxCell id="be-tasks-ctrl-put" value="Controller (Task)&#xa;PUT /tasks/:id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8BC34A;strokeColor=#558B2F;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="10" y="176" width="235" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="be-tasks-svc-put" value="Service (update)&#xa;prisma.task.update({ where: { id }, data: dto })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#AED581;strokeColor=#558B2F;fontColor=#1B5E20;fontSize=10;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="272" y="176" width="235" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- PATCH -->
+    <mxCell id="be-tasks-ctrl-patch" value="Controller (Task)&#xa;PATCH /tasks/:id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="10" y="246" width="235" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="be-tasks-svc-patch" value="Service (updatePartial)&#xa;prisma.task.update({ where: {id}, data })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#42A5F5;strokeColor=#1565C0;fontColor=#ffffff;fontSize=10;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="272" y="246" width="235" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- DELETE -->
+    <mxCell id="be-tasks-ctrl-del" value="Controller (Task)&#xa;DELETE /tasks/:id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="10" y="316" width="235" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="be-tasks-svc-del" value="Service (remove)&#xa;prisma.task.delete({ where: { id } })" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF9A9A;strokeColor=#B71C1C;fontColor=#B71C1C;fontSize=10;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="272" y="316" width="235" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Connector line inside Tasks module -->
+    <mxCell id="be-tasks-sep" value="" style="line;strokeColor=#1565C0;fillColor=none;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="255" y="36" width="10" height="330" as="geometry" />
+    </mxCell>
+
+    <!-- DTO Validation note -->
+    <mxCell id="be-tasks-dto" value="📋 CreateTaskDto / UpdateTaskDto — ValidationPipe aplica decoradores de class-validator automáticamente" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontColor=#0D47A1;fontSize=9;fontStyle=2;" vertex="1" parent="be-tasks-mod">
+      <mxGeometry x="10" y="390" width="500" height="35" as="geometry" />
+    </mxCell>
+
+    <!-- JWT Guard -->
+    <mxCell id="be-guard" value="🛡️ JwtAuthGuard — Todos los endpoints de /tasks requieren: Authorization: Bearer &lt;token&gt; en Headers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontColor=#5D4037;fontSize=10;fontStyle=2;" vertex="1" parent="zona-backend">
+      <mxGeometry x="25" y="820" width="520" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- Response Format -->
+    <mxCell id="be-response" value="📤 Respuestas en formato JSON — 201 Created (POST) | 200 OK (GET/PUT/PATCH/DELETE) | 400 Bad Request | 404 Not Found | 401 Unauthorized" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontColor=#1B5E20;fontSize=9;fontStyle=2;" vertex="1" parent="zona-backend">
+      <mxGeometry x="25" y="875" width="520" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!-- ===================== ZONA ORM ============================ -->
+    <!-- ============================================================ -->
+    <mxCell id="zona-orm" value="ORM (Prisma Client)" style="swimlane;startSize=40;fillColor=#E8F8F5;strokeColor=#00796B;fontStyle=1;fontSize=13;fontColor=#00796B;swimlaneLine=1;rounded=1;arcSize=3;" vertex="1" parent="1">
+      <mxGeometry x="1155" y="80" width="220" height="1000" as="geometry" />
+    </mxCell>
+
+    <mxCell id="orm-user" value="User&#xa;(findUnique / create)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00BCD4;strokeColor=#006EAF;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-orm">
+      <mxGeometry x="20" y="60" width="180" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="orm-task-findmany" value="Task&#xa;(findMany)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-orm">
+      <mxGeometry x="20" y="220" width="180" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="orm-task-create" value="Task&#xa;(create)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-orm">
+      <mxGeometry x="20" y="310" width="180" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="orm-task-update" value="Task&#xa;(update)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8BC34A;strokeColor=#558B2F;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-orm">
+      <mxGeometry x="20" y="400" width="180" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="orm-task-delete" value="Task&#xa;(delete)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#ffffff;fontStyle=1;fontSize=11;" vertex="1" parent="zona-orm">
+      <mxGeometry x="20" y="490" width="180" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!-- ===================== ZONA BD ============================ -->
+    <!-- ============================================================ -->
+    <mxCell id="zona-bd" value="BD (PostgreSQL)" style="swimlane;startSize=40;fillColor=#EBF5FB;strokeColor=#1565C0;fontStyle=1;fontSize=13;fontColor=#1565C0;swimlaneLine=1;rounded=1;arcSize=3;" vertex="1" parent="1">
+      <mxGeometry x="1415" y="80" width="210" height="1000" as="geometry" />
+    </mxCell>
+
+    <mxCell id="bd-user" value="tabla: User&#xa;id, name, email&#xa;password, createdAt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#BBDEFB;strokeColor=#1565C0;fontColor=#0D47A1;fontStyle=1;fontSize=10;" vertex="1" parent="zona-bd">
+      <mxGeometry x="15" y="55" width="180" height="80" as="geometry" />
+    </mxCell>
+
+    <mxCell id="bd-task" value="tabla: Task&#xa;id, title, description&#xa;status, priority, dueDate&#xa;userId [FK], createdAt" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#C8E6C9;strokeColor=#2E7D32;fontColor=#1B5E20;fontStyle=1;fontSize=10;" vertex="1" parent="zona-bd">
+      <mxGeometry x="15" y="230" width="180" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!-- === FLECHAS: FRONTEND → BACKEND (con labels HTTP)  ======== -->
+    <!-- ============================================================ -->
+
+    <!-- POST /auth/register -->
+    <mxCell id="arr-register" value="POST /auth/register&#xa;{ name, email, password }&#xa;→ 201: { id, name, email }" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#E0234E;strokeWidth=2;fontColor=#E0234E;fontSize=9;fontStyle=1;fillColor=#E0234E;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-register" target="be-auth-mod">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- POST /auth/login -->
+    <mxCell id="arr-login" value="POST /auth/login&#xa;{ email, password }&#xa;→ 201: { access_token }" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=2;fontColor=#C62828;fontSize=9;fontStyle=1;fillColor=#C62828;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-login" target="be-auth-mod">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- GET /tasks -->
+    <mxCell id="arr-get-tasks" value="GET /tasks&#xa;Headers: Bearer &lt;token&gt;&#xa;→ 200: [{ id, title, status }]" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1976D2;strokeWidth=2;fontColor=#1976D2;fontSize=9;fontStyle=1;fillColor=#1976D2;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-task-list" target="be-tasks-mod">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- POST /tasks -->
+    <mxCell id="arr-post-tasks" value="POST /tasks&#xa;{ title, description, priority }&#xa;→ 201: { id, title, status }" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#388E3C;strokeWidth=2;fontColor=#388E3C;fontSize=9;fontStyle=1;fillColor=#388E3C;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-task-create" target="be-tasks-mod">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- PUT /tasks/:id -->
+    <mxCell id="arr-put-tasks" value="PUT /tasks/:id&#xa;{ title, description, status, priority }&#xa;→ 200: { id, title, status, updatedAt }" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#558B2F;strokeWidth=2;fontColor=#558B2F;fontSize=9;fontStyle=1;fillColor=#558B2F;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-task-edit" target="be-tasks-mod">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- DELETE /tasks/:id -->
+    <mxCell id="arr-del-tasks" value="DELETE /tasks/:id&#xa;→ 200: { success: true }" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B71C1C;strokeWidth=2;fontColor=#B71C1C;fontSize=9;fontStyle=1;fillColor=#B71C1C;endArrow=block;endFill=1;" edge="1" parent="1" source="fe-task-delete" target="be-tasks-mod">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!-- === FLECHAS: BACKEND → ORM ================================ -->
+    <!-- ============================================================ -->
+
+    <mxCell id="arr-auth-orm" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="be-auth-mod" target="orm-user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-get-orm" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="be-tasks-ctrl-get" target="orm-task-findmany">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-post-orm" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="be-tasks-ctrl-post" target="orm-task-create">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-put-orm" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="be-tasks-ctrl-put" target="orm-task-update">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-patch-orm" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="be-tasks-ctrl-patch" target="orm-task-update">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-del-orm" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#00796B;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1" source="be-tasks-ctrl-del" target="orm-task-delete">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!-- === FLECHAS: ORM → BD (punteadas) ========================= -->
+    <!-- ============================================================ -->
+
+    <mxCell id="arr-orm-user-bd" value="SQL SELECT/INSERT" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-user" target="bd-user">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-orm-findmany-bd" value="SQL SELECT" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-task-findmany" target="bd-task">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-orm-create-bd" value="SQL INSERT" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-task-create" target="bd-task">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-orm-update-bd" value="SQL UPDATE" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-task-update" target="bd-task">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <mxCell id="arr-orm-delete-bd" value="SQL DELETE" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=block;endFill=1;dashed=1;fontSize=9;fontColor=#1565C0;" edge="1" parent="1" source="orm-task-delete" target="bd-task">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- ============================================================ -->
+    <!-- ===================== LEYENDA ============================== -->
+    <!-- ============================================================ -->
+    <mxCell id="leyenda" value="LEYENDA DE MÉTODOS HTTP" style="swimlane;startSize=28;fillColor=#F8F9FA;strokeColor=#495057;fontStyle=1;fontSize=11;fontColor=#212529;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="30" y="1110" width="1595" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-get" value="GET — Obtener datos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="10" y="12" width="185" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-post" value="POST — Crear recurso" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#388E3C;strokeColor=#1B5E20;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="210" y="12" width="185" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-put" value="PUT — Actualizar (completo)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8BC34A;strokeColor=#558B2F;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="410" y="12" width="195" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-patch" value="PATCH — Actualizar parcial" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#42A5F5;strokeColor=#1565C0;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="620" y="12" width="195" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-delete" value="DELETE — Eliminar recurso" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F44336;strokeColor=#B71C1C;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="830" y="12" width="195" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-orm" value="→ Sólida: HTTP Request/Response" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00796B;strokeColor=#004D40;fontColor=#ffffff;fontSize=10;fontStyle=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="1040" y="12" width="220" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="leg-bd" value="- - Punteada: Consulta SQL (ORM→BD)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=#0D47A1;fontColor=#ffffff;fontSize=10;fontStyle=1;dashed=1;" vertex="1" parent="leyenda">
+      <mxGeometry x="1275" y="12" width="260" height="28" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

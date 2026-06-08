@@ -59,6 +59,23 @@
       "name": "Users",
       "item": [
         {
+          "name": "Get My Profile (me)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/me",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
           "name": "Get All Users",
           "request": {
             "method": "GET",

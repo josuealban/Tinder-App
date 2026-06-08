@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreatePhotoDto } from './dto/create-photo.dto';
-import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { PrismaService } from '../prisma/prisma.service.js';
+import { CreatePhotoDto } from './dto/create-photo.dto.js';
+import { UpdatePhotoDto } from './dto/update-photo.dto.js';
 
 @Injectable()
 export class PhotoService {
@@ -32,7 +32,7 @@ export class PhotoService {
   }
 
   async update(id: number, updatePhotoDto: UpdatePhotoDto) {
-    await this.findOne(id); // Verifica que existe
+    await this.findOne(id);
     return this.prisma.photo.update({
       where: { id },
       data: updatePhotoDto,
@@ -40,7 +40,7 @@ export class PhotoService {
   }
 
   async remove(id: number) {
-    await this.findOne(id); // Verifica que existe
+    await this.findOne(id);
     return this.prisma.photo.delete({
       where: { id },
     });

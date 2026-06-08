@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateChatDto } from './dto/create-chat.dto';
-import { UpdateChatDto } from './dto/update-chat.dto';
+import { PrismaService } from '../prisma/prisma.service.js';
+import { CreateChatDto } from './dto/create-chat.dto.js';
+import { UpdateChatDto } from './dto/update-chat.dto.js';
 
 @Injectable()
 export class ChatService {
@@ -48,7 +48,7 @@ export class ChatService {
   }
 
   async update(id: number, updateChatDto: UpdateChatDto) {
-    await this.findOne(id); // Verifica que existe
+    await this.findOne(id);
     return this.prisma.chat.update({
       where: { id },
       data: updateChatDto,
@@ -56,7 +56,7 @@ export class ChatService {
   }
 
   async remove(id: number) {
-    await this.findOne(id); // Verifica que existe
+    await this.findOne(id);
     return this.prisma.chat.delete({
       where: { id },
     });

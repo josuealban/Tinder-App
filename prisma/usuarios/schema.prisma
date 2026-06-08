@@ -24,6 +24,11 @@ enum Gender {
   OTHER
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 enum SubscriptionTier {
   FREE
   BRONZE
@@ -41,6 +46,7 @@ model User {
   phone     String?  @unique
   name      String
   age       Int
+  role      Role     @default(USER)
 
   // Relaciones dentro de usuarios_db
   profile   Profile?

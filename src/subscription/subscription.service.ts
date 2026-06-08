@@ -27,7 +27,7 @@ export class SubscriptionService {
   }
 
   async update(tier: SubscriptionTier, updateSubscriptionDto: UpdateSubscriptionDto) {
-    await this.findOne(tier); // Verify it exists
+    await this.findOne(tier);
     return this.prisma.subscriptionPlan.update({
       where: { tier },
       data: updateSubscriptionDto,
@@ -35,7 +35,7 @@ export class SubscriptionService {
   }
 
   async remove(tier: SubscriptionTier) {
-    await this.findOne(tier); // Verify it exists
+    await this.findOne(tier);
     return this.prisma.subscriptionPlan.delete({
       where: { tier },
     });

@@ -39,7 +39,7 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    await this.findOne(id); // Verifica que existe antes de actualizar
+    await this.findOne(id);
     return this.prisma.user.update({
       where: { id },
       data: updateUserDto,
@@ -47,10 +47,38 @@ export class UserService {
   }
 
   async remove(id: number) {
-    await this.findOne(id); // Verifica que existe antes de eliminar
+    await this.findOne(id);
     return this.prisma.user.delete({
       where: { id },
     });
+  }
+
+  async findDerived(minAge: number, maxAge: number, country?: string) {
+    return this.prisma.user.findMany({
+      where: {
+        age: {
+          gte: minAge,
+          lte: maxAge,
+        },
+        country: country ? {
+          equals: country,
+          mode: 'insensitive',
+        } : undefined,
+      },
+      include: {
+        photos: true,
+      },
+    });
+  }
+
+  async getStatsByCountry() {
+    return this.prisma.$queryRawUnsafe(`
+      SELECT country, COUNT(*)::int as count
+      FROM "usuarios"."User"
+      WHERE country IS NOT NULL
+      GROUP BY country
+      ORDER BY count DESC
+    `);
   }
 }
 

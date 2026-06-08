@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UserService } from '../../user/user.service.js';
 import { AuthenticatedUser } from '../decorators/current-user.decorator.js';
+import { Role } from '../enums/role.enum.js';
 
 interface JwtPayload {
   email: string;
@@ -27,6 +28,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (user.isRestricted) {
       throw new UnauthorizedException('El usuario está restringido');
     }
-    return { userId: user.id, email: user.email };
+    return { userId: user.id, email: user.email, role: user.role as Role };
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable, ConflictException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateInteractionDto } from './dto/create-interaction.dto';
-import { UpdateInteractionDto } from './dto/update-interaction.dto';
-import { InteractionType } from '../domain/enums/interaction-type.enum';
+import { PrismaService } from '../prisma/prisma.service.js';
+import { CreateInteractionDto } from './dto/create-interaction.dto.js';
+import { UpdateInteractionDto } from './dto/update-interaction.dto.js';
+import { InteractionType } from '../domain/enums/interaction-type.enum.js';
 
 @Injectable()
 export class InteractionService {
@@ -15,12 +15,10 @@ export class InteractionService {
       throw new ConflictException('User cannot interact with themselves');
     }
 
-    // Create the interaction
     const interaction = await this.prisma.interaction.create({
       data: { fromId, toId, type },
     });
 
-    // Check if it's a MATCH (if it's a LIKE/SUPERLIKE)
     if (type === InteractionType.LIKE || type === InteractionType.SUPERLIKE) {
       const reciprocal = await this.prisma.interaction.findFirst({
         where: {
@@ -34,12 +32,11 @@ export class InteractionService {
       });
 
       if (reciprocal) {
-        // Create a MATCH
         await this.prisma.match.create({
           data: {
             user1Id: Math.min(fromId, toId),
             user2Id: Math.max(fromId, toId),
-            chat: { create: {} }, // Automatically create a chat for the match
+            chat: { create: {} },
           },
         });
       }
