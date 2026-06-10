@@ -31,7 +31,7 @@
     "prisma:push:matches": "prisma db push --config=prisma.matches.config.ts",
     "prisma:push:mensajeria": "prisma db push --config=prisma.mensajeria.config.ts",
     "prisma:push:all": "npm run prisma:push:usuarios && npm run prisma:push:matches && npm run prisma:push:mensajeria",
-    "seed": "tsx prisma/seed.ts",
+    "seed": "tsx prisma/seed-monolith.ts",
     "seed:usuarios": "tsx prisma/seeds/seed.usuarios.ts",
     "seed:matches": "tsx prisma/seeds/seed.matches.ts",
     "seed:mensajeria": "tsx prisma/seeds/seed.mensajeria.ts"

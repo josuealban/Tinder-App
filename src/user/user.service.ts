@@ -48,6 +48,8 @@ export class UserService {
 
   async remove(id: number) {
     await this.findOne(id);
+    // Delete related photos first (FK RESTRICT)
+    await this.prisma.photo.deleteMany({ where: { userId: id } });
     return this.prisma.user.delete({
       where: { id },
     });

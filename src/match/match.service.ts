@@ -64,6 +64,12 @@ export class MatchService {
 
   async remove(id: number) {
     await this.findOne(id);
+    // Delete related messages → chat → match (FK RESTRICT)
+    const chat = await this.prisma.chat.findUnique({ where: { matchId: id } });
+    if (chat) {
+      await this.prisma.message.deleteMany({ where: { chatId: chat.id } });
+      await this.prisma.chat.delete({ where: { id: chat.id } });
+    }
     return this.prisma.match.delete({
       where: { id },
     });
