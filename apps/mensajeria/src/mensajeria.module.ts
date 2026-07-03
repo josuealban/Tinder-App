@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { MensajeriaController } from './mensajeria.controller';
-import { MensajeriaService } from './mensajeria.service';
+import { ChatModule } from './chat/chat.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
-  imports: [],
-  controllers: [MensajeriaController],
-  providers: [MensajeriaService],
+  imports: [
+    ChatModule,
+    MessageModule,
+  ],
 })
-export class MensajeriaModule {}
+export class MensajeriaModule { }
