@@ -1,8 +1,59 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/tindel/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/tindel/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/tindel",
+  "projects": {
+    "gateway": {
+      "type": "application",
+      "root": "apps/gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/gateway/tsconfig.app.json"
+      }
+    },
+    "matches": {
+      "type": "application",
+      "root": "apps/matches",
+      "entryFile": "main",
+      "sourceRoot": "apps/matches/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/matches/tsconfig.app.json"
+      }
+    },
+    "mensajeria": {
+      "type": "application",
+      "root": "apps/mensajeria",
+      "entryFile": "main",
+      "sourceRoot": "apps/mensajeria/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mensajeria/tsconfig.app.json"
+      }
+    },
+    "tindel": {
+      "type": "application",
+      "root": "apps/tindel",
+      "entryFile": "main",
+      "sourceRoot": "apps/tindel/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/tindel/tsconfig.app.json"
+      }
+    },
+    "usuarios": {
+      "type": "application",
+      "root": "apps/usuarios",
+      "entryFile": "main",
+      "sourceRoot": "apps/usuarios/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/usuarios/tsconfig.app.json"
+      }
+    }
   }
 }
