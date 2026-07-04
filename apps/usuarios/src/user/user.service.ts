@@ -71,7 +71,10 @@ export class UserService {
         name,
         age,
         profile: {
-          update: profileData
+          upsert: {
+            create: { ...profileData, hobbies: (profileData as any).hobbies || [], musicList: (profileData as any).musicList || [] },
+            update: profileData,
+          }
         }
       },
       include: {
@@ -112,12 +115,12 @@ export class UserService {
   }
 
   async getStatsByCountry() {
-    return this.prisma.$queryRawUnsafe(`
+    return this.prisma.$queryRaw`
       SELECT country, COUNT(*)::int as count
-      FROM "usuarios"."Profile"
+      FROM "Profile"
       WHERE country IS NOT NULL
       GROUP BY country
       ORDER BY count DESC
-    `);
+    `;
   }
 }
