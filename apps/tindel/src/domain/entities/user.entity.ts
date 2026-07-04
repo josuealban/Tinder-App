@@ -1,7 +1,7 @@
-import { Gender } from '../enums/gender.enum.js';
-import { SubscriptionTier } from '../enums/subscription-tier.enum.js';
-import { SubscriptionPlan } from './subscription-plan.entity.js';
-import { Photo } from './photo.entity.js';
+import { Gender } from '../enums/gender.enum';
+import { SubscriptionTier } from '../enums/subscription-tier.enum';
+import { SubscriptionPlan } from './subscription-plan.entity';
+import { Photo } from './photo.entity';
 
 export class User {
   id: number;

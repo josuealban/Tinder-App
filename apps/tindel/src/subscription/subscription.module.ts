@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { SubscriptionService } from './subscription.service.js';
-import { SubscriptionController } from './subscription.controller.js';
-import { PrismaModule } from '../prisma/prisma.module.js';
+import { SubscriptionService } from './subscription.service';
+import { SubscriptionController } from './subscription.controller';
+import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
   imports: [PrismaModule],

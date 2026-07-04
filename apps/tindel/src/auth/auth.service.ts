@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service.js';
+import { UserService } from '../user/user.service';
 import { User } from '@prisma/client';
-import { CreateUserDto } from '../user/dto/create-user.dto.js';
+import { CreateUserDto } from '../user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 
 type UserWithoutPassword = Omit<User, 'password'>;

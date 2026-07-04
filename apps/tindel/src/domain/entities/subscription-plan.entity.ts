@@ -1,4 +1,4 @@
-import { SubscriptionTier } from '../enums/subscription-tier.enum.js';
+import { SubscriptionTier } from '../enums/subscription-tier.enum';
 
 export class SubscriptionPlan {
   tier: SubscriptionTier;

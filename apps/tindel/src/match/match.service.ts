@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
-import { CreateMatchDto } from './dto/create-match.dto.js';
-import { UpdateMatchDto } from './dto/update-match.dto.js';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateMatchDto } from './dto/create-match.dto';
+import { UpdateMatchDto } from './dto/update-match.dto';
 
 @Injectable()
 export class MatchService {

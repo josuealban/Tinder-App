@@ -1,6 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-import { Role } from '../enums/role.enum.js';
+import { Role } from '../enums/role.enum';
 
 export class AuthenticatedUser {
   userId!: number;

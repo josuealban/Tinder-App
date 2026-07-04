@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { NestFactory, HttpAdapterHost } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { AppModule } from './app.module.js';
+import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './prisma-client-exception.filter';
 
 async function bootstrap() {

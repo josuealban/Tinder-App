@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ChatModule } from './chat/chat.module';
-import { MessageModule } from './message/message.module';
+import { ChatModule } from '../../tindel/src/chat/chat.module';
+import { MessageModule } from '../../tindel/src/message/message.module';
 
 @Module({
-  imports: [
-    ChatModule,
-    MessageModule,
-  ],
+  imports: [ChatModule, MessageModule],
 })
-export class MensajeriaModule { }
+export class MensajeriaModule {}

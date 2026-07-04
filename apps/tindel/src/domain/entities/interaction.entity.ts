@@ -1,4 +1,4 @@
-import { InteractionType } from '../enums/interaction-type.enum.js';
+import { InteractionType } from '../enums/interaction-type.enum';
 
 export class Interaction {
   id: number;

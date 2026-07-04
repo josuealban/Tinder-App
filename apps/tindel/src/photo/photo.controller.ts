@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Put, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { PhotoService } from './photo.service.js';
-import { CreatePhotoDto } from './dto/create-photo.dto.js';
-import { UpdatePhotoDto } from './dto/update-photo.dto.js';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
-import { RolesGuard } from '../auth/guards/roles.guard.js';
-import { Roles } from '../auth/decorators/roles.decorator.js';
-import { Role } from '../auth/enums/role.enum.js';
+import { PhotoService } from './photo.service';
+import { CreatePhotoDto } from './dto/create-photo.dto';
+import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/enums/role.enum';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('photos')

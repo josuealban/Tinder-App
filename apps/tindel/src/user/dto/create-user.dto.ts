@@ -2,8 +2,8 @@ import {
   IsEmail, IsString, IsInt, IsNumber, IsOptional,
   IsEnum, IsArray, MinLength, Min, Max,
 } from 'class-validator';
-import { Gender } from '../../domain/enums/gender.enum.js';
-import { SubscriptionTier } from '../../domain/enums/subscription-tier.enum.js';
+import { Gender } from '../../domain/enums/gender.enum';
+import { SubscriptionTier } from '../../domain/enums/subscription-tier.enum';
 
 export class CreateUserDto {
   @IsEmail({}, { message: 'El email debe tener un formato válido' })

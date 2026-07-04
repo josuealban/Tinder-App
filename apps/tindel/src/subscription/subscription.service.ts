@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
-import { SubscriptionTier } from '../domain/enums/subscription-tier.enum.js';
-import { CreateSubscriptionDto } from './dto/create-subscription.dto.js';
-import { UpdateSubscriptionDto } from './dto/update-subscription.dto.js';
+import { PrismaService } from '../prisma/prisma.service';
+import { SubscriptionTier } from '../domain/enums/subscription-tier.enum';
+import { CreateSubscriptionDto } from './dto/create-subscription.dto';
+import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 
 @Injectable()
 export class SubscriptionService {

@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards } from '@nestjs/common';
-import { SubscriptionService } from './subscription.service.js';
-import { SubscriptionTier } from '../domain/enums/subscription-tier.enum.js';
-import { CreateSubscriptionDto } from './dto/create-subscription.dto.js';
-import { UpdateSubscriptionDto } from './dto/update-subscription.dto.js';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
-import { RolesGuard } from '../auth/guards/roles.guard.js';
-import { Roles } from '../auth/decorators/roles.decorator.js';
-import { Role } from '../auth/enums/role.enum.js';
+import { SubscriptionService } from './subscription.service';
+import { SubscriptionTier } from '../domain/enums/subscription-tier.enum';
+import { CreateSubscriptionDto } from './dto/create-subscription.dto';
+import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/enums/role.enum';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('subscriptions')

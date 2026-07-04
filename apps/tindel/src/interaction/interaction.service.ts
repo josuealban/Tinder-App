@@ -1,8 +1,8 @@
 import { Injectable, ConflictException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service.js';
-import { CreateInteractionDto } from './dto/create-interaction.dto.js';
-import { UpdateInteractionDto } from './dto/update-interaction.dto.js';
-import { InteractionType } from '../domain/enums/interaction-type.enum.js';
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateInteractionDto } from './dto/create-interaction.dto';
+import { UpdateInteractionDto } from './dto/update-interaction.dto';
+import { InteractionType } from '../domain/enums/interaction-type.enum';
 
 @Injectable()
 export class InteractionService {

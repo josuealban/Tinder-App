@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { PhotoModule } from './photo/photo.module';
-import { SubscriptionModule } from './subscription/subscription.module';
+import { AuthModule } from '../../tindel/src/auth/auth.module';
+import { UserModule } from '../../tindel/src/user/user.module';
+import { PhotoModule } from '../../tindel/src/photo/photo.module';
+import { SubscriptionModule } from '../../tindel/src/subscription/subscription.module';
 
 @Module({
   imports: [
