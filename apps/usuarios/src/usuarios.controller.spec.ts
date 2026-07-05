@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsuariosController } from './usuarios.controller';
-import { UsuariosService } from './usuarios.service';
 
 describe('UsuariosController', () => {
   let usuariosController: UsuariosController;
@@ -8,15 +7,13 @@ describe('UsuariosController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [UsuariosController],
-      providers: [UsuariosService],
+      providers: [],
     }).compile();
 
     usuariosController = app.get<UsuariosController>(UsuariosController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(usuariosController.getHello()).toBe('Hello World!');
-    });
+  it('should be defined', () => {
+    expect(usuariosController).toBeDefined();
   });
 });

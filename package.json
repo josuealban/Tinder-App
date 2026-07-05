@@ -11,7 +11,7 @@
     "test": "test"
   },
   "scripts": {
-    "build": "nest build",
+    "build": "npm run build:all",
     "build:gateway": "nest build gateway",
     "build:usuarios": "nest build usuarios",
     "build:matches": "nest build matches",
