@@ -1,12 +1,30 @@
-import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import {
   USER_PATTERNS,
   MATCH_PATTERNS,
   MESSAGE_PATTERNS,
+  SUBSCRIPTION_PLAN_PATTERNS,
 } from '@app/common/patterns';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { RolesGuard } from './auth/roles.guard';
+import { Roles } from './auth/roles.decorator';
+import { Role } from './auth/role.enum';
+import { Public } from './auth/public.decorator';
 
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller()
 export class GatewayController {
   constructor(
@@ -18,71 +36,59 @@ export class GatewayController {
 
     @Inject('MENSAJERIA_SERVICE')
     private readonly mensajeriaClient: ClientProxy,
-  ) { }
+  ) {}
 
-  // USUARIOS / AUTH
+  // ─── AUTH ────────────────────────────────────────────────────────────────────
 
+  @Public()
   @Post('auth/login')
   login(@Body() body: any) {
-    return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.LOGIN, body),
-    );
+    return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.LOGIN, body));
   }
 
+  // ─── USUARIOS ────────────────────────────────────────────────────────────────
+
+  @Public()
   @Post('users')
   createUser(@Body() body: any) {
-    return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.REGISTER, body),
-    );
+    return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.REGISTER, body));
   }
 
   @Get('users')
   findAllUsers() {
-    return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.FIND_ALL, {}),
-    );
+    return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.FIND_ALL, {}));
   }
 
   @Get('users/:id')
   findUser(@Param('id') id: string) {
-    return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.FIND_ONE, Number(id)),
-    );
+    return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.FIND_ONE, Number(id)));
   }
 
   @Patch('users/:id')
   updateUser(@Param('id') id: string, @Body() body: any) {
     return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.UPDATE, {
-        id: Number(id),
-        body,
-      }),
-    );
-  }
-
-  @Delete('users/:id')
-  deleteUser(@Param('id') id: string) {
-    return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.DELETE, Number(id)),
+      this.usuariosClient.send(USER_PATTERNS.UPDATE, { id: Number(id), body }),
     );
   }
 
   @Put('users/:id')
   replaceUser(@Param('id') id: string, @Body() body: any) {
     return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.REPLACE, {
-        id: Number(id),
-        body,
-      }),
+      this.usuariosClient.send(USER_PATTERNS.REPLACE, { id: Number(id), body }),
     );
   }
 
-  // PHOTOS
+  @Roles(Role.ADMIN)
+  @Delete('users/:id')
+  deleteUser(@Param('id') id: string) {
+    return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.DELETE, Number(id)));
+  }
+
+  // ─── PHOTOS ──────────────────────────────────────────────────────────────────
+
   @Post('photos')
   createPhoto(@Body() body: any) {
-    return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.CREATE_PHOTO, body),
-    );
+    return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.CREATE_PHOTO, body));
   }
 
   @Get('photos/user/:userId')
@@ -95,136 +101,159 @@ export class GatewayController {
   @Put('photos/:id')
   replacePhoto(@Param('id') id: string, @Body() body: any) {
     return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.REPLACE_PHOTO, {
-        id: Number(id),
-        body,
+      this.usuariosClient.send(USER_PATTERNS.REPLACE_PHOTO, { id: Number(id), body }),
+    );
+  }
+
+  @Roles(Role.ADMIN)
+  @Delete('photos/:id')
+  deletePhoto(@Param('id') id: string) {
+    return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.DELETE_PHOTO, Number(id)));
+  }
+
+  // ─── SUBSCRIPTIONS (usuario) ─────────────────────────────────────────────────
+
+  @Post('subscriptions')
+  createSubscription(@Body() body: any) {
+    return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.CREATE_SUBSCRIPTION, body));
+  }
+
+  @Get('subscriptions/user/:userId')
+  findSubscriptionByUser(@Param('userId') userId: string) {
+    return firstValueFrom(
+      this.usuariosClient.send(USER_PATTERNS.FIND_SUBSCRIPTION_BY_USER, {
+        userId: Number(userId),
       }),
     );
   }
 
-  @Delete('photos/:id')
-  deletePhoto(@Param('id') id: string) {
-    return firstValueFrom(
-      this.usuariosClient.send(USER_PATTERNS.DELETE_PHOTO, Number(id)),
-    );
-  }
-
-  // MATCHES / INTERACTIONS
+  // ─── INTERACTIONS / MATCHES ───────────────────────────────────────────────────
 
   @Post('interactions')
   createInteraction(@Body() body: any) {
-    return firstValueFrom(
-      this.matchesClient.send(MATCH_PATTERNS.CREATE_INTERACTION, body),
-    );
+    return firstValueFrom(this.matchesClient.send(MATCH_PATTERNS.CREATE_INTERACTION, body));
   }
 
   @Get('interactions/user/:userId')
   findInteractionsByUser(@Param('userId') userId: string) {
     return firstValueFrom(
-      this.matchesClient.send(
-        MATCH_PATTERNS.FIND_INTERACTIONS_BY_USER,
-        Number(userId),
-      ),
-    );
-  }
-
-  @Get('matches/user/:userId')
-  findMatchesByUser(@Param('userId') userId: string) {
-    return firstValueFrom(
-      this.matchesClient.send(
-        MATCH_PATTERNS.FIND_MATCHES_BY_USER,
-        Number(userId),
-      ),
-    );
-  }
-
-  @Get('matches/:id')
-  findMatchById(@Param('id') id: string) {
-    return firstValueFrom(
-      this.matchesClient.send(MATCH_PATTERNS.FIND_MATCH_BY_ID, Number(id)),
+      this.matchesClient.send(MATCH_PATTERNS.FIND_INTERACTIONS_BY_USER, Number(userId)),
     );
   }
 
   @Put('interactions/:id')
   replaceInteraction(@Param('id') id: string, @Body() body: any) {
     return firstValueFrom(
-      this.matchesClient.send(MATCH_PATTERNS.REPLACE_INTERACTION, {
-        id: Number(id),
-        body,
-      }),
+      this.matchesClient.send(MATCH_PATTERNS.REPLACE_INTERACTION, { id: Number(id), body }),
     );
+  }
+
+  @Get('matches/user/:userId')
+  findMatchesByUser(@Param('userId') userId: string) {
+    return firstValueFrom(
+      this.matchesClient.send(MATCH_PATTERNS.FIND_MATCHES_BY_USER, Number(userId)),
+    );
+  }
+
+  @Get('matches/:id')
+  findMatchById(@Param('id') id: string) {
+    return firstValueFrom(this.matchesClient.send(MATCH_PATTERNS.FIND_MATCH_BY_ID, Number(id)));
   }
 
   @Put('matches/:id')
   replaceMatch(@Param('id') id: string, @Body() body: any) {
     return firstValueFrom(
-      this.matchesClient.send(MATCH_PATTERNS.REPLACE_MATCH, {
-        id: Number(id),
-        body,
-      }),
+      this.matchesClient.send(MATCH_PATTERNS.REPLACE_MATCH, { id: Number(id), body }),
     );
   }
 
-  // MENSAJERÍA
+  // ─── MENSAJERÍA ───────────────────────────────────────────────────────────────
 
   @Post('chats')
   createChat(@Body() body: any) {
-    return firstValueFrom(
-      this.mensajeriaClient.send(MESSAGE_PATTERNS.CREATE_CHAT, body),
-    );
+    return firstValueFrom(this.mensajeriaClient.send(MESSAGE_PATTERNS.CREATE_CHAT, body));
   }
 
   @Get('chats/:id')
   findChatById(@Param('id') id: string) {
     return firstValueFrom(
-      this.mensajeriaClient.send(
-        MESSAGE_PATTERNS.FIND_CHAT_BY_ID,
-        Number(id),
-      ),
-    );
-  }
-
-  @Post('messages')
-  sendMessage(@Body() body: any) {
-    return firstValueFrom(
-      this.mensajeriaClient.send(MESSAGE_PATTERNS.SEND_MESSAGE, body),
-    );
-  }
-
-  @Get('messages/chat/:chatId')
-  getMessagesByChat(@Param('chatId') chatId: string) {
-    return firstValueFrom(
-      this.mensajeriaClient.send(
-        MESSAGE_PATTERNS.GET_MESSAGES_BY_CHAT,
-        Number(chatId),
-      ),
+      this.mensajeriaClient.send(MESSAGE_PATTERNS.FIND_CHAT_BY_ID, Number(id)),
     );
   }
 
   @Put('chats/:id')
   replaceChat(@Param('id') id: string, @Body() body: any) {
     return firstValueFrom(
-      this.mensajeriaClient.send(MESSAGE_PATTERNS.REPLACE_CHAT, {
-        id: Number(id),
-        body,
-      }),
+      this.mensajeriaClient.send(MESSAGE_PATTERNS.REPLACE_CHAT, { id: Number(id), body }),
+    );
+  }
+
+  @Post('messages')
+  sendMessage(@Body() body: any) {
+    return firstValueFrom(this.mensajeriaClient.send(MESSAGE_PATTERNS.SEND_MESSAGE, body));
+  }
+
+  @Get('messages/chat/:chatId')
+  getMessagesByChat(@Param('chatId') chatId: string) {
+    return firstValueFrom(
+      this.mensajeriaClient.send(MESSAGE_PATTERNS.GET_MESSAGES_BY_CHAT, Number(chatId)),
     );
   }
 
   @Put('messages/:id')
   replaceMessage(@Param('id') id: string, @Body() body: any) {
     return firstValueFrom(
-      this.mensajeriaClient.send(MESSAGE_PATTERNS.REPLACE_MESSAGE, {
-        id: Number(id),
-        body,
-      }),
+      this.mensajeriaClient.send(MESSAGE_PATTERNS.REPLACE_MESSAGE, { id: Number(id), body }),
     );
   }
 
+  @Roles(Role.ADMIN)
   @Delete('messages/:id')
   deleteMessage(@Param('id') id: string) {
     return firstValueFrom(
       this.mensajeriaClient.send(MESSAGE_PATTERNS.DELETE_MESSAGE, Number(id)),
+    );
+  }
+
+  // ─── SUBSCRIPTION PLANS (catálogo) ───────────────────────────────────────────
+
+  @Public()
+  @Get('subscription-plans')
+  findAllSubscriptionPlans() {
+    return firstValueFrom(
+      this.mensajeriaClient.send(SUBSCRIPTION_PLAN_PATTERNS.FIND_ALL, {}),
+    );
+  }
+
+  @Public()
+  @Get('subscription-plans/:tier')
+  findOneSubscriptionPlan(@Param('tier') tier: string) {
+    return firstValueFrom(
+      this.mensajeriaClient.send(SUBSCRIPTION_PLAN_PATTERNS.FIND_ONE, tier),
+    );
+  }
+
+  @Roles(Role.ADMIN)
+  @Post('subscription-plans')
+  createSubscriptionPlan(@Body() body: any) {
+    return firstValueFrom(
+      this.mensajeriaClient.send(SUBSCRIPTION_PLAN_PATTERNS.CREATE, body),
+    );
+  }
+
+  @Roles(Role.ADMIN)
+  @Put('subscription-plans/:tier')
+  updateSubscriptionPlan(@Param('tier') tier: string, @Body() dto: any) {
+    return firstValueFrom(
+      this.mensajeriaClient.send(SUBSCRIPTION_PLAN_PATTERNS.UPDATE, { tier, dto }),
+    );
+  }
+
+  @Roles(Role.ADMIN)
+  @Delete('subscription-plans/:tier')
+  deleteSubscriptionPlan(@Param('tier') tier: string) {
+    return firstValueFrom(
+      this.mensajeriaClient.send(SUBSCRIPTION_PLAN_PATTERNS.DELETE, tier),
     );
   }
 }

@@ -40,3 +40,11 @@ export const MESSAGE_PATTERNS = {
 export const EVENTS = {
   MATCH_CREATED: 'match.created',
 };
+
+export const SUBSCRIPTION_PLAN_PATTERNS = {
+  FIND_ALL: { cmd: 'subscription_plan.find_all' },
+  FIND_ONE: { cmd: 'subscription_plan.find_one' },
+  CREATE: { cmd: 'subscription_plan.create' },
+  UPDATE: { cmd: 'subscription_plan.update' },
+  DELETE: { cmd: 'subscription_plan.delete' },
+};

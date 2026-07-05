@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { GatewayController } from './gateway.controller';
 import { GatewayService } from './gateway.service';
+import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { RolesGuard } from './auth/roles.guard';
 
 @Module({
   imports: [
+    AuthModule,
     ClientsModule.register([
       {
         name: 'USUARIOS_SERVICE',
@@ -33,6 +38,16 @@ import { GatewayService } from './gateway.service';
     ]),
   ],
   controllers: [GatewayController],
-  providers: [GatewayService],
+  providers: [
+    GatewayService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
-export class GatewayModule { }
+export class GatewayModule {}
