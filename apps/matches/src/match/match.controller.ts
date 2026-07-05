@@ -16,4 +16,9 @@ export class MatchController {
   findOne(@Payload() id: number) {
     return this.matchService.findOne(id);
   }
+
+  @MessagePattern(MATCH_PATTERNS.REPLACE_MATCH)
+  replace(@Payload() data: { id: number; body: any }) {
+    return this.matchService.replace(data.id, data.body);
+  }
 }

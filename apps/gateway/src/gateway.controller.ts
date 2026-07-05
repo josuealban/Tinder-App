@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import {
@@ -67,6 +67,48 @@ export class GatewayController {
     );
   }
 
+  @Put('users/:id')
+  replaceUser(@Param('id') id: string, @Body() body: any) {
+    return firstValueFrom(
+      this.usuariosClient.send(USER_PATTERNS.REPLACE, {
+        id: Number(id),
+        body,
+      }),
+    );
+  }
+
+  // PHOTOS
+  @Post('photos')
+  createPhoto(@Body() body: any) {
+    return firstValueFrom(
+      this.usuariosClient.send(USER_PATTERNS.CREATE_PHOTO, body),
+    );
+  }
+
+  @Get('photos/user/:userId')
+  findPhotosByUser(@Param('userId') userId: string) {
+    return firstValueFrom(
+      this.usuariosClient.send(USER_PATTERNS.FIND_PHOTOS_BY_USER, Number(userId)),
+    );
+  }
+
+  @Put('photos/:id')
+  replacePhoto(@Param('id') id: string, @Body() body: any) {
+    return firstValueFrom(
+      this.usuariosClient.send(USER_PATTERNS.REPLACE_PHOTO, {
+        id: Number(id),
+        body,
+      }),
+    );
+  }
+
+  @Delete('photos/:id')
+  deletePhoto(@Param('id') id: string) {
+    return firstValueFrom(
+      this.usuariosClient.send(USER_PATTERNS.DELETE_PHOTO, Number(id)),
+    );
+  }
+
   // MATCHES / INTERACTIONS
 
   @Post('interactions')
@@ -103,6 +145,26 @@ export class GatewayController {
     );
   }
 
+  @Put('interactions/:id')
+  replaceInteraction(@Param('id') id: string, @Body() body: any) {
+    return firstValueFrom(
+      this.matchesClient.send(MATCH_PATTERNS.REPLACE_INTERACTION, {
+        id: Number(id),
+        body,
+      }),
+    );
+  }
+
+  @Put('matches/:id')
+  replaceMatch(@Param('id') id: string, @Body() body: any) {
+    return firstValueFrom(
+      this.matchesClient.send(MATCH_PATTERNS.REPLACE_MATCH, {
+        id: Number(id),
+        body,
+      }),
+    );
+  }
+
   // MENSAJERÍA
 
   @Post('chats')
@@ -136,6 +198,33 @@ export class GatewayController {
         MESSAGE_PATTERNS.GET_MESSAGES_BY_CHAT,
         Number(chatId),
       ),
+    );
+  }
+
+  @Put('chats/:id')
+  replaceChat(@Param('id') id: string, @Body() body: any) {
+    return firstValueFrom(
+      this.mensajeriaClient.send(MESSAGE_PATTERNS.REPLACE_CHAT, {
+        id: Number(id),
+        body,
+      }),
+    );
+  }
+
+  @Put('messages/:id')
+  replaceMessage(@Param('id') id: string, @Body() body: any) {
+    return firstValueFrom(
+      this.mensajeriaClient.send(MESSAGE_PATTERNS.REPLACE_MESSAGE, {
+        id: Number(id),
+        body,
+      }),
+    );
+  }
+
+  @Delete('messages/:id')
+  deleteMessage(@Param('id') id: string) {
+    return firstValueFrom(
+      this.mensajeriaClient.send(MESSAGE_PATTERNS.DELETE_MESSAGE, Number(id)),
     );
   }
 }

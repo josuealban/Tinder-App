@@ -45,4 +45,12 @@ export class PhotoService {
       where: { id },
     });
   }
+
+  async replace(id: number, data: any) {
+    await this.findOne(id);
+    return this.prisma.photo.update({
+      where: { id },
+      data,
+    });
+  }
 }

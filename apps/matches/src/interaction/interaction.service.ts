@@ -20,33 +20,40 @@ export class InteractionService {
       throw new ConflictException('User cannot interact with themselves');
     }
 
-    const interaction = await this.prisma.interaction.create({
-      data: { fromId, toId, type },
-    });
+    let matchCreated: any = null;
 
-    if (type === InteractionType.LIKE || type === InteractionType.SUPERLIKE) {
-      const reciprocal = await this.prisma.interaction.findFirst({
-        where: {
-          fromId: toId,
-          toId: fromId,
-          OR: [
-            { type: InteractionType.LIKE },
-            { type: InteractionType.SUPERLIKE },
-          ],
-        },
+    const interaction = await this.prisma.$transaction(async (tx) => {
+      const newInteraction = await tx.interaction.create({
+        data: { fromId, toId, type },
       });
 
-      if (reciprocal) {
-        const match = await this.prisma.match.create({
-          data: {
-            user1Id: Math.min(fromId, toId),
-            user2Id: Math.max(fromId, toId),
+      if (type === InteractionType.LIKE || type === InteractionType.SUPERLIKE) {
+        const reciprocal = await tx.interaction.findFirst({
+          where: {
+            fromId: toId,
+            toId: fromId,
+            OR: [
+              { type: InteractionType.LIKE },
+              { type: InteractionType.SUPERLIKE },
+            ],
           },
         });
-        
-        // Emit event to mensajeria to create chat
-        this.mensajeriaClient.emit(EVENTS.MATCH_CREATED, { matchId: match.id, user1Id: match.user1Id, user2Id: match.user2Id });
+
+        if (reciprocal) {
+          matchCreated = await tx.match.create({
+            data: {
+              user1Id: Math.min(fromId, toId),
+              user2Id: Math.max(fromId, toId),
+            },
+          });
+        }
       }
+
+      return newInteraction;
+    });
+
+    if (matchCreated) {
+      this.mensajeriaClient.emit(EVENTS.MATCH_CREATED, { matchId: matchCreated.id, user1Id: matchCreated.user1Id, user2Id: matchCreated.user2Id });
     }
 
     return interaction;
@@ -74,6 +81,13 @@ export class InteractionService {
     return this.prisma.interaction.update({
       where: { id },
       data: updateInteractionDto,
+    });
+  }
+
+  async replace(id: number, data: any) {
+    return this.prisma.interaction.update({
+      where: { id },
+      data,
     });
   }
 

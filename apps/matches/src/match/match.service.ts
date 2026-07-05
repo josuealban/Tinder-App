@@ -52,4 +52,12 @@ export class MatchService {
       where: { id },
     });
   }
+
+  async replace(id: number, data: any) {
+    await this.findOne(id);
+    return this.prisma.match.update({
+      where: { id },
+      data,
+    });
+  }
 }

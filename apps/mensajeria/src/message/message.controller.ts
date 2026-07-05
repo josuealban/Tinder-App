@@ -17,4 +17,14 @@ export class MessageController {
   findByChat(@Payload() chatId: number) {
     return this.messageService.findByChat(chatId);
   }
+
+  @MessagePattern(MESSAGE_PATTERNS.REPLACE_MESSAGE)
+  replace(@Payload() data: { id: number; body: any }) {
+    return this.messageService.replace(data.id, data.body);
+  }
+
+  @MessagePattern(MESSAGE_PATTERNS.DELETE_MESSAGE)
+  remove(@Payload() id: number) {
+    return this.messageService.remove(id);
+  }
 }

@@ -22,6 +22,11 @@ export class UserController {
     return this.userService.update(data.id, data.body);
   }
 
+  @MessagePattern(USER_PATTERNS.REPLACE)
+  replace(@Payload() data: { id: number; body: any }) {
+    return this.userService.replace(data.id, data.body);
+  }
+
   @MessagePattern(USER_PATTERNS.DELETE)
   remove(@Payload() id: number) {
     return this.userService.remove(id);

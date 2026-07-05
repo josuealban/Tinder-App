@@ -84,6 +84,34 @@ export class UserService {
     });
   }
 
+  async replace(id: number, replaceUserDto: any) {
+    await this.findOne(id);
+    const {
+      email, password, phone, name, age,
+      ...profileData
+    } = replaceUserDto;
+    return this.prisma.user.update({
+      where: { id },
+      data: {
+        email,
+        password,
+        phone,
+        name,
+        age,
+        profile: {
+          upsert: {
+            create: { ...profileData, hobbies: profileData.hobbies || [], musicList: profileData.musicList || [] },
+            update: { ...profileData, hobbies: profileData.hobbies || [], musicList: profileData.musicList || [] },
+          }
+        }
+      },
+      include: {
+        profile: true,
+        photos: true,
+      }
+    });
+  }
+
   async remove(id: number) {
     await this.findOne(id);
     await this.prisma.profile.deleteMany({ where: { userId: id } });

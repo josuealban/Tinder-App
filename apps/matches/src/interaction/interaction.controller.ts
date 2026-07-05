@@ -16,4 +16,9 @@ export class InteractionController {
   findByUser(@Payload() userId: number) {
     return this.interactionService.findByUser(userId);
   }
+
+  @MessagePattern(MATCH_PATTERNS.REPLACE_INTERACTION)
+  replace(@Payload() data: { id: number; body: any }) {
+    return this.interactionService.replace(data.id, data.body);
+  }
 }

@@ -23,4 +23,9 @@ export class ChatController {
   findOne(@Payload() id: number) {
     return this.chatService.findOne(id);
   }
+
+  @MessagePattern(MESSAGE_PATTERNS.REPLACE_CHAT)
+  replace(@Payload() data: { id: number; body: any }) {
+    return this.chatService.replace(data.id, data.body);
+  }
 }

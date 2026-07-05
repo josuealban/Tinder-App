@@ -8,8 +8,16 @@ export class MessageService {
   constructor(private prisma: PrismaService) {}
 
   async create(createMessageDto: CreateMessageDto) {
-    return this.prisma.message.create({
-      data: createMessageDto,
+    return this.prisma.$transaction(async (tx) => {
+      const chat = await tx.chat.findUnique({
+        where: { id: createMessageDto.chatId },
+      });
+      if (!chat) {
+        throw new NotFoundException(`Chat con id ${createMessageDto.chatId} no encontrado`);
+      }
+      return tx.message.create({
+        data: createMessageDto,
+      });
     });
   }
 
@@ -37,6 +45,14 @@ export class MessageService {
     return this.prisma.message.update({
       where: { id },
       data: updateMessageDto,
+    });
+  }
+
+  async replace(id: number, data: any) {
+    await this.findOne(id);
+    return this.prisma.message.update({
+      where: { id },
+      data,
     });
   }
 

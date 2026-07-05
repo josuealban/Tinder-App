@@ -8,8 +8,18 @@ export class ChatService {
   constructor(private prisma: PrismaService) {}
 
   async create(createChatDto: CreateChatDto) {
-    return this.prisma.chat.create({
-      data: createChatDto,
+    return this.prisma.$transaction(async (tx) => {
+      const existingChat = await tx.chat.findUnique({
+        where: { matchId: createChatDto.matchId },
+      });
+      
+      if (existingChat) {
+        return existingChat;
+      }
+      
+      return tx.chat.create({
+        data: createChatDto,
+      });
     });
   }
 
@@ -40,6 +50,14 @@ export class ChatService {
     return this.prisma.chat.update({
       where: { id },
       data: updateChatDto,
+    });
+  }
+
+  async replace(id: number, data: any) {
+    await this.findOne(id);
+    return this.prisma.chat.update({
+      where: { id },
+      data,
     });
   }
 

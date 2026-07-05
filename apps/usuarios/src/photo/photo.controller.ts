@@ -17,4 +17,14 @@ export class PhotoController {
   findByUser(@Payload() userId: number) {
     return this.photoService.findByUser(userId);
   }
+
+  @MessagePattern(USER_PATTERNS.REPLACE_PHOTO)
+  replace(@Payload() data: { id: number; body: any }) {
+    return this.photoService.replace(data.id, data.body);
+  }
+
+  @MessagePattern(USER_PATTERNS.DELETE_PHOTO)
+  remove(@Payload() id: number) {
+    return this.photoService.remove(id);
+  }
 }
