@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { MatchesModule } from './matches.module';
@@ -16,4 +17,5 @@ async function bootstrap() {
 
   await app.listen();
 }
+
 void bootstrap();
