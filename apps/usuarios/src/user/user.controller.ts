@@ -7,11 +7,6 @@ import { USER_PATTERNS } from '@app/common/patterns';
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  @MessagePattern(USER_PATTERNS.REGISTER)
-  create(@Payload() data: any) {
-    return this.userService.create(data);
-  }
-
   @MessagePattern(USER_PATTERNS.FIND_ALL)
   findAll() {
     return this.userService.findAll();

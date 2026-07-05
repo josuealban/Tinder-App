@@ -1,12 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { UsuariosService } from './usuarios.service';
+import { Controller } from '@nestjs/common';
 
+// Microservicio TCP — no expone rutas HTTP.
+// Las rutas HTTP las maneja exclusivamente apps/gateway.
 @Controller()
-export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService) {}
-
-  @Get()
-  getHello(): string {
-    return this.usuariosService.getHello();
-  }
-}
+export class UsuariosController {}

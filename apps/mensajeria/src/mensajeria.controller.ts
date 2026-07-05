@@ -1,12 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { MensajeriaService } from './mensajeria.service';
+import { Controller } from '@nestjs/common';
 
+// Microservicio TCP — no expone rutas HTTP.
+// Las rutas HTTP las maneja exclusivamente apps/gateway.
 @Controller()
-export class MensajeriaController {
-  constructor(private readonly mensajeriaService: MensajeriaService) {}
-
-  @Get()
-  getHello(): string {
-    return this.mensajeriaService.getHello();
-  }
-}
+export class MensajeriaController {}

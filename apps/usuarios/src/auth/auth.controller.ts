@@ -7,6 +7,11 @@ import { USER_PATTERNS } from '@app/common/patterns';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
+  @MessagePattern(USER_PATTERNS.REGISTER)
+  register(@Payload() data: any) {
+    return this.authService.register(data);
+  }
+
   @MessagePattern(USER_PATTERNS.LOGIN)
   async login(@Payload() data: any) {
     const user = await this.authService.validateUser(data.email, data.password);
