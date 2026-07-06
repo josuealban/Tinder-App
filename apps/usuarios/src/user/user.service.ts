@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -52,7 +53,12 @@ export class UserService {
       where: { id },
       include: { profile: true, photos: true },
     });
-    if (!user) throw new NotFoundException(`Usuario con id ${id} no encontrado`);
+    if (!user) {
+      throw new RpcException({
+        statusCode: 404,
+        message: `Usuario con id ${id} no encontrado`,
+      });
+    }
     return user;
   }
 

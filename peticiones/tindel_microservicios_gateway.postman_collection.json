@@ -10,13 +10,38 @@
 			"name": "1. Auth y Usuarios",
 			"item": [
 				{
-					"name": "POST /users (Usuario 1 - Test)",
+					"name": "POST /users (Usuario 1 - Alice)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var ts = Date.now();",
+									"pm.collectionVariables.set('aliceEmail', 'alice' + ts + '@tindel.com');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData && jsonData.id) {",
+									"    pm.collectionVariables.set('userId', jsonData.id);",
+									"    console.log('userId (Alice) guardado: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"alice@tindel.com\",\n    \"password\": \"123456\",\n    \"name\": \"Alice\",\n    \"age\": 24,\n    \"bio\": \"Amo la musica y los viajes\",\n    \"gender\": \"FEMALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Quito\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"musica\", \"viajes\"],\n    \"musicList\": [\"Rock\", \"Pop\"]\n}",
+							"raw": "{\n    \"email\": \"{{aliceEmail}}\",\n    \"password\": \"123456\",\n    \"name\": \"Alice\",\n    \"age\": 24,\n    \"bio\": \"Amo la musica y los viajes\",\n    \"gender\": \"FEMALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Quito\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"musica\", \"viajes\"],\n    \"musicList\": [\"Rock\", \"Pop\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -36,13 +61,38 @@
 					"response": []
 				},
 				{
-					"name": "POST /users (Usuario 2 - Para Match)",
+					"name": "POST /users (Usuario 2 - Bob)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var ts = Date.now();",
+									"pm.collectionVariables.set('bobEmail', 'bob' + ts + '@tindel.com');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData && jsonData.id) {",
+									"    pm.collectionVariables.set('targetUserId', jsonData.id);",
+									"    console.log('targetUserId (Bob) guardado: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"bob@tindel.com\",\n    \"password\": \"123456\",\n    \"name\": \"Bob\",\n    \"age\": 27,\n    \"bio\": \"Fan del deporte y la tecnologia\",\n    \"gender\": \"MALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Guayaquil\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"deporte\", \"tecnologia\"],\n    \"musicList\": [\"Electronica\", \"Jazz\"]\n}",
+							"raw": "{\n    \"email\": \"{{bobEmail}}\",\n    \"password\": \"123456\",\n    \"name\": \"Bob\",\n    \"age\": 27,\n    \"bio\": \"Fan del deporte y la tecnologia\",\n    \"gender\": \"MALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Guayaquil\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"deporte\", \"tecnologia\"],\n    \"musicList\": [\"Electronica\", \"Jazz\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -83,7 +133,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"alice@tindel.com\",\n    \"password\": \"123456\"\n}",
+							"raw": "{\n    \"email\": \"{{aliceEmail}}\",\n    \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -125,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"bob@tindel.com\",\n    \"password\": \"123456\"\n}",
+							"raw": "{\n    \"email\": \"{{bobEmail}}\",\n    \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -214,7 +264,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"alice@tindel.com\",\n    \"password\": \"123456\",\n    \"name\": \"Alice Completa\",\n    \"age\": 25,\n    \"bio\": \"Perfil reemplazado con PUT\",\n    \"gender\": \"FEMALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Quito\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"musica\", \"viajes\", \"lectura\"],\n    \"musicList\": [\"Rock\", \"Pop\", \"Jazz\"]\n}",
+							"raw": "{\n    \"email\": \"{{aliceEmail}}\",\n    \"password\": \"123456\",\n    \"name\": \"Alice Completa\",\n    \"age\": 25,\n    \"bio\": \"Perfil reemplazado con PUT\",\n    \"gender\": \"FEMALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Quito\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"musica\", \"viajes\", \"lectura\"],\n    \"musicList\": [\"Rock\", \"Pop\", \"Jazz\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -259,6 +309,21 @@
 			"item": [
 				{
 					"name": "POST /photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData && jsonData.id) {",
+									"    pm.collectionVariables.set('photoId', jsonData.id);",
+									"    console.log('photoId guardado: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -453,6 +518,21 @@
 				},
 				{
 					"name": "GET /matches/user/:userId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (Array.isArray(jsonData) && jsonData.length > 0 && jsonData[0].id) {",
+									"    pm.collectionVariables.set('matchId', jsonData[0].id);",
+									"    console.log('matchId guardado: ' + jsonData[0].id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -523,6 +603,21 @@
 			"item": [
 				{
 					"name": "POST /chats",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData && jsonData.id) {",
+									"    pm.collectionVariables.set('chatId', jsonData.id);",
+									"    console.log('chatId guardado: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -594,6 +689,21 @@
 				},
 				{
 					"name": "POST /messages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData && jsonData.id) {",
+									"    pm.collectionVariables.set('messageId', jsonData.id);",
+									"    console.log('messageId guardado: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -906,45 +1016,57 @@
 		},
 		{
 			"key": "userId",
-			"value": "1",
+			"value": "",
 			"type": "string",
-			"description": "ID del Usuario 1 (Alice). Actualiza este valor con el id que retorne POST /users"
+			"description": "ID del Usuario 1 (Alice). Se asigna automáticamente al crear Alice."
 		},
 		{
 			"key": "targetUserId",
-			"value": "2",
+			"value": "",
 			"type": "string",
-			"description": "ID del Usuario 2 (Bob). Actualiza con el id que retorne el segundo POST /users"
+			"description": "ID del Usuario 2 (Bob). Se asigna automáticamente al crear Bob."
 		},
 		{
 			"key": "matchId",
-			"value": "1",
+			"value": "",
 			"type": "string",
-			"description": "ID del Match generado tras el LIKE mutuo. Actualiza con el matchId retornado"
+			"description": "ID del Match generado tras el LIKE mutuo. Se asigna automáticamente."
 		},
 		{
 			"key": "chatId",
-			"value": "1",
+			"value": "",
 			"type": "string",
-			"description": "ID del Chat creado en POST /chats. Actualiza con el id retornado"
+			"description": "ID del Chat creado en POST /chats. Se asigna automáticamente."
 		},
 		{
 			"key": "photoId",
-			"value": "1",
+			"value": "",
 			"type": "string",
-			"description": "ID de la foto creada en POST /photos. Actualiza con el id retornado"
+			"description": "ID de la foto creada en POST /photos. Se asigna automáticamente."
 		},
 		{
 			"key": "messageId",
-			"value": "1",
+			"value": "",
 			"type": "string",
-			"description": "ID del mensaje creado. Actualiza con el id retornado"
+			"description": "ID del mensaje creado. Se asigna automáticamente."
 		},
 		{
 			"key": "token",
 			"value": "",
 			"type": "string",
 			"description": "JWT Token. Se guarda automaticamente al ejecutar POST /auth/login"
+		},
+		{
+			"key": "aliceEmail",
+			"value": "alice@tindel.com",
+			"type": "string",
+			"description": "Email de Alice generado dinamicamente. Se actualiza en el prerequest script."
+		},
+		{
+			"key": "bobEmail",
+			"value": "bob@tindel.com",
+			"type": "string",
+			"description": "Email de Bob generado dinamicamente. Se actualiza en el prerequest script."
 		}
 	]
 }

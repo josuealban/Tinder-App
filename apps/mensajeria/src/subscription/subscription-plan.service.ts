@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateSubscriptionPlanDto, SubscriptionTier } from './dto/create-subscription-plan.dto';
 import { UpdateSubscriptionPlanDto } from './dto/update-subscription-plan.dto';
@@ -18,7 +19,10 @@ export class SubscriptionPlanService {
       where: { tier },
     });
     if (!plan) {
-      throw new NotFoundException(`Plan de suscripción '${tier}' no encontrado`);
+      throw new RpcException({
+        statusCode: 404,
+        message: `Plan de suscripción '${tier}' no encontrado`,
+      });
     }
     return plan;
   }

@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
@@ -41,7 +42,12 @@ export class ChatService {
         messages: { orderBy: { createdAt: 'asc' } },
       },
     });
-    if (!chat) throw new NotFoundException(`Chat con id ${id} no encontrado`);
+    if (!chat) {
+      throw new RpcException({
+        statusCode: 404,
+        message: `Chat con id ${id} no encontrado`,
+      });
+    }
     return chat;
   }
 

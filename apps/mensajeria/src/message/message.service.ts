@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
@@ -13,7 +14,10 @@ export class MessageService {
         where: { id: createMessageDto.chatId },
       });
       if (!chat) {
-        throw new NotFoundException(`Chat con id ${createMessageDto.chatId} no encontrado`);
+        throw new RpcException({
+          statusCode: 404,
+          message: `Chat con id ${createMessageDto.chatId} no encontrado`,
+        });
       }
       return tx.message.create({
         data: createMessageDto,
@@ -29,7 +33,12 @@ export class MessageService {
     const message = await this.prisma.message.findUnique({
       where: { id },
     });
-    if (!message) throw new NotFoundException(`Mensaje con id ${id} no encontrado`);
+    if (!message) {
+      throw new RpcException({
+        statusCode: 404,
+        message: `Mensaje con id ${id} no encontrado`,
+      });
+    }
     return message;
   }
 
