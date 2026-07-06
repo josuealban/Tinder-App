@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { MatchService } from './match.service';
 import { MATCH_PATTERNS } from '@app/common/patterns';
+import { UpdateMatchDto } from './dto/update-match.dto';
 
 @Controller()
 export class MatchController {
@@ -18,7 +19,7 @@ export class MatchController {
   }
 
   @MessagePattern(MATCH_PATTERNS.REPLACE_MATCH)
-  replace(@Payload() data: { id: number; body: any }) {
+  replace(@Payload() data: { id: number; body: UpdateMatchDto }) {
     return this.matchService.replace(data.id, data.body);
   }
 }

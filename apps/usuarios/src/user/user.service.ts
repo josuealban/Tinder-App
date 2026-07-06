@@ -78,7 +78,7 @@ export class UserService {
         age,
         profile: {
           upsert: {
-            create: { ...profileData, hobbies: (profileData as any).hobbies || [], musicList: (profileData as any).musicList || [] },
+            create: { ...profileData, hobbies: profileData.hobbies ?? [], musicList: profileData.musicList ?? [] },
             update: profileData,
           }
         }
@@ -90,7 +90,7 @@ export class UserService {
     });
   }
 
-  async replace(id: number, replaceUserDto: any) {
+  async replace(id: number, replaceUserDto: UpdateUserDto) {
     await this.findOne(id);
     const {
       email, password, phone, name, age,

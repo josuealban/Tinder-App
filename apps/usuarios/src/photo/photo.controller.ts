@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { PhotoService } from './photo.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
+import { UpdatePhotoDto } from './dto/update-photo.dto';
 import { USER_PATTERNS } from '@app/common/patterns';
 
 @Controller()
@@ -19,7 +20,7 @@ export class PhotoController {
   }
 
   @MessagePattern(USER_PATTERNS.REPLACE_PHOTO)
-  replace(@Payload() data: { id: number; body: any }) {
+  replace(@Payload() data: { id: number; body: UpdatePhotoDto }) {
     return this.photoService.replace(data.id, data.body);
   }
 

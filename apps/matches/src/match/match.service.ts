@@ -53,7 +53,7 @@ export class MatchService {
     });
   }
 
-  async replace(id: number, data: any) {
+  async replace(id: number, data: UpdateMatchDto) {
     await this.findOne(id);
     return this.prisma.match.update({
       where: { id },

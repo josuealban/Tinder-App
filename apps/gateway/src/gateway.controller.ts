@@ -42,7 +42,7 @@ export class GatewayController {
 
   @Public()
   @Post('auth/login')
-  login(@Body() body: any) {
+  login(@Body() body: unknown) {
     return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.LOGIN, body));
   }
 
@@ -50,7 +50,7 @@ export class GatewayController {
 
   @Public()
   @Post('users')
-  createUser(@Body() body: any) {
+  createUser(@Body() body: unknown) {
     return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.REGISTER, body));
   }
 
@@ -65,14 +65,14 @@ export class GatewayController {
   }
 
   @Patch('users/:id')
-  updateUser(@Param('id') id: string, @Body() body: any) {
+  updateUser(@Param('id') id: string, @Body() body: unknown) {
     return firstValueFrom(
       this.usuariosClient.send(USER_PATTERNS.UPDATE, { id: Number(id), body }),
     );
   }
 
   @Put('users/:id')
-  replaceUser(@Param('id') id: string, @Body() body: any) {
+  replaceUser(@Param('id') id: string, @Body() body: unknown) {
     return firstValueFrom(
       this.usuariosClient.send(USER_PATTERNS.REPLACE, { id: Number(id), body }),
     );
@@ -87,7 +87,7 @@ export class GatewayController {
   // ─── PHOTOS ──────────────────────────────────────────────────────────────────
 
   @Post('photos')
-  createPhoto(@Body() body: any) {
+  createPhoto(@Body() body: unknown) {
     return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.CREATE_PHOTO, body));
   }
 
@@ -99,7 +99,7 @@ export class GatewayController {
   }
 
   @Put('photos/:id')
-  replacePhoto(@Param('id') id: string, @Body() body: any) {
+  replacePhoto(@Param('id') id: string, @Body() body: unknown) {
     return firstValueFrom(
       this.usuariosClient.send(USER_PATTERNS.REPLACE_PHOTO, { id: Number(id), body }),
     );
@@ -114,7 +114,7 @@ export class GatewayController {
   // ─── SUBSCRIPTIONS (usuario) ─────────────────────────────────────────────────
 
   @Post('subscriptions')
-  createSubscription(@Body() body: any) {
+  createSubscription(@Body() body: unknown) {
     return firstValueFrom(this.usuariosClient.send(USER_PATTERNS.CREATE_SUBSCRIPTION, body));
   }
 
@@ -130,7 +130,7 @@ export class GatewayController {
   // ─── INTERACTIONS / MATCHES ───────────────────────────────────────────────────
 
   @Post('interactions')
-  createInteraction(@Body() body: any) {
+  createInteraction(@Body() body: unknown) {
     return firstValueFrom(this.matchesClient.send(MATCH_PATTERNS.CREATE_INTERACTION, body));
   }
 
@@ -142,7 +142,7 @@ export class GatewayController {
   }
 
   @Put('interactions/:id')
-  replaceInteraction(@Param('id') id: string, @Body() body: any) {
+  replaceInteraction(@Param('id') id: string, @Body() body: unknown) {
     return firstValueFrom(
       this.matchesClient.send(MATCH_PATTERNS.REPLACE_INTERACTION, { id: Number(id), body }),
     );
@@ -161,7 +161,7 @@ export class GatewayController {
   }
 
   @Put('matches/:id')
-  replaceMatch(@Param('id') id: string, @Body() body: any) {
+  replaceMatch(@Param('id') id: string, @Body() body: unknown) {
     return firstValueFrom(
       this.matchesClient.send(MATCH_PATTERNS.REPLACE_MATCH, { id: Number(id), body }),
     );
@@ -170,7 +170,7 @@ export class GatewayController {
   // ─── MENSAJERÍA ───────────────────────────────────────────────────────────────
 
   @Post('chats')
-  createChat(@Body() body: any) {
+  createChat(@Body() body: unknown) {
     return firstValueFrom(this.mensajeriaClient.send(MESSAGE_PATTERNS.CREATE_CHAT, body));
   }
 
@@ -182,14 +182,14 @@ export class GatewayController {
   }
 
   @Put('chats/:id')
-  replaceChat(@Param('id') id: string, @Body() body: any) {
+  replaceChat(@Param('id') id: string, @Body() body: unknown) {
     return firstValueFrom(
       this.mensajeriaClient.send(MESSAGE_PATTERNS.REPLACE_CHAT, { id: Number(id), body }),
     );
   }
 
   @Post('messages')
-  sendMessage(@Body() body: any) {
+  sendMessage(@Body() body: unknown) {
     return firstValueFrom(this.mensajeriaClient.send(MESSAGE_PATTERNS.SEND_MESSAGE, body));
   }
 
@@ -201,7 +201,7 @@ export class GatewayController {
   }
 
   @Put('messages/:id')
-  replaceMessage(@Param('id') id: string, @Body() body: any) {
+  replaceMessage(@Param('id') id: string, @Body() body: unknown) {
     return firstValueFrom(
       this.mensajeriaClient.send(MESSAGE_PATTERNS.REPLACE_MESSAGE, { id: Number(id), body }),
     );
@@ -235,7 +235,7 @@ export class GatewayController {
 
   @Roles(Role.ADMIN)
   @Post('subscription-plans')
-  createSubscriptionPlan(@Body() body: any) {
+  createSubscriptionPlan(@Body() body: unknown) {
     return firstValueFrom(
       this.mensajeriaClient.send(SUBSCRIPTION_PLAN_PATTERNS.CREATE, body),
     );
@@ -243,7 +243,7 @@ export class GatewayController {
 
   @Roles(Role.ADMIN)
   @Put('subscription-plans/:tier')
-  updateSubscriptionPlan(@Param('tier') tier: string, @Body() dto: any) {
+  updateSubscriptionPlan(@Param('tier') tier: string, @Body() dto: unknown) {
     return firstValueFrom(
       this.mensajeriaClient.send(SUBSCRIPTION_PLAN_PATTERNS.UPDATE, { tier, dto }),
     );

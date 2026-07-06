@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { MessageService } from './message.service';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { UpdateMessageDto } from './dto/update-message.dto';
 import { MESSAGE_PATTERNS } from '@app/common/patterns';
 
 @Controller()
@@ -19,7 +20,7 @@ export class MessageController {
   }
 
   @MessagePattern(MESSAGE_PATTERNS.REPLACE_MESSAGE)
-  replace(@Payload() data: { id: number; body: any }) {
+  replace(@Payload() data: { id: number; body: UpdateMessageDto }) {
     return this.messageService.replace(data.id, data.body);
   }
 

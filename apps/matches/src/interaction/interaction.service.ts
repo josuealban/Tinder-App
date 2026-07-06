@@ -20,12 +20,12 @@ export class InteractionService {
       throw new ConflictException('User cannot interact with themselves');
     }
 
-    let matchCreated: any = null;
-
-    const interaction = await this.prisma.$transaction(async (tx) => {
+    const { interaction, matchCreated } = await this.prisma.$transaction(async (tx) => {
       const newInteraction = await tx.interaction.create({
         data: { fromId, toId, type },
       });
+
+      let match: { id: number; user1Id: number; user2Id: number } | null = null;
 
       if (type === InteractionType.LIKE || type === InteractionType.SUPERLIKE) {
         const reciprocal = await tx.interaction.findFirst({
@@ -40,7 +40,7 @@ export class InteractionService {
         });
 
         if (reciprocal) {
-          matchCreated = await tx.match.create({
+          match = await tx.match.create({
             data: {
               user1Id: Math.min(fromId, toId),
               user2Id: Math.max(fromId, toId),
@@ -49,7 +49,7 @@ export class InteractionService {
         }
       }
 
-      return newInteraction;
+      return { interaction: newInteraction, matchCreated: match };
     });
 
     if (matchCreated) {
@@ -84,7 +84,7 @@ export class InteractionService {
     });
   }
 
-  async replace(id: number, data: any) {
+  async replace(id: number, data: UpdateInteractionDto) {
     return this.prisma.interaction.update({
       where: { id },
       data,

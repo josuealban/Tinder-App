@@ -59,7 +59,7 @@ export class ChatService {
     });
   }
 
-  async replace(id: number, data: any) {
+  async replace(id: number, data: UpdateChatDto) {
     await this.findOne(id);
     return this.prisma.chat.update({
       where: { id },

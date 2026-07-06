@@ -57,7 +57,7 @@ export class MessageService {
     });
   }
 
-  async replace(id: number, data: any) {
+  async replace(id: number, data: UpdateMessageDto) {
     await this.findOne(id);
     return this.prisma.message.update({
       where: { id },

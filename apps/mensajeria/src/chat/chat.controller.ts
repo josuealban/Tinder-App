@@ -25,7 +25,7 @@ export class ChatController {
   }
 
   @MessagePattern(MESSAGE_PATTERNS.REPLACE_CHAT)
-  replace(@Payload() data: { id: number; body: any }) {
+  replace(@Payload() data: { id: number; body: UpdateChatDto }) {
     return this.chatService.replace(data.id, data.body);
   }
 }

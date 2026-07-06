@@ -8,6 +8,11 @@ import {
 import { RpcException } from '@nestjs/microservices';
 import { Response } from 'express';
 
+interface RpcError {
+  statusCode?: number;
+  message?: string;
+}
+
 @Catch(RpcException)
 export class RpcExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(RpcExceptionFilter.name);
@@ -16,7 +21,7 @@ export class RpcExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    const error = exception.getError() as any;
+    const error = exception.getError() as string | RpcError;
 
     const status =
       typeof error === 'object' && error?.statusCode
@@ -44,15 +49,18 @@ export class RpcExceptionFilter implements ExceptionFilter {
 export class AllExceptionsFilter implements ExceptionFilter {
   private readonly logger = new Logger(AllExceptionsFilter.name);
 
-  catch(exception: any, host: ArgumentsHost) {
+  catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
     // RPC error objects come as plain objects with status/message
     if (exception && typeof exception === 'object') {
+      const exc = exception as Record<string, unknown>;
       const status =
-        exception.statusCode || exception.status || HttpStatus.INTERNAL_SERVER_ERROR;
-      const message = exception.message || 'Internal server error';
+        (typeof exc.statusCode === 'number' ? exc.statusCode : null) ||
+        (typeof exc.status === 'number' ? exc.status : null) ||
+        HttpStatus.INTERNAL_SERVER_ERROR;
+      const message = (typeof exc.message === 'string' ? exc.message : null) || 'Internal server error';
 
       this.logger.error(`Exception caught: ${JSON.stringify(exception)}`);
 

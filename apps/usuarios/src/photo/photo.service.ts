@@ -46,7 +46,7 @@ export class PhotoService {
     });
   }
 
-  async replace(id: number, data: any) {
+  async replace(id: number, data: UpdatePhotoDto) {
     await this.findOne(id);
     return this.prisma.photo.update({
       where: { id },
