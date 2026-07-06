@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "b3e34b5c-4c02-4d24-8b63-0a95f9c4f420",
 		"name": "tindel_microservicios_gateway",
+		"description": "Colección oficial para probar el API Gateway de Tindel. Todas las peticiones van a http://localhost:3000. Sigue el orden de las carpetas para probar correctamente.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -9,13 +10,80 @@
 			"name": "1. Auth y Usuarios",
 			"item": [
 				{
-					"name": "POST /auth/login",
+					"name": "POST /users (Usuario 1 - Test)",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"123456\"\n}",
+							"raw": "{\n    \"email\": \"alice@tindel.com\",\n    \"password\": \"123456\",\n    \"name\": \"Alice\",\n    \"age\": 24,\n    \"bio\": \"Amo la musica y los viajes\",\n    \"gender\": \"FEMALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Quito\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"musica\", \"viajes\"],\n    \"musicList\": [\"Rock\", \"Pop\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /users (Usuario 2 - Para Match)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"bob@tindel.com\",\n    \"password\": \"123456\",\n    \"name\": \"Bob\",\n    \"age\": 27,\n    \"bio\": \"Fan del deporte y la tecnologia\",\n    \"gender\": \"MALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Guayaquil\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"deporte\", \"tecnologia\"],\n    \"musicList\": [\"Electronica\", \"Jazz\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /auth/login (Alice - Usuario 1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.access_token) {",
+									"    pm.collectionVariables.set(\"token\", jsonData.access_token);",
+									"    console.log(\"Token guardado automaticamente: \" + jsonData.access_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"alice@tindel.com\",\n    \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -36,13 +104,28 @@
 					"response": []
 				},
 				{
-					"name": "POST /users",
+					"name": "POST /auth/login (Bob - Usuario 2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.access_token) {",
+									"    pm.collectionVariables.set(\"token\", jsonData.access_token);",
+									"    console.log(\"Token de Bob guardado: \" + jsonData.access_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"123456\",\n    \"name\": \"Test User\",\n    \"age\": 25\n}",
+							"raw": "{\n    \"email\": \"bob@tindel.com\",\n    \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -50,12 +133,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users",
+							"raw": "{{baseUrl}}/auth/login",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"users"
+								"auth",
+								"login"
 							]
 						}
 					},
@@ -103,7 +187,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Updated Name\"\n}",
+							"raw": "{\n    \"name\": \"Alice Actualizada\",\n    \"bio\": \"Perfil actualizado con PATCH\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -130,7 +214,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"usuario_actualizado@gmail.com\",\n    \"name\": \"Usuario Actualizado\",\n    \"age\": 23,\n    \"bio\": \"Perfil actualizado con PUT\"\n}",
+							"raw": "{\n    \"email\": \"alice@tindel.com\",\n    \"password\": \"123456\",\n    \"name\": \"Alice Completa\",\n    \"age\": 25,\n    \"bio\": \"Perfil reemplazado con PUT\",\n    \"gender\": \"FEMALE\",\n    \"nationality\": \"Ecuador\",\n    \"city\": \"Quito\",\n    \"country\": \"Ecuador\",\n    \"hobbies\": [\"musica\", \"viajes\", \"lectura\"],\n    \"musicList\": [\"Rock\", \"Pop\", \"Jazz\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -151,7 +235,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE /users/:id",
+					"name": "DELETE /users/:id (Admin)",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -180,7 +264,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": {{userId}},\n    \"url\": \"http://example.com/photo.jpg\",\n    \"isPrimary\": true\n}",
+							"raw": "{\n    \"userId\": {{userId}},\n    \"url\": \"https://randomuser.me/api/portraits/women/44.jpg\",\n    \"isPrimary\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -225,7 +309,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"url\": \"http://example.com/new_photo.jpg\",\n    \"isPrimary\": false\n}",
+							"raw": "{\n    \"url\": \"https://randomuser.me/api/portraits/women/50.jpg\",\n    \"isPrimary\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -246,7 +330,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE /photos/:id",
+					"name": "DELETE /photos/:id (Admin)",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -267,15 +351,42 @@
 		},
 		{
 			"name": "3. Interactions y Matches",
+			"description": "IMPORTANTE: Para generar un Match necesitas 2 usuarios. Paso 1: Alice (userId=1) le da LIKE a Bob (targetUserId=2). Paso 2: Loguéate como Bob, actualiza el token. Paso 3: Bob (userId=2) le da LIKE a Alice (fromId=2, toId=1). El sistema generará automáticamente un Match.",
 			"item": [
 				{
-					"name": "POST /interactions",
+					"name": "POST /interactions (Alice LIKE a Bob)",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"type\": \"LIKE\",\n    \"fromId\": {{userId}},\n    \"toId\": {{targetUserId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/interactions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"interactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /interactions (Bob LIKE a Alice - Genera MATCH)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"LIKE\",\n    \"fromId\": {{targetUserId}},\n    \"toId\": {{userId}}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -320,7 +431,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"DISLIKE\"\n}",
+							"raw": "{\n    \"type\": \"SUPERLIKE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -408,6 +519,7 @@
 		},
 		{
 			"name": "4. Chats y Messages",
+			"description": "Para probar chats necesitas un matchId válido (creado en el paso de Interactions). Primero crea el chat con el matchId, luego envía mensajes.",
 			"item": [
 				{
 					"name": "POST /chats",
@@ -487,7 +599,33 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"chatId\": {{chatId}},\n    \"fromId\": {{userId}},\n    \"content\": \"Hola desde gateway\"\n}",
+							"raw": "{\n    \"chatId\": {{chatId}},\n    \"fromId\": {{userId}},\n    \"content\": \"Hola! Acabo de hacer match contigo!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/messages",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /messages (Respuesta de Bob)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"chatId\": {{chatId}},\n    \"fromId\": {{targetUserId}},\n    \"content\": \"Hola Alice! Que bueno hacer match!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -532,7 +670,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"content\": \"Mensaje editado\"\n}",
+							"raw": "{\n    \"content\": \"Mensaje editado correctamente\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -553,7 +691,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE /messages/:id",
+					"name": "DELETE /messages/:id (Admin)",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -574,6 +712,7 @@
 		},
 		{
 			"name": "5. Subscriptions y Subscription Plans",
+			"description": "Planes de suscripción gestionados por el microservicio de Mensajería. POST/PUT/DELETE requieren rol ADMIN.",
 			"item": [
 				{
 					"name": "GET /subscription-plans",
@@ -611,13 +750,13 @@
 					"response": []
 				},
 				{
-					"name": "POST /subscription-plans",
+					"name": "POST /subscription-plans (Admin)",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"tier\": \"GOLD\",\n    \"name\": \"Gold Plan\",\n    \"price\": 9.99,\n    \"durationDays\": 30,\n    \"features\": [\"Ver perfiles ilimitados\", \"5 superlikes al dia\"]\n}",
+							"raw": "{\n    \"tier\": \"GOLD\",\n    \"name\": \"Plan Gold\",\n    \"price\": 9.99,\n    \"durationDays\": 30,\n    \"features\": [\"Perfiles ilimitados\", \"5 superlikes al dia\", \"Ver quien te dio like\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -637,13 +776,13 @@
 					"response": []
 				},
 				{
-					"name": "PUT /subscription-plans/:tier",
+					"name": "PUT /subscription-plans/:tier (Admin)",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Gold Plan Premium\",\n    \"price\": 12.99,\n    \"durationDays\": 30,\n    \"features\": [\"Ver perfiles ilimitados\", \"10 superlikes al dia\"]\n}",
+							"raw": "{\n    \"name\": \"Plan Gold Premium\",\n    \"price\": 12.99,\n    \"durationDays\": 30,\n    \"features\": [\"Perfiles ilimitados\", \"10 superlikes al dia\", \"Boost de perfil\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -664,7 +803,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE /subscription-plans/:tier",
+					"name": "DELETE /subscription-plans/:tier (Admin)",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -768,37 +907,44 @@
 		{
 			"key": "userId",
 			"value": "1",
-			"type": "string"
+			"type": "string",
+			"description": "ID del Usuario 1 (Alice). Actualiza este valor con el id que retorne POST /users"
 		},
 		{
 			"key": "targetUserId",
 			"value": "2",
-			"type": "string"
+			"type": "string",
+			"description": "ID del Usuario 2 (Bob). Actualiza con el id que retorne el segundo POST /users"
 		},
 		{
 			"key": "matchId",
 			"value": "1",
-			"type": "string"
+			"type": "string",
+			"description": "ID del Match generado tras el LIKE mutuo. Actualiza con el matchId retornado"
 		},
 		{
 			"key": "chatId",
 			"value": "1",
-			"type": "string"
+			"type": "string",
+			"description": "ID del Chat creado en POST /chats. Actualiza con el id retornado"
 		},
 		{
 			"key": "photoId",
 			"value": "1",
-			"type": "string"
+			"type": "string",
+			"description": "ID de la foto creada en POST /photos. Actualiza con el id retornado"
 		},
 		{
 			"key": "messageId",
 			"value": "1",
-			"type": "string"
+			"type": "string",
+			"description": "ID del mensaje creado. Actualiza con el id retornado"
 		},
 		{
 			"key": "token",
 			"value": "",
-			"type": "string"
+			"type": "string",
+			"description": "JWT Token. Se guarda automaticamente al ejecutar POST /auth/login"
 		}
 	]
 }
