@@ -25,6 +25,8 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+Las solicitudes Postman se encuentran en la carpeta peticiones. La colección oficial es peticiones/tindel_microservicios_gateway.postman_collection.json.
+
 ## Project setup
 
 ```bash
